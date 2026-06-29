@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Plus, Pencil, Trash2, ToggleLeft, ToggleRight, GripVertical, X, Save } from 'lucide-react';
+import ImageUpload from '@/components/ui/ImageUpload';
 
 interface Service {
   id: string;
@@ -185,10 +186,11 @@ export default function AdminServicesPage() {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-[11px] font-mono text-white/40 uppercase tracking-wider mb-2">URL de l'image</label>
-                <input value={form.imageUrl} onChange={e => setForm({ ...form, imageUrl: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm focus:border-[var(--green-l)] focus:outline-none transition-colors" placeholder="https://images.unsplash.com/..." />
-              </div>
+              <ImageUpload
+                value={form.imageUrl}
+                onChange={(url) => setForm({ ...form, imageUrl: url })}
+                label="Image (optionnelle)"
+              />
 
               <div className="grid grid-cols-2 gap-4">
                 <div>

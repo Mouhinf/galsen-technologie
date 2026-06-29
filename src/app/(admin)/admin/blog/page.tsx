@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Plus, Pencil, Trash2, Eye, EyeOff, X, Save, ToggleLeft, ToggleRight } from 'lucide-react';
+import ImageUpload from '@/components/ui/ImageUpload';
 
 interface Post {
   id: string;
@@ -198,10 +199,11 @@ export default function AdminBlogPage() {
 <p>Votre contenu ici...</p>" />
               </div>
 
-              <div>
-                <label className="block text-[11px] font-mono text-white/40 uppercase tracking-wider mb-2">URL de l'image *</label>
-                <input value={form.imageUrl} onChange={e => setForm({ ...form, imageUrl: e.target.value })} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm focus:border-[var(--green-l)] focus:outline-none transition-colors" placeholder="https://images.unsplash.com/..." />
-              </div>
+              <ImageUpload
+                value={form.imageUrl}
+                onChange={(url) => setForm({ ...form, imageUrl: url })}
+                label="Image de couverture *"
+              />
 
               <div>
                 <label className="block text-[11px] font-mono text-white/40 uppercase tracking-wider mb-2">Tags (séparés par des virgules)</label>
