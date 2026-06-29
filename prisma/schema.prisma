@@ -33,7 +33,9 @@ model Message {
 model Service {
   id          String   @id @default(cuid())
   title       String
+  slug        String   @unique
   description String
+  content     String   @default("")
   icon        String   @default("Code2")
   color       String   @default("#22C55E")
   features    String   @default("[]")

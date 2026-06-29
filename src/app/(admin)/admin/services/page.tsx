@@ -8,6 +8,7 @@ interface Service {
   id: string;
   title: string;
   description: string;
+  content: string;
   icon: string;
   color: string;
   features: string;
@@ -30,6 +31,7 @@ export default function AdminServicesPage() {
   const [form, setForm] = useState({
     title: '',
     description: '',
+    content: '',
     icon: 'Code2',
     color: '#22C55E',
     features: '',
@@ -49,7 +51,7 @@ export default function AdminServicesPage() {
 
   const openCreate = () => {
     setEditing(null);
-    setForm({ title: '', description: '', icon: 'Code2', color: '#22C55E', features: '', imageUrl: '', active: true, order: services.length });
+    setForm({ title: '', description: '', content: '', icon: 'Code2', color: '#22C55E', features: '', imageUrl: '', active: true, order: services.length });
     setShowModal(true);
   };
 
@@ -59,6 +61,7 @@ export default function AdminServicesPage() {
     setForm({
       title: s.title,
       description: s.description,
+      content: s.content,
       icon: s.icon,
       color: s.color,
       features,
@@ -160,8 +163,13 @@ export default function AdminServicesPage() {
               </div>
 
               <div>
-                <label className="block text-[11px] font-mono text-white/40 uppercase tracking-wider mb-2">Description *</label>
-                <textarea value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} rows={3} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm focus:border-[var(--green-l)] focus:outline-none transition-colors resize-none" placeholder="Description du service..." />
+                <label className="block text-[11px] font-mono text-white/40 uppercase tracking-wider mb-2">Description courte *</label>
+                <textarea value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} rows={3} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm focus:border-[var(--green-l)] focus:outline-none transition-colors resize-none" placeholder="Résumé du service..." />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-mono text-white/40 uppercase tracking-wider mb-2">Contenu détaillé (HTML) - page service</label>
+                <textarea value={form.content} onChange={e => setForm({ ...form, content: e.target.value })} rows={6} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm focus:border-[var(--green-l)] focus:outline-none transition-colors resize-y font-mono" placeholder="<h2>Description détaillée</h2><p>Texte complet...</p>" />
               </div>
 
               <div>
