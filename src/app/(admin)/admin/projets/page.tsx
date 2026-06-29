@@ -7,14 +7,17 @@ import ImageUpload from '@/components/ui/ImageUpload';
 interface Project {
   id: string;
   title: string;
+  slug: string;
   category: string;
   client: string | null;
   year: string | null;
   description: string;
+  content: string;
   techStack: string;
   imageUrl: string;
   liveUrl: string | null;
   published: boolean;
+  createdAt: string;
 }
 
 const CATEGORIES = ['Web & Mobile', 'IA & Data', 'Cybersécurité', 'Cloud', 'Formation', 'Conseil'];
@@ -32,6 +35,7 @@ export default function AdminProjetsPage() {
     client: '',
     year: new Date().getFullYear().toString(),
     description: '',
+    content: '',
     techStack: '',
     imageUrl: '',
     liveUrl: '',
@@ -49,7 +53,7 @@ export default function AdminProjetsPage() {
 
   const openCreate = () => {
     setEditing(null);
-    setForm({ title: '', category: 'Web & Mobile', client: '', year: new Date().getFullYear().toString(), description: '', techStack: '', imageUrl: '', liveUrl: '', published: false });
+    setForm({ title: '', category: 'Web & Mobile', client: '', year: new Date().getFullYear().toString(), description: '', content: '', techStack: '', imageUrl: '', liveUrl: '', published: false });
     setShowModal(true);
   };
 
@@ -62,6 +66,7 @@ export default function AdminProjetsPage() {
       client: p.client || '',
       year: p.year || '',
       description: p.description,
+      content: p.content,
       techStack,
       imageUrl: p.imageUrl,
       liveUrl: p.liveUrl || '',
@@ -100,6 +105,8 @@ export default function AdminProjetsPage() {
     fetchProjects();
   };
 
+  const formatDate = (d: string) => new Date(d).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
+
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
@@ -126,7 +133,7 @@ export default function AdminProjetsPage() {
                 <th className="px-6 py-4">Titre</th>
                 <th className="px-6 py-4">Catégorie</th>
                 <th className="px-6 py-4">Client</th>
-                <th className="px-6 py-4">Année</th>
+                <th className="px-6 py-4">Date</th>
                 <th className="px-6 py-4">Statut</th>
                 <th className="px-6 py-4 text-right">Actions</th>
               </tr>
@@ -139,7 +146,7 @@ export default function AdminProjetsPage() {
                     <span className="text-[10px] font-mono bg-white/5 text-white/50 px-2 py-1 rounded">{p.category}</span>
                   </td>
                   <td className="px-6 py-4 text-white/60">{p.client || '—'}</td>
-                  <td className="px-6 py-4 text-white/40">{p.year || '—'}</td>
+                  <td className="px-6 py-4 text-white/40 text-xs">{formatDate(p.createdAt)}</td>
                   <td className="px-6 py-4">
                     <button onClick={() => togglePublished(p)} className={`flex items-center gap-1.5 text-[10px] font-mono uppercase ${p.published ? 'text-[var(--green-l)]' : 'text-white/30'}`}>
                       {p.published ? <Eye size={12} /> : <EyeOff size={12} />}
@@ -165,7 +172,7 @@ export default function AdminProjetsPage() {
       {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm" onClick={() => setShowModal(false)}>
-          <div className="bg-[#0A0A0A] border border-white/10 rounded-2xl w-full max-w-lg p-8 space-y-6 max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+          <div className="bg-[#0A0A0A] border border-white/10 rounded-2xl w-full max-w-2xl p-8 space-y-6 max-h-[90vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-center">
               <h2 className="text-xl font-heading font-bold">{editing ? 'Modifier le projet' : 'Nouveau projet'}</h2>
               <button onClick={() => setShowModal(false)} className="text-white/40 hover:text-white"><X size={20} /></button>
@@ -196,8 +203,13 @@ export default function AdminProjetsPage() {
               </div>
 
               <div>
-                <label className="block text-[11px] font-mono text-white/40 uppercase tracking-wider mb-2">Description *</label>
-                <textarea value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} rows={3} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm focus:border-[var(--green-l)] focus:outline-none transition-colors resize-none" placeholder="Description du projet..." />
+                <label className="block text-[11px] font-mono text-white/40 uppercase tracking-wider mb-2">Description courte *</label>
+                <textarea value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} rows={3} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm focus:border-[var(--green-l)] focus:outline-none transition-colors resize-none" placeholder="Résumé du projet..." />
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-mono text-white/40 uppercase tracking-wider mb-2">Contenu détaillé (HTML) - page projet</label>
+                <textarea value={form.content} onChange={e => setForm({ ...form, content: e.target.value })} rows={6} className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm focus:border-[var(--green-l)] focus:outline-none transition-colors resize-y font-mono" placeholder="<h2>Description technique</h2><p>Contenu détaillé...</p>" />
               </div>
 
               <div>

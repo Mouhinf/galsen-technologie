@@ -49,10 +49,12 @@ model Service {
 model Project {
   id          String   @id @default(cuid())
   title       String
+  slug        String   @unique
   category    String
   client      String?
   year        String?
   description String
+  content     String   @default("")
   techStack   String   @default("[]")
   imageUrl    String
   liveUrl     String?
