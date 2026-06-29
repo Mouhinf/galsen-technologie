@@ -1,0 +1,23 @@
+import '@/app/globals.css';
+import { ThemeProvider } from '@/components/providers/ThemeProvider';
+
+export const metadata = {
+  title: 'Galsen Technologie | IA & Tech au Sénégal',
+  description: 'Galsen Technologie propulse votre entreprise vers le futur numérique.',
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="fr" suppressHydrationWarning>
+      <body className="bg-black text-white selection:bg-[#22C55E] selection:text-black font-body">
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
