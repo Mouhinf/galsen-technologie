@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useState, useEffect } from 'react';
 import Navbar from '@/components/site/Navbar';
 import Hero from '@/components/site/Hero';
 import ServicesGrid from '@/components/site/ServicesGrid';
@@ -13,7 +14,7 @@ import Link from 'next/link';
 
 const partners = ['Madar', 'Linguère Digital Innovation', 'Assirik Tours', 'Diaz Automobile', 'SLAAC Voyages'];
 
-const testimonials = [
+const fallbackTestimonials = [
   { name: 'Mamadou Fall', role: 'CTO, Wave Sénégal', text: 'Galsen Technologie a transformé notre approche de la donnée. Une équipe exceptionnelle et des résultats concrets.' },
   { name: 'Awa Diop', role: 'Directrice Innovation, Orange', text: 'Le professionnalisme et la réactivité de Galsen sont sans égal sur le marché local. Un partenaire de confiance.' },
   { name: 'Jean-Pierre Kouamé', role: 'Fondateur, TechHub Dakar', text: 'Des solutions robustes et modernes qui répondent parfaitement aux enjeux technologiques de demain.' },
@@ -23,11 +24,33 @@ const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: (i: number) => ({
     opacity: 1, y: 0,
-    transition: { duration: 0.6, delay: i * 0.1, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: { duration: 0.6, delay: i * 0.1, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
   }),
 };
 
+interface TestimonialData {
+  id: string;
+  name: string;
+  role: string;
+  content: string;
+  rating: number;
+}
+
 export default function Home() {
+  const [testimonials, setTestimonials] = useState<TestimonialData[] | null>(null);
+
+  useEffect(() => {
+    fetch('/api/testimonials?published=true')
+      .then(res => res.json())
+      .then(data => {
+        const published = data.filter((t: any) => t.published).slice(0, 3);
+        setTestimonials(published.length > 0 ? published : null);
+      })
+      .catch(() => setTestimonials(null));
+  }, []);
+
+  const displayTestimonials = testimonials ?? fallbackTestimonials;
+
   return (
     <main className="min-h-screen">
       <TechGrid />
@@ -123,7 +146,7 @@ export default function Home() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((t, i) => (
+            {displayTestimonials.map((t: any, i: number) => (
               <motion.div
                 key={i}
                 initial="hidden"
@@ -139,12 +162,12 @@ export default function Home() {
                 </div>
 
                 <div className="flex gap-1 mb-6">
-                  {[...Array(5)].map((_, j) => (
+                  {[...Array(t.rating || 5)].map((_, j) => (
                     <Star key={j} size={13} fill="#F5D020" className="text-[var(--gold)]" />
                   ))}
                 </div>
                 <p className="text-white/60 italic mb-8 relative z-10 text-sm leading-relaxed">
-                  &ldquo;{t.text}&rdquo;
+                  &ldquo;{t.content || t.text}&rdquo;
                 </p>
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[var(--green-l)]/30 to-[var(--blue)]/20 flex items-center justify-center font-bold text-[var(--green-l)] text-sm border border-white/10">
