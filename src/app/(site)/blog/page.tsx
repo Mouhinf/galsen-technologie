@@ -38,7 +38,10 @@ export default async function BlogPage() {
       <section className="pt-40 pb-12">
         <div className="max-w-[1320px] mx-auto px-4">
           <div className="section-label mb-6">Actualités</div>
-          <h1 className="text-5xl md:text-6xl font-display font-bold text-white mb-12">Le Blog Galsen</h1>
+          <h1 className="text-5xl md:text-6xl font-display font-bold text-white mb-4">Le Blog Galsen</h1>
+          <p className="text-white/40 font-body text-lg max-w-xl">
+            Actualités tech, tutoriels, études de cas et réflexions sur l&apos;innovation numérique au Sénégal et en Afrique.
+          </p>
         </div>
       </section>
 
