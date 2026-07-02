@@ -4,6 +4,7 @@ import { ThemeProvider } from '@/components/providers/ThemeProvider';
 export const metadata = {
   title: 'Galsen Technologie | IA & Tech au Sénégal',
   description: 'Galsen Technologie propulse votre entreprise vers le futur numérique.',
+  icons: { icon: '/logo.png' },
 };
 
 export default function RootLayout({
