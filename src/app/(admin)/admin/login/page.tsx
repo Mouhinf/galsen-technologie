@@ -8,30 +8,20 @@ import Logo from '@/components/ui/Logo';
 
 export default function LoginPage(props: { searchParams?: { error?: string } }) {
   const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState(props?.searchParams?.error ? 'Email ou mot de passe incorrect' : '');
-  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const errorMessage = props?.searchParams?.error
+    ? 'Email ou mot de passe incorrect'
+    : '';
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
-    setError('');
-
-    const result = await signIn('credentials', {
-      email,
-      password,
-      redirect: false,
+    const form = e.currentTarget;
+    await signIn('credentials', {
+      email: (form.elements as any).email.value,
+      password: (form.elements as any).password.value,
+      callbackUrl: '/admin',
     });
-
-    if (result?.error) {
-      setError('Email ou mot de passe incorrect');
-      setLoading(false);
-    } else {
-      router.push('/admin');
-      router.refresh();
-    }
   };
 
   return (
@@ -49,9 +39,8 @@ export default function LoginPage(props: { searchParams?: { error?: string } }) 
           <div className="space-y-2">
             <label className="text-[10px] font-mono text-white/50 uppercase">Email</label>
             <input
+              name="email"
               type="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
               required
               className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:border-[var(--green-l)] outline-none transition-colors"
               placeholder="admin@galsen.sn"
@@ -62,9 +51,8 @@ export default function LoginPage(props: { searchParams?: { error?: string } }) 
             <label className="text-[10px] font-mono text-white/50 uppercase">Mot de passe</label>
             <div className="relative">
               <input
+                name="password"
                 type={showPassword ? 'text' : 'password'}
-                value={password}
-                onChange={e => setPassword(e.target.value)}
                 required
                 className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 pr-10 focus:border-[var(--green-l)] outline-none transition-colors"
                 placeholder="••••••••"
@@ -79,16 +67,12 @@ export default function LoginPage(props: { searchParams?: { error?: string } }) 
             </div>
           </div>
 
-          {error && (
-            <div className="text-red-400 text-sm text-center font-mono bg-red-400/10 py-2 rounded-lg">{error}</div>
+          {errorMessage && (
+            <div className="text-red-400 text-sm text-center font-mono bg-red-400/10 py-2 rounded-lg">{errorMessage}</div>
           )}
 
-          <button type="submit" disabled={loading} className="btn-primary w-full py-4 text-xs flex items-center justify-center gap-2">
-            {loading ? (
-              <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-            ) : (
-              'Se connecter'
-            )}
+          <button type="submit" className="btn-primary w-full py-4 text-xs">
+            Se connecter
           </button>
         </form>
       </div>
