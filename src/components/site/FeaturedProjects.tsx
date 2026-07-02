@@ -97,7 +97,7 @@ export default function FeaturedProjects() {
                   <h3 className="text-xl font-heading font-bold text-white mb-4 group-hover:text-[var(--green-l)] transition-colors">{project.title}</h3>
                   <div className="flex gap-2 flex-wrap">
                     {project.tech.map((t: string) => (
-                      <span key={t} className="text-[9px] font-mono text-white/30 bg-white/[0.04] px-2 py-1 rounded border border-white/[0.06]">{t}</span>
+                      <span key={t} className="text-[9px] font-mono text-white/50 bg-white/[0.04] px-2 py-1 rounded border border-white/[0.06]">{t}</span>
                     ))}
                   </div>
                 </div>
