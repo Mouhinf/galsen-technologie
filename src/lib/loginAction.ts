@@ -1,22 +1,21 @@
 'use server';
 
 import { signIn } from '@/lib/auth';
+import { AuthError } from 'next-auth';
+import { redirect } from 'next/navigation';
 
-export async function loginAction(formData: FormData) {
-  const email = formData.get('email') as string;
-  const password = formData.get('password') as string;
-
+export async function authenticate(formData: FormData) {
   try {
     await signIn('credentials', {
-      email,
-      password,
+      email: formData.get('email') as string,
+      password: formData.get('password') as string,
       redirect: false,
     });
-    return { success: true, error: null };
-  } catch (error: any) {
-    if (error?.type === 'CredentialsSignin') {
-      return { success: false, error: 'Email ou mot de passe incorrect' };
+  } catch (error) {
+    if (error instanceof AuthError) {
+      redirect('/admin/login?error=1');
     }
-    return { success: false, error: 'Une erreur est survenue' };
+    redirect('/admin/login?error=2');
   }
+  redirect('/admin');
 }
