@@ -1,35 +1,31 @@
 'use client';
 
 import React, { useState } from 'react';
-import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Eye, EyeOff } from 'lucide-react';
 import Logo from '@/components/ui/Logo';
+import { loginAction } from '@/lib/loginAction';
 
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
-    const result = await signIn('credentials', {
-      email,
-      password,
-      redirect: false,
-    });
+    const formData = new FormData(e.currentTarget);
+    const result = await loginAction(formData);
 
-    if (result?.error) {
-      setError('Email ou mot de passe incorrect');
-      setLoading(false);
-    } else {
+    if (result.success) {
       router.push('/admin');
+      router.refresh();
+    } else {
+      setError(result.error || 'Erreur inconnue');
+      setLoading(false);
     }
   };
 
@@ -48,9 +44,8 @@ export default function LoginPage() {
           <div className="space-y-2">
             <label className="text-[10px] font-mono text-white/50 uppercase">Email</label>
             <input
+              name="email"
               type="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
               required
               className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:border-[var(--green-l)] outline-none transition-colors"
               placeholder="admin@galsen.sn"
@@ -61,9 +56,8 @@ export default function LoginPage() {
             <label className="text-[10px] font-mono text-white/50 uppercase">Mot de passe</label>
             <div className="relative">
               <input
+                name="password"
                 type={showPassword ? 'text' : 'password'}
-                value={password}
-                onChange={e => setPassword(e.target.value)}
                 required
                 className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 pr-10 focus:border-[var(--green-l)] outline-none transition-colors"
                 placeholder="••••••••"
