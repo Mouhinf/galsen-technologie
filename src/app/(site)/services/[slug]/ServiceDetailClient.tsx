@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { ArrowLeft, Send, MessageCircle, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
+import { sanitizeHtml } from '@/lib/sanitize';
 
 const WHATSAPP_NUMBER = '221700003004';
 
@@ -92,7 +93,7 @@ export default function ServiceDetailClient({ service }: ServiceDetailClientProp
 
             {service.content && (
               <div className="prose prose-invert prose-green max-w-none">
-                <div dangerouslySetInnerHTML={{ __html: service.content }} />
+                <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(service.content) }} />
               </div>
             )}
           </div>

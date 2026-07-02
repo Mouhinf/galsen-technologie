@@ -37,6 +37,9 @@ prisma/dev.db-journal
 # vercel
 .vercel
 
+# generated
+graphify-out/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

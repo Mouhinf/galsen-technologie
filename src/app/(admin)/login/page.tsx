@@ -1,7 +1,38 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { Eye, EyeOff } from 'lucide-react';
 import Logo from '@/components/ui/Logo';
 
 export default function LoginPage() {
+  const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    const result = await signIn('credentials', {
+      email,
+      password,
+      redirect: false,
+    });
+
+    if (result?.error) {
+      setError('Email ou mot de passe incorrect');
+      setLoading(false);
+    } else {
+      router.push('/admin');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black flex items-center justify-center relative overflow-hidden">
       <div className="tech-grid opacity-20" />
@@ -9,24 +40,55 @@ export default function LoginPage() {
       <div className="w-full max-w-md p-8 glass-card relative z-10">
         <div className="text-center mb-8 flex flex-col items-center">
           <Logo size={80} className="mb-4" />
-          <div className="text-[11px] font-mono tracking-widest text-white/50 uppercase">Espace Administrateur</div>
+          <h1 className="text-xl font-heading font-bold text-white mb-1">Connexion Admin</h1>
+          <div className="text-[11px] font-mono tracking-widest text-white/50 uppercase">Accès réservé au personnel</div>
         </div>
 
-        <form className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
             <label className="text-[10px] font-mono text-white/50 uppercase">Email</label>
-            <input type="email" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:border-[var(--green-l)] outline-none transition-colors" placeholder="admin@galsen.sn" />
+            <input
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+              className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:border-[var(--green-l)] outline-none transition-colors"
+              placeholder="admin@galsen.sn"
+            />
           </div>
           
           <div className="space-y-2">
-            <div className="flex justify-between items-center">
-              <label className="text-[10px] font-mono text-white/50 uppercase">Mot de passe</label>
-              <a href="#" className="text-[10px] text-[var(--green-l)] hover:underline">Oublié ?</a>
+            <label className="text-[10px] font-mono text-white/50 uppercase">Mot de passe</label>
+            <div className="relative">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                required
+                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 pr-10 focus:border-[var(--green-l)] outline-none transition-colors"
+                placeholder="••••••••"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white transition-colors"
+              >
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
             </div>
-            <input type="password" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:border-[var(--green-l)] outline-none transition-colors" placeholder="••••••••" />
           </div>
 
-          <button type="submit" className="btn-primary w-full py-4 text-xs">Se connecter</button>
+          {error && (
+            <div className="text-red-400 text-sm text-center font-mono bg-red-400/10 py-2 rounded-lg">{error}</div>
+          )}
+
+          <button type="submit" disabled={loading} className="btn-primary w-full py-4 text-xs flex items-center justify-center gap-2">
+            {loading ? (
+              <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            ) : (
+              'Se connecter'
+            )}
+          </button>
         </form>
       </div>
     </div>

@@ -1,30 +1,38 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 import prisma from '@/lib/prisma';
+import { corsResponse } from '@/lib/cors';
 
 export async function PATCH(
-  _req: NextRequest,
+  req: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const origin = req.headers.get('origin');
   try {
-    const body = await _req.json();
+    const body = await req.json();
     const message = await prisma.message.update({
       where: { id: params.id },
       data: { status: body.status },
     });
-    return NextResponse.json(message);
+    return corsResponse(message, 200, origin);
   } catch {
-    return NextResponse.json({ error: 'Message not found' }, { status: 404 });
+    return corsResponse({ error: 'Message not found' }, 404, origin);
   }
 }
 
 export async function DELETE(
-  _req: NextRequest,
+  req: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const origin = req.headers.get('origin');
   try {
     await prisma.message.delete({ where: { id: params.id } });
-    return NextResponse.json({ success: true });
+    return corsResponse({ success: true }, 200, origin);
   } catch {
-    return NextResponse.json({ error: 'Message not found' }, { status: 404 });
+    return corsResponse({ error: 'Message not found' }, 404, origin);
   }
+}
+
+export async function OPTIONS(req: NextRequest) {
+  const origin = req.headers.get('origin');
+  return corsResponse({}, 204, origin);
 }

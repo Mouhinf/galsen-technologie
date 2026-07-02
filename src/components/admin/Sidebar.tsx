@@ -2,6 +2,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useSession, signOut } from 'next-auth/react';
 import Logo from '@/components/ui/Logo';
 import { cn } from '@/lib/utils';
 import { 
@@ -14,7 +15,7 @@ const menuGroups = [
     title: 'GÉNÉRAL',
     items: [
       { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
-      { name: 'Messages', href: '/admin/messages', icon: Inbox, badge: '3' },
+      { name: 'Messages', href: '/admin/messages', icon: Inbox },
     ]
   },
   {
@@ -38,6 +39,9 @@ const menuGroups = [
 ];
 
 const Sidebar = () => {
+  const pathname = usePathname();
+  const { data: session } = useSession();
+
   return (
     <aside className="fixed top-0 left-0 w-[240px] h-screen bg-[#0A0A0A] border-r border-white/5 flex flex-col z-40">
       <div className="h-16 flex items-center gap-2 px-6 border-b border-white/5">
@@ -56,15 +60,15 @@ const Sidebar = () => {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="flex items-center gap-3 px-2 py-2 rounded-lg text-sm text-white/60 hover:text-white hover:bg-white/5 transition-colors group"
+                  className={cn(
+                    "flex items-center gap-3 px-2 py-2 rounded-lg text-sm transition-colors group",
+                    pathname === item.href
+                      ? "text-white bg-white/10"
+                      : "text-white/60 hover:text-white hover:bg-white/5"
+                  )}
                 >
                   <item.icon size={16} className="group-hover:text-[var(--green-l)] transition-colors" />
                   {item.name}
-                  {item.badge && (
-                    <span className="ml-auto bg-[var(--green-l)] text-black text-[10px] font-bold px-1.5 py-0.5 rounded-full">
-                      {item.badge}
-                    </span>
-                  )}
                 </Link>
               ))}
             </nav>
@@ -74,15 +78,18 @@ const Sidebar = () => {
 
       <div className="p-4 border-t border-white/5">
         <div className="flex items-center gap-3 mb-4 px-2">
-          <div className="w-8 h-8 rounded-full bg-[var(--green-l)]/20 flex items-center justify-center text-[var(--green-l)] font-bold text-sm">
-            AD
+          <div className="w-8 h-8 rounded-full bg-[var(--green-l)]/20 flex items-center justify-center text-[var(--green-l)] font-bold text-sm uppercase">
+            {session?.user?.name?.charAt(0) || 'A'}
           </div>
-          <div>
-            <div className="text-sm font-medium text-white">Admin User</div>
-            <div className="text-[10px] text-white/40">admin@galsen.sn</div>
+          <div className="flex-1 min-w-0">
+            <div className="text-sm font-medium text-white truncate">{session?.user?.name || 'Admin'}</div>
+            <div className="text-[10px] text-white/40 truncate">{session?.user?.email || 'admin@galsen.sn'}</div>
           </div>
         </div>
-        <button className="flex items-center gap-3 px-2 py-2 w-full rounded-lg text-sm text-red-400 hover:text-red-300 hover:bg-red-400/10 transition-colors">
+        <button
+          onClick={() => signOut({ callbackUrl: '/admin/login' })}
+          className="flex items-center gap-3 px-2 py-2 w-full rounded-lg text-sm text-red-400 hover:text-red-300 hover:bg-red-400/10 transition-colors"
+        >
           <LogOut size={16} />
           Se déconnecter
         </button>

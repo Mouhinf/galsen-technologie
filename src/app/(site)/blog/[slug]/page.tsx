@@ -5,6 +5,7 @@ import Footer from '@/components/site/Footer';
 import Link from 'next/link';
 import prisma from '@/lib/prisma';
 import { notFound } from 'next/navigation';
+import { sanitizeHtml } from '@/lib/sanitize';
 
 export const dynamic = 'force-dynamic';
 
@@ -49,7 +50,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           {post.excerpt && (
             <p className="lead text-xl text-white/70 mb-8">{post.excerpt}</p>
           )}
-          <div dangerouslySetInnerHTML={{ __html: post.content }} />
+          <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }} />
         </div>
 
         {/* Tags */}

@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { ArrowLeft, Send, MessageCircle, CheckCircle2, ExternalLink, Calendar, User } from 'lucide-react';
 import Link from 'next/link';
+import { sanitizeHtml } from '@/lib/sanitize';
 
 const WHATSAPP_NUMBER = '221700003004';
 
@@ -104,7 +105,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
             {/* Content */}
             {project.content && (
               <div className="prose prose-invert prose-green max-w-none">
-                <div dangerouslySetInnerHTML={{ __html: project.content }} />
+                <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(project.content) }} />
               </div>
             )}
           </div>
