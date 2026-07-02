@@ -71,7 +71,7 @@ const ServicesGrid = () => {
           <motion.h2 variants={fadeUp} custom={1} className="text-4xl md:text-5xl font-display font-bold text-white mb-4">
             Ce que nous faisons
           </motion.h2>
-          <motion.p variants={fadeUp} custom={2} className="text-white/40 font-body max-w-xl">
+          <motion.p variants={fadeUp} custom={2} className="text-white/60 font-body max-w-xl">
             Des solutions technologiques de pointe adaptées au marché africain et international.
           </motion.p>
         </motion.div>
@@ -105,10 +105,10 @@ const ServicesGrid = () => {
               >
                 <div className="flex justify-between items-start mb-8">
                   <div className="text-3xl">{service.icon}</div>
-                  <div className="text-[9px] font-mono tracking-[2px] text-white/20 uppercase border border-white/[0.06] px-3 py-1 rounded-full">{service.badge}</div>
+                  <div className="text-[9px] font-mono tracking-[2px] text-white/35 uppercase border border-white/[0.06] px-3 py-1 rounded-full">{service.badge}</div>
                 </div>
                 <h3 className="text-xl font-heading font-bold text-white mb-3">{service.title}</h3>
-                <p className="text-white/40 text-sm font-body leading-relaxed mb-8">{service.desc}</p>
+                <p className="text-white/60 text-sm font-body leading-relaxed mb-8">{service.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -149,7 +149,7 @@ const ServicesGrid = () => {
                       >
                         {ICON_MAP[service.icon] || '🔧'}
                       </div>
-                      <div className="text-[9px] font-mono tracking-[2px] text-white/20 uppercase border border-white/[0.06] px-3 py-1 rounded-full group-hover:text-white/40 group-hover:border-white/15 transition-colors">
+                      <div className="text-[9px] font-mono tracking-[2px] text-white/35 uppercase border border-white/[0.06] px-3 py-1 rounded-full group-hover:text-white/50 group-hover:border-white/15 transition-colors">
                         {service.icon}
                       </div>
                     </div>
@@ -157,7 +157,7 @@ const ServicesGrid = () => {
                     <h3 className="text-xl font-heading font-bold text-white mb-3 group-hover:text-white transition-colors">
                       {service.title}
                     </h3>
-                    <p className="text-white/40 text-sm font-body leading-relaxed mb-8 line-clamp-2">
+                    <p className="text-white/60 text-sm font-body leading-relaxed mb-8 line-clamp-2">
                       {service.description}
                     </p>
 
@@ -166,7 +166,7 @@ const ServicesGrid = () => {
                         {tags.map((tag: string) => (
                           <span
                             key={tag}
-                            className="text-[9px] font-mono text-white/30 bg-white/[0.03] border border-white/[0.05] px-2.5 py-1 rounded-md group-hover:border-white/10 group-hover:text-white/50 transition-colors"
+                            className="text-[9px] font-mono text-white/50 bg-white/[0.03] border border-white/[0.05] px-2.5 py-1 rounded-md group-hover:border-white/10 group-hover:text-white/60 transition-colors"
                           >
                             {tag}
                           </span>

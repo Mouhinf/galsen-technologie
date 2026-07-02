@@ -152,7 +152,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.35 }}
-            className="text-white/45 text-base md:text-lg font-body max-w-lg mb-16 leading-relaxed mx-auto lg:mx-0"
+            className="text-white/60 text-base md:text-lg font-body max-w-lg mb-16 leading-relaxed mx-auto lg:mx-0"
           >
             Galsen Technologie propulse votre entreprise vers le futur numérique.
             IA, cybersécurité, développement — nous construisons l&apos;Afrique tech de demain.
@@ -182,7 +182,7 @@ const Hero = () => {
             className="flex flex-wrap gap-2 justify-center lg:justify-start"
           >
             {['Next.js', 'Python', 'TensorFlow', 'AWS', 'React', 'Docker'].map((t) => (
-              <span key={t} className="text-[9px] font-mono text-white/25 bg-white/[0.03] border border-white/[0.06] px-3 py-1 rounded-full">
+              <span key={t} className="text-[9px] font-mono text-white/45 bg-white/[0.03] border border-white/[0.06] px-3 py-1 rounded-full">
                 {t}
               </span>
             ))}

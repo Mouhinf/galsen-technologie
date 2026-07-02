@@ -86,7 +86,7 @@ export default function Home() {
 
       {/* ═══ Partners Marquee ═══ */}
       <section className="py-10 border-y border-white/5 bg-white/[0.01] overflow-hidden">
-        <p className="text-center text-[9px] font-mono tracking-[5px] uppercase text-white/20 mb-8">
+        <p className="text-center text-[9px] font-mono tracking-[5px] uppercase text-white/40 mb-8">
           Ils nous font confiance
         </p>
         <div className="relative">
@@ -96,7 +96,7 @@ export default function Home() {
             {partners.map((name, i) => (
               <span
                 key={i}
-                className="inline-block mx-12 text-xl font-display font-black tracking-wider text-white/15 hover:text-[var(--green-l)]/40 transition-colors duration-500 cursor-default select-none"
+                className="inline-block mx-12 text-xl font-display font-black tracking-wider text-white/30 hover:text-[var(--green-l)]/40 transition-colors duration-500 cursor-default select-none"
               >
                 {name}
               </span>
@@ -141,10 +141,10 @@ export default function Home() {
                 className="p-8 glass-card group relative overflow-hidden"
               >
                 <div className="text-3xl mb-6 relative z-10">{item.icon}</div>
-                <h4 className="text-lg font-heading font-bold mb-3 group-hover:text-[var(--green-l)] transition-colors relative z-10">
+                <h3 className="text-lg font-heading font-bold mb-3 group-hover:text-[var(--green-l)] transition-colors relative z-10">
                   {item.title}
-                </h4>
-                <p className="text-white/40 text-sm font-body leading-relaxed relative z-10">{item.desc}</p>
+                </h3>
+                <p className="text-white/60 text-sm font-body leading-relaxed relative z-10">{item.desc}</p>
                 {/* Scan line */}
                 <div className="absolute left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[var(--green-l)]/30 to-transparent opacity-0 group-hover:opacity-100" style={{ animation: 'scan-sweep 2s ease-in-out infinite' }} />
               </motion.div>
@@ -200,7 +200,7 @@ export default function Home() {
                     <h3 className="text-base font-heading font-bold text-white mb-3 group-hover:text-[var(--green-l)] transition-colors line-clamp-2">
                       {post.title}
                     </h3>
-                    <p className="text-white/40 text-xs leading-relaxed mb-4 line-clamp-2 flex-grow">
+                    <p className="text-white/60 text-xs leading-relaxed mb-4 line-clamp-2 flex-grow">
                       {post.excerpt}
                     </p>
                     <div className="flex items-center text-[10px] text-[var(--green-l)] font-mono uppercase tracking-widest gap-1.5">
@@ -251,7 +251,7 @@ export default function Home() {
                     <Star key={j} size={13} fill="#F5D020" className="text-[var(--gold)]" />
                   ))}
                 </div>
-                <p className="text-white/60 italic mb-8 relative z-10 text-sm leading-relaxed">
+                <p className="text-white/70 italic mb-8 relative z-10 text-sm leading-relaxed">
                   &ldquo;{t.content || t.text}&rdquo;
                 </p>
                 <div className="flex items-center gap-4">
@@ -260,7 +260,7 @@ export default function Home() {
                   </div>
                   <div>
                     <div className="text-white font-bold text-sm">{t.name}</div>
-                    <div className="text-white/30 text-[11px] font-mono">{t.role}</div>
+                    <div className="text-white/50 text-[11px] font-mono">{t.role}</div>
                   </div>
                 </div>
               </motion.div>
@@ -292,7 +292,7 @@ export default function Home() {
             <motion.h2 variants={fadeUp} custom={1} className="text-4xl md:text-6xl font-display font-bold text-white mb-6 leading-tight">
               Prêt à transformer votre entreprise ?
             </motion.h2>
-            <motion.p variants={fadeUp} custom={2} className="text-white/40 text-lg mb-12 max-w-lg mx-auto">
+            <motion.p variants={fadeUp} custom={2} className="text-white/60 text-lg mb-12 max-w-lg mx-auto">
               Donnez à votre projet l&apos;élan technologique qu&apos;il mérite.
             </motion.p>
             <motion.div variants={fadeUp} custom={3} className="flex flex-wrap justify-center gap-6">

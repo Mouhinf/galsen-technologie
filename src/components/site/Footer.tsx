@@ -9,28 +9,28 @@ const Footer = () => {
       <div className="max-w-[1320px] mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 relative z-10">
         <div className="space-y-6">
           <Logo size={56} />
-          <p className="text-white/50 text-sm leading-relaxed font-body">
+          <p className="text-white/60 text-sm leading-relaxed font-body">
             Galsen Technologie propulse votre entreprise vers le futur numérique. IA, cybersécurité, développement — nous construisons l'Afrique tech.
           </p>
           <div className="flex gap-4">
-            <Link href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--green-l)]/20 hover:text-[var(--green-l)] transition-all">
+            <Link href="#" aria-label="LinkedIn" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--green-l)]/20 hover:text-[var(--green-l)] transition-all">
               <span>IN</span>
             </Link>
-            <Link href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--green-l)]/20 hover:text-[var(--green-l)] transition-all">
+            <Link href="#" aria-label="Twitter" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--green-l)]/20 hover:text-[var(--green-l)] transition-all">
               <span>TW</span>
             </Link>
-            <Link href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--green-l)]/20 hover:text-[var(--green-l)] transition-all">
+            <Link href="#" aria-label="GitHub" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--green-l)]/20 hover:text-[var(--green-l)] transition-all">
               <span>GH</span>
             </Link>
-            <Link href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--green-l)]/20 hover:text-[var(--green-l)] transition-all">
+            <Link href="#" aria-label="WhatsApp" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--green-l)]/20 hover:text-[var(--green-l)] transition-all">
               <WhatsApp size={18} />
             </Link>
           </div>
         </div>
 
         <div>
-          <h4 className="text-white font-heading font-semibold mb-6">Services</h4>
-          <ul className="space-y-4 text-white/50 text-sm font-body">
+          <h2 className="text-white font-heading font-semibold mb-6 text-sm">Services</h2>
+          <ul className="space-y-4 text-white/60 text-sm font-body">
             <li><Link href="/services" className="hover:text-[var(--green-l)] transition-colors">Web & Mobile</Link></li>
             <li><Link href="/services" className="hover:text-[var(--green-l)] transition-colors">IA & Data</Link></li>
             <li><Link href="/services" className="hover:text-[var(--green-l)] transition-colors">Cybersécurité</Link></li>
@@ -40,8 +40,8 @@ const Footer = () => {
         </div>
 
         <div>
-          <h4 className="text-white font-heading font-semibold mb-6">Navigation</h4>
-          <ul className="space-y-4 text-white/50 text-sm font-body">
+          <h2 className="text-white font-heading font-semibold mb-6 text-sm">Navigation</h2>
+          <ul className="space-y-4 text-white/60 text-sm font-body">
             <li><Link href="/a-propos" className="hover:text-[var(--green-l)] transition-colors">À Propos</Link></li>
             <li><Link href="/realisations" className="hover:text-[var(--green-l)] transition-colors">Réalisations</Link></li>
             <li><Link href="/blog" className="hover:text-[var(--green-l)] transition-colors">Blog & News</Link></li>
@@ -51,8 +51,8 @@ const Footer = () => {
         </div>
 
         <div>
-          <h4 className="text-white font-heading font-semibold mb-6">Newsletter</h4>
-          <p className="text-white/50 text-sm mb-4 font-body">Restez informé de nos dernières innovations.</p>
+          <h2 className="text-white font-heading font-semibold mb-6 text-sm">Newsletter</h2>
+          <p className="text-white/60 text-sm mb-4 font-body">Restez informé de nos dernières innovations.</p>
           <form className="space-y-3">
             <input 
               type="email" 
@@ -64,7 +64,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="max-w-[1320px] mx-auto px-4 mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 relative z-10 text-white/30 text-[12px]">
+      <div className="max-w-[1320px] mx-auto px-4 mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 relative z-10 text-white/45 text-[12px]">
         <p>© 2024 Galsen Technologie. Tous droits réservés.</p>
         <div className="flex gap-6">
           <Link href="/legal" className="hover:text-white transition-colors">Mentions Légales</Link>

@@ -49,7 +49,7 @@ const ProcessTimeline = () => {
           <motion.h2 variants={fadeUp} custom={1} className="text-4xl md:text-5xl font-display font-bold text-white mb-4">
             Comment nous travaillons
           </motion.h2>
-          <motion.p variants={fadeUp} custom={2} className="text-white/40 font-body max-w-md mx-auto">
+          <motion.p variants={fadeUp} custom={2} className="text-white/60 font-body max-w-md mx-auto">
             Une méthodologie éprouvée pour des résultats prévisibles et de qualité.
           </motion.p>
         </motion.div>
@@ -87,10 +87,10 @@ const ProcessTimeline = () => {
                   </div>
                 </div>
 
-                <h4 className="text-base font-heading font-bold text-white mb-2 group-hover:text-[var(--green-l)] transition-colors">
+                <h3 className="text-base font-heading font-bold text-white mb-2 group-hover:text-[var(--green-l)] transition-colors">
                   {step.title}
-                </h4>
-                <p className="text-white/30 text-sm font-body leading-relaxed max-w-[180px] mx-auto">
+                </h3>
+                <p className="text-white/50 text-sm font-body leading-relaxed max-w-[180px] mx-auto">
                   {step.desc}
                 </p>
               </motion.div>
