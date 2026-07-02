@@ -36,8 +36,24 @@ interface TestimonialData {
   rating: number;
 }
 
+interface BlogPost {
+  slug: string;
+  title: string;
+  excerpt: string;
+  category: string;
+  imageUrl: string;
+  createdAt: string;
+}
+
+const fallbackBlogPosts = [
+  { slug: "futur-ia-afrique", title: "L'avenir de l'IA générative dans le secteur bancaire africain", excerpt: "Découvrez comment l'IA générative révolutionne le secteur bancaire en Afrique.", category: "IA & Data", imageUrl: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2065", createdAt: "" },
+  { slug: "cyber-menaces-2024", title: "Les 5 grandes menaces de cybersécurité en 2024", excerpt: "Les cyberattaques évoluent rapidement. Voici les menaces à surveiller.", category: "Cybersécurité", imageUrl: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070", createdAt: "" },
+  { slug: "nextjs-vs-react", title: "Pourquoi nous avons choisi Next.js 14 pour nos clients", excerpt: "Next.js 14 offre des performances inégalées pour le web moderne.", category: "Développement", imageUrl: "https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=2070", createdAt: "" },
+];
+
 export default function Home() {
   const [testimonials, setTestimonials] = useState<TestimonialData[] | null>(null);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
 
   useEffect(() => {
     fetch('/api/testimonials?published=true')
@@ -49,7 +65,18 @@ export default function Home() {
       .catch(() => setTestimonials(null));
   }, []);
 
+  useEffect(() => {
+    fetch('/api/posts')
+      .then(res => res.json())
+      .then(data => {
+        const published = data.filter((p: any) => p.published).slice(0, 3);
+        setBlogPosts(published.length > 0 ? published : fallbackBlogPosts);
+      })
+      .catch(() => setBlogPosts(fallbackBlogPosts));
+  }, []);
+
   const displayTestimonials = testimonials ?? fallbackTestimonials;
+  const displayBlogPosts: BlogPost[] = blogPosts.length > 0 ? blogPosts : fallbackBlogPosts;
 
   return (
     <main className="min-h-screen">
@@ -129,6 +156,64 @@ export default function Home() {
       <FeaturedProjects />
 
       <ProcessTimeline />
+
+      {/* ═══ Blog ═══ */}
+      <section className="py-28 relative overflow-hidden">
+        <div className="max-w-[1320px] mx-auto px-4">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6"
+          >
+            <div>
+              <motion.div variants={fadeUp} custom={0} className="section-label mb-6">Blog</motion.div>
+              <motion.h2 variants={fadeUp} custom={1} className="text-4xl md:text-5xl font-display font-bold text-white">
+                Derniers articles
+              </motion.h2>
+            </div>
+            <motion.div variants={fadeUp} custom={2}>
+              <Link href="/blog" className="btn-secondary text-[11px] py-2 px-6 flex items-center gap-2">
+                Voir tout <ArrowRight size={14} />
+              </Link>
+            </motion.div>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {displayBlogPosts.map((post, i) => (
+              <Link key={post.slug} href={`/blog/${post.slug}`}>
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  variants={fadeUp}
+                  custom={i}
+                  className="group glass-card overflow-hidden flex flex-col cursor-pointer h-full"
+                >
+                  <div className="aspect-[16/9] relative overflow-hidden">
+                    <img src={post.imageUrl} alt={post.title} className="object-cover w-full h-full opacity-60 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" />
+                    <div className="absolute top-3 left-3 text-[8px] font-mono tracking-widest text-black bg-[var(--green-l)] px-2 py-1 rounded">
+                      {post.category.toUpperCase()}
+                    </div>
+                  </div>
+                  <div className="p-5 flex flex-col flex-grow">
+                    <h3 className="text-base font-heading font-bold text-white mb-3 group-hover:text-[var(--green-l)] transition-colors line-clamp-2">
+                      {post.title}
+                    </h3>
+                    <p className="text-white/40 text-xs leading-relaxed mb-4 line-clamp-2 flex-grow">
+                      {post.excerpt}
+                    </p>
+                    <div className="flex items-center text-[10px] text-[var(--green-l)] font-mono uppercase tracking-widest gap-1.5">
+                      Lire l&apos;article <ArrowRight size={12} />
+                    </div>
+                  </div>
+                  <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-[var(--green-l)] via-[var(--gold)] to-[var(--green-l)] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                </motion.div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ═══ Testimonials ═══ */}
       <section className="py-28 relative overflow-hidden">
