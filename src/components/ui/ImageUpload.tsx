@@ -55,7 +55,7 @@ export default function ImageUpload({ value, onChange, label }: ImageUploadProps
 
   return (
     <div>
-      {label && <label className="block text-[11px] font-mono text-white/40 uppercase tracking-wider mb-2">{label}</label>}
+      {label && <label className="block text-[11px] font-mono text-white/60 uppercase tracking-wider mb-2">{label}</label>}
 
       {preview ? (
         <div className="relative rounded-xl overflow-hidden border border-white/10 group">
@@ -97,15 +97,15 @@ export default function ImageUpload({ value, onChange, label }: ImageUploadProps
           {uploading ? (
             <div className="flex flex-col items-center gap-2">
               <div className="w-8 h-8 border-2 border-[var(--green-l)] border-t-transparent rounded-full animate-spin" />
-              <p className="text-white/40 text-sm">Upload en cours...</p>
+              <p className="text-white/60 text-sm">Upload en cours...</p>
             </div>
           ) : (
             <div className="flex flex-col items-center gap-2">
-              <ImageIcon size={32} className="text-white/20" />
-              <p className="text-white/40 text-sm">
+              <ImageIcon size={32} className="text-white/45" />
+              <p className="text-white/60 text-sm">
                 Dépose une image ici ou <span className="text-[var(--green-l)]">parcours</span>
               </p>
-              <p className="text-white/20 text-[10px]">PNG, JPG, WebP</p>
+              <p className="text-white/45 text-[10px]">PNG, JPG, WebP</p>
             </div>
           )}
         </div>

@@ -64,7 +64,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="max-w-[1320px] mx-auto px-4 mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 relative z-10 text-white/45 text-[12px]">
+      <div className="max-w-[1320px] mx-auto px-4 mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 relative z-10 text-white/60 text-[12px]">
         <p>© 2024 Galsen Technologie. Tous droits réservés.</p>
         <div className="flex gap-6">
           <Link href="/legal" className="hover:text-white transition-colors">Mentions Légales</Link>

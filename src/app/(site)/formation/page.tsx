@@ -74,11 +74,11 @@ export default function FormationPage() {
               <div className="border-t border-white/5 pt-6 mt-auto">
                 <div className="flex justify-between items-end mb-6">
                   <div>
-                    <div className="text-[10px] font-mono text-white/40 mb-1">PROCHAINE SESSION</div>
+                    <div className="text-[10px] font-mono text-white/60 mb-1">PROCHAINE SESSION</div>
                     <div className="text-sm font-bold">15 Septembre 2024</div>
                   </div>
                   <div className="text-right">
-                    <div className="text-[10px] font-mono text-white/40 mb-1">TARIF</div>
+                    <div className="text-[10px] font-mono text-white/60 mb-1">TARIF</div>
                     <div className="text-lg font-bold" style={{ color: f.color }}>{f.price}</div>
                   </div>
                 </div>

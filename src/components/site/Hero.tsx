@@ -182,7 +182,7 @@ const Hero = () => {
             className="flex flex-wrap gap-2 justify-center lg:justify-start"
           >
             {['Next.js', 'Python', 'TensorFlow', 'AWS', 'React', 'Docker'].map((t) => (
-              <span key={t} className="text-[9px] font-mono text-white/45 bg-white/[0.03] border border-white/[0.06] px-3 py-1 rounded-full">
+              <span key={t} className="text-[9px] font-mono text-white/60 bg-white/[0.03] border border-white/[0.06] px-3 py-1 rounded-full">
                 {t}
               </span>
             ))}
@@ -266,7 +266,7 @@ const Hero = () => {
         transition={{ duration: 2, repeat: Infinity }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-        <span className="text-[9px] font-mono text-white/40 uppercase tracking-[3px]">Scroll</span>
+        <span className="text-[9px] font-mono text-white/60 uppercase tracking-[3px]">Scroll</span>
         <div className="w-5 h-8 border border-white/15 rounded-full flex justify-center pt-1.5">
           <motion.div
             animate={{ y: [0, 8, 0], opacity: [1, 0, 1] }}

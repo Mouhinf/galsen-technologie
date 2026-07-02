@@ -105,7 +105,7 @@ const ServicesGrid = () => {
               >
                 <div className="flex justify-between items-start mb-8">
                   <div className="text-3xl">{service.icon}</div>
-                  <div className="text-[9px] font-mono tracking-[2px] text-white/35 uppercase border border-white/[0.06] px-3 py-1 rounded-full">{service.badge}</div>
+                  <div className="text-[9px] font-mono tracking-[2px] text-white/55 uppercase border border-white/[0.06] px-3 py-1 rounded-full">{service.badge}</div>
                 </div>
                 <h3 className="text-xl font-heading font-bold text-white mb-3">{service.title}</h3>
                 <p className="text-white/60 text-sm font-body leading-relaxed mb-8">{service.desc}</p>
@@ -149,7 +149,7 @@ const ServicesGrid = () => {
                       >
                         {ICON_MAP[service.icon] || '🔧'}
                       </div>
-                      <div className="text-[9px] font-mono tracking-[2px] text-white/35 uppercase border border-white/[0.06] px-3 py-1 rounded-full group-hover:text-white/50 group-hover:border-white/15 transition-colors">
+                      <div className="text-[9px] font-mono tracking-[2px] text-white/55 uppercase border border-white/[0.06] px-3 py-1 rounded-full group-hover:text-white/70 group-hover:border-white/15 transition-colors">
                         {service.icon}
                       </div>
                     </div>

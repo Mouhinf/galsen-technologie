@@ -92,7 +92,7 @@ export default function RealisationsPage() {
             <motion.h1 variants={fadeUp} custom={1} className="text-5xl md:text-6xl font-display font-bold text-white mb-4">
               Nos Réalisations
             </motion.h1>
-            <motion.p variants={fadeUp} custom={2} className="text-white/40 font-body max-w-xl text-lg">
+            <motion.p variants={fadeUp} custom={2} className="text-white/60 font-body max-w-xl text-lg">
               Découvrez nos projets qui transforment le paysage technologique africain.
             </motion.p>
           </motion.div>
@@ -103,7 +103,7 @@ export default function RealisationsPage() {
             transition={{ delay: 0.3 }}
             className="flex flex-wrap items-center gap-3"
           >
-            <Filter size={14} className="text-white/30 mr-1" />
+            <Filter size={14} className="text-white/50 mr-1" />
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -111,13 +111,13 @@ export default function RealisationsPage() {
                 className={`px-5 py-2 rounded-full text-xs font-mono tracking-widest uppercase transition-all duration-300 ${
                   activeFilter === cat
                     ? 'bg-[var(--green-l)] text-black font-bold shadow-[0_0_20px_rgba(34,197,94,0.3)]'
-                    : 'border border-white/10 text-white/40 hover:text-white hover:border-white/30 hover:bg-white/[0.03]'
+                    : 'border border-white/10 text-white/60 hover:text-white hover:border-white/30 hover:bg-white/[0.03]'
                 }`}
               >
                 {cat}
               </button>
             ))}
-            <span className="text-[11px] font-mono text-white/20 ml-auto hidden md:block">
+            <span className="text-[11px] font-mono text-white/45 ml-auto hidden md:block">
               {filtered.length} projet{filtered.length !== 1 ? 's' : ''}
             </span>
           </motion.div>
@@ -170,7 +170,7 @@ export default function RealisationsPage() {
                           <h3 className="text-xl font-heading font-bold text-white mb-1.5 group-hover:text-[var(--green-l)] transition-colors">
                             {p.title}
                           </h3>
-                          <div className="flex items-center gap-3 text-[10px] font-mono text-white/40">
+                          <div className="flex items-center gap-3 text-[10px] font-mono text-white/60">
                             {p.client && (
                               <span className="flex items-center gap-1">
                                 <Briefcase size={10} />
@@ -188,7 +188,7 @@ export default function RealisationsPage() {
                             {techs.map((t: string) => (
                               <span
                                 key={t}
-                                className="text-[9px] font-mono text-white/30 bg-white/[0.03] border border-white/[0.05] px-2 py-0.5 rounded group-hover:border-white/10 group-hover:text-white/50 transition-colors"
+                                className="text-[9px] font-mono text-white/55 bg-white/[0.03] border border-white/[0.05] px-2 py-0.5 rounded group-hover:border-white/10 group-hover:text-white/70 transition-colors"
                               >
                                 {t}
                               </span>
@@ -207,7 +207,7 @@ export default function RealisationsPage() {
 
           {filtered.length === 0 && !loading && (
             <div className="text-center py-20">
-              <p className="text-white/30 font-mono text-sm">Aucun projet trouvé dans cette catégorie.</p>
+              <p className="text-white/55 font-mono text-sm">Aucun projet trouvé dans cette catégorie.</p>
             </div>
           )}
         </div>

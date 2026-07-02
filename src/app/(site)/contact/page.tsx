@@ -68,7 +68,7 @@ const ContactPage = () => {
                   <div key={i} className="flex gap-6 items-start">
                     <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-xl shrink-0">{item.icon}</div>
                     <div>
-                      <div className="text-white/30 text-[10px] uppercase tracking-widest font-mono mb-1">{item.label}</div>
+                      <div className="text-white/50 text-[10px] uppercase tracking-widest font-mono mb-1">{item.label}</div>
                       <div className="text-white font-heading font-medium">{item.value}</div>
                     </div>
                   </div>

@@ -86,7 +86,7 @@ export default function Home() {
 
       {/* ═══ Partners Marquee ═══ */}
       <section className="py-10 border-y border-white/5 bg-white/[0.01] overflow-hidden">
-        <p className="text-center text-[9px] font-mono tracking-[5px] uppercase text-white/40 mb-8">
+        <p className="text-center text-[9px] font-mono tracking-[5px] uppercase text-white/60 mb-8">
           Ils nous font confiance
         </p>
         <div className="relative">
@@ -96,7 +96,7 @@ export default function Home() {
             {partners.map((name, i) => (
               <span
                 key={i}
-                className="inline-block mx-12 text-xl font-display font-black tracking-wider text-white/30 hover:text-[var(--green-l)]/40 transition-colors duration-500 cursor-default select-none"
+                className="inline-block mx-12 text-xl font-display font-black tracking-wider text-white/55 hover:text-[var(--green-l)]/60 transition-colors duration-500 cursor-default select-none"
               >
                 {name}
               </span>

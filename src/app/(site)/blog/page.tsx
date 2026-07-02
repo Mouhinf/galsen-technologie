@@ -87,7 +87,7 @@ export default function BlogPage() {
           <motion.div initial="hidden" animate="visible">
             <motion.div variants={fadeUp} custom={0} className="section-label mb-6">Actualités</motion.div>
             <motion.h1 variants={fadeUp} custom={1} className="text-5xl md:text-6xl font-display font-bold text-white mb-4">Le Blog Galsen</motion.h1>
-            <motion.p variants={fadeUp} custom={2} className="text-white/40 font-body text-lg max-w-xl">
+            <motion.p variants={fadeUp} custom={2} className="text-white/60 font-body text-lg max-w-xl">
               Actualités tech, tutoriels, études de cas et réflexions sur l&apos;innovation numérique au Sénégal et en Afrique.
             </motion.p>
           </motion.div>
@@ -98,7 +98,7 @@ export default function BlogPage() {
             transition={{ delay: 0.3 }}
             className="flex flex-wrap items-center gap-3 mt-12"
           >
-            <Filter size={14} className="text-white/30 mr-1" />
+            <Filter size={14} className="text-white/50 mr-1" />
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -106,13 +106,13 @@ export default function BlogPage() {
                 className={`px-5 py-2 rounded-full text-xs font-mono tracking-widest uppercase transition-all duration-300 ${
                   activeFilter === cat
                     ? 'bg-[var(--green-l)] text-black font-bold shadow-[0_0_20px_rgba(34,197,94,0.3)]'
-                    : 'border border-white/10 text-white/40 hover:text-white hover:border-white/30 hover:bg-white/[0.03]'
+                    : 'border border-white/10 text-white/60 hover:text-white hover:border-white/30 hover:bg-white/[0.03]'
                 }`}
               >
                 {cat}
               </button>
             ))}
-            <span className="text-[11px] font-mono text-white/20 ml-auto hidden md:block">
+            <span className="text-[11px] font-mono text-white/45 ml-auto hidden md:block">
               {filtered.length} article{filtered.length !== 1 ? 's' : ''}
             </span>
           </motion.div>
@@ -146,11 +146,11 @@ export default function BlogPage() {
                       </div>
                     </div>
                     <div className="p-6 flex flex-col flex-grow">
-                      <div className="text-white/40 text-[11px] font-mono mb-3">{post.date}</div>
+                      <div className="text-white/60 text-[11px] font-mono mb-3">{post.date}</div>
                       <h3 className="text-xl font-heading font-bold text-white mb-4 group-hover:text-[var(--green-l)] transition-colors line-clamp-2">
                         {post.title}
                       </h3>
-                      {post.excerpt && <p className="text-white/40 text-sm mb-4 line-clamp-2">{post.excerpt}</p>}
+                      {post.excerpt && <p className="text-white/60 text-sm mb-4 line-clamp-2">{post.excerpt}</p>}
                       <div className="mt-auto flex items-center text-[11px] text-[var(--green-l)] font-mono uppercase tracking-widest gap-2">
                         Lire l&apos;article
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -165,7 +165,7 @@ export default function BlogPage() {
 
           {filtered.length === 0 && !loading && (
             <div className="text-center py-20">
-              <p className="text-white/30 font-mono text-sm">Aucun article trouvé dans cette catégorie.</p>
+              <p className="text-white/55 font-mono text-sm">Aucun article trouvé dans cette catégorie.</p>
             </div>
           )}
         </div>

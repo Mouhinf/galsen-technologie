@@ -102,7 +102,7 @@ export default function AproposPage() {
                 </div>
               </div>
               <div className="text-center lg:text-left mt-6">
-                <div className="text-white/40 text-sm font-body italic max-w-sm mx-auto lg:mx-0">
+                <div className="text-white/60 text-sm font-body italic max-w-sm mx-auto lg:mx-0">
                   Data Scientist | Développeur Full Stack | Spécialiste en Intelligence Artificielle
                 </div>
               </div>
@@ -174,7 +174,7 @@ export default function AproposPage() {
                 <h3 className="text-xl font-heading font-bold text-white mb-3 group-hover:text-[var(--green-l)] transition-colors">
                   {card.title}
                 </h3>
-                <p className="text-white/40 text-sm font-body leading-relaxed">
+                <p className="text-white/60 text-sm font-body leading-relaxed">
                   {card.desc}
                 </p>
                 <div className="absolute -bottom-10 -right-10 w-32 h-32 rounded-full bg-[var(--green-l)]/5 blur-[60px] group-hover:opacity-100 opacity-0 transition-opacity duration-700" />
