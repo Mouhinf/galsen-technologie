@@ -1,9 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, BrainCircuit, Shield, Cloud, Code2, Cpu, Wifi, Zap, Database } from 'lucide-react';
-import Image from 'next/image';
+import { motion } from 'framer-motion';
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
 /* ─── Typing Effect ─── */
@@ -48,18 +47,6 @@ const TypingText = () => {
     </span>
   );
 };
-
-/* ─── Orbiting Icons ─── */
-const orbitIcons = [
-  { icon: BrainCircuit, delay: 0, color: '#22C55E' },
-  { icon: Shield, delay: 1, color: '#C8001E' },
-  { icon: Cloud, delay: 2, color: '#00B8FF' },
-  { icon: Code2, delay: 3, color: '#F5D020' },
-  { icon: Cpu, delay: 4, color: '#8B5CF6' },
-  { icon: Wifi, delay: 5, color: '#22C55E' },
-  { icon: Zap, delay: 6, color: '#FDE047' },
-  { icon: Database, delay: 7, color: '#00B8FF' },
-];
 
 /* ─── Neural Network SVG ─── */
 const NeuralNetwork = () => (
@@ -118,149 +105,72 @@ const Hero = () => {
       {/* Neural network behind everything */}
       <NeuralNetwork />
 
-      <div className="max-w-[1320px] mx-auto px-4 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+      <div className="max-w-[1000px] mx-auto px-4 w-full relative z-10 text-center">
 
-        {/* ─── Left Column: Text ─── */}
-        <div className="lg:col-span-7 text-center lg:text-left">
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6 }}
+          className="section-label mb-8 justify-center"
+        >
+          <span className="inline-block w-2 h-2 rounded-full bg-[var(--green-l)] mr-2 animate-pulse" />
+          Entreprise informatique
+        </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            className="section-label mb-8 justify-center lg:justify-start"
-          >
-            <span className="inline-block w-2 h-2 rounded-full bg-[var(--green-l)] mr-2 animate-pulse" />
-            Dakar, Sénégal
-          </motion.div>
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.15 }}
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black leading-[1.05] mb-8"
+        >
+          <span className="block text-white/90">Experts en</span>
+          <span className="block h-[1.15em] overflow-hidden">
+            <TypingText />
+          </span>
+          <span className="block text-white/60 font-light text-[0.55em] mt-2">
+            au service de l&apos;Afrique.
+          </span>
+        </motion.h1>
 
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.15 }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black leading-[1.05] mb-8"
-          >
-            <span className="block text-white/90">Experts en</span>
-            <span className="block h-[1.15em] overflow-hidden">
-              <TypingText />
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.35 }}
+          className="text-white/45 text-base md:text-lg font-body max-w-lg mb-16 leading-relaxed mx-auto"
+        >
+          Galsen Technologie propulse votre entreprise vers le futur numérique.
+          IA, cybersécurité, développement — nous construisons l&apos;Afrique tech de demain.
+        </motion.p>
+
+        {/* CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="flex flex-wrap gap-4 justify-center mb-10"
+        >
+          <Link href="/services" className="btn-primary flex items-center gap-2 group">
+            Découvrir nos services
+            <ArrowRight className="group-hover:translate-x-1 transition-transform" size={18} />
+          </Link>
+          <Link href="/realisations" className="btn-secondary">
+            Voir nos réalisations
+          </Link>
+        </motion.div>
+
+        {/* Tech badges */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2 }}
+          className="flex flex-wrap gap-2 justify-center"
+        >
+          {['Next.js', 'Python', 'TensorFlow', 'AWS', 'React', 'Docker'].map((t) => (
+            <span key={t} className="text-[9px] font-mono text-white/25 bg-white/[0.03] border border-white/[0.06] px-3 py-1 rounded-full">
+              {t}
             </span>
-            <span className="block text-white/60 font-light text-[0.55em] mt-2">
-              au service de l&apos;Afrique.
-            </span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.35 }}
-            className="text-white/45 text-base md:text-lg font-body max-w-lg mb-16 leading-relaxed mx-auto lg:mx-0"
-          >
-            Galsen Technologie propulse votre entreprise vers le futur numérique.
-            IA, cybersécurité, développement — nous construisons l&apos;Afrique tech de demain.
-          </motion.p>
-
-          {/* CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="flex flex-wrap gap-4 justify-center lg:justify-start mb-10"
-          >
-            <Link href="/services" className="btn-primary flex items-center gap-2 group">
-              Découvrir nos services
-              <ArrowRight className="group-hover:translate-x-1 transition-transform" size={18} />
-            </Link>
-            <Link href="/realisations" className="btn-secondary">
-              Voir nos réalisations
-            </Link>
-          </motion.div>
-
-          {/* Tech badges */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2 }}
-            className="flex flex-wrap gap-2 justify-center lg:justify-start"
-          >
-            {['Next.js', 'Python', 'TensorFlow', 'AWS', 'React', 'Docker'].map((t) => (
-              <span key={t} className="text-[9px] font-mono text-white/25 bg-white/[0.03] border border-white/[0.06] px-3 py-1 rounded-full">
-                {t}
-              </span>
-            ))}
-          </motion.div>
-        </div>
-
-        {/* ─── Right Column: Logo + Orbiting Icons ─── */}
-        <div className="lg:col-span-5 flex justify-center items-center relative min-h-[400px] lg:min-h-[550px] lg:-translate-y-[80px]">
-
-          {/* Orbit ring */}
-          <div className="absolute w-[320px] h-[320px] md:w-[380px] md:h-[380px] rounded-full border border-white/[0.04]" />
-          <div className="absolute w-[240px] h-[240px] md:w-[280px] md:h-[280px] rounded-full border border-dashed border-white/[0.03]" style={{ animation: 'border-spin 20s linear infinite' }} />
-
-          {/* Orbiting tech icons */}
-          {orbitIcons.map((item, i) => {
-            const angle = (i / orbitIcons.length) * 360;
-            return (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1 + i * 0.1 }}
-                className="absolute w-9 h-9 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center justify-center backdrop-blur-sm"
-                style={{
-                  ['--orbit-radius' as string]: '170px',
-                  animation: `orbit ${16 + i * 2}s linear infinite`,
-                  animationDelay: `${-i * 2}s`,
-                  color: item.color,
-                }}
-              >
-                <item.icon size={16} />
-              </motion.div>
-            );
-          })}
-
-          {/* Center logo */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.3 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
-            className="relative z-10"
-          >
-            <motion.div
-              animate={{ y: [0, -12, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-            >
-              <Image
-                src="/logo-galsen.png"
-                alt="Galsen Technologie"
-                width={525}
-                height={475}
-                className="w-[200px] md:w-[240px] lg:w-[260px] h-auto drop-shadow-[0_0_60px_rgba(34,197,94,0.25)]"
-                priority
-              />
-            </motion.div>
-
-            {/* Pulse rings behind logo */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              {[0, 1, 2].map((i) => (
-                <div
-                  key={i}
-                  className="absolute rounded-full border border-[var(--green-l)]/20"
-                  style={{
-                    width: 160 + i * 60,
-                    height: 160 + i * 60,
-                    animation: `pulse-ring ${3 + i}s ease-out infinite`,
-                    animationDelay: `${i * 0.8}s`,
-                  }}
-                />
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Multi-color ambient glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] bg-[#22C55E]/10 blur-[100px] rounded-full pointer-events-none" style={{ animation: 'glow-pulse 4s ease-in-out infinite' }} />
-          <div className="absolute top-1/3 left-1/3 w-[120px] h-[120px] bg-[#00B8FF]/8 blur-[80px] rounded-full pointer-events-none" style={{ animation: 'glow-pulse 5s ease-in-out infinite 1s' }} />
-          <div className="absolute bottom-1/3 right-1/3 w-[100px] h-[100px] bg-[#F5D020]/6 blur-[60px] rounded-full pointer-events-none" style={{ animation: 'glow-pulse 6s ease-in-out infinite 2s' }} />
-        </div>
+          ))}
+        </motion.div>
       </div>
 
       {/* Scroll indicator */}
