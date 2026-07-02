@@ -1,28 +1,38 @@
-'use client';
-
-import React, { useState } from 'react';
-import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { Eye, EyeOff } from 'lucide-react';
+import React from 'react';
 import Logo from '@/components/ui/Logo';
+import crypto from 'crypto';
 
-export default function LoginPage(props: { searchParams?: { error?: string } }) {
-  const router = useRouter();
-  const [showPassword, setShowPassword] = useState(false);
-
+export default async function LoginPage(props: { searchParams?: { error?: string } }) {
   const errorMessage = props?.searchParams?.error
     ? 'Email ou mot de passe incorrect'
     : '';
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    await signIn('credentials', {
-      email: (form.elements as any).email.value,
-      password: (form.elements as any).password.value,
-      callbackUrl: '/admin',
+  const baseUrl = process.env.NEXTAUTH_URL || 'https://galsen-technologie.vercel.app';
+  let csrfToken = '';
+
+  try {
+    const res = await fetch(`${baseUrl}/api/auth/csrf`, {
+      cache: 'no-store',
+      headers: { Accept: 'application/json' },
     });
-  };
+    const data = await res.json();
+    csrfToken = data.csrfToken ?? '';
+
+    if (csrfToken) {
+      const secret = process.env.AUTH_SECRET || 'fallback';
+      const hash = crypto.createHmac('sha256', secret).update(csrfToken).digest('hex');
+      const cookieValue = `${csrfToken}|${hash}`;
+
+      const { cookies } = await import('next/headers');
+      const cookieStore = cookies();
+      cookieStore.set('__Host-authjs.csrf-token', cookieValue, {
+        path: '/',
+        httpOnly: true,
+        secure: true,
+        sameSite: 'lax',
+      });
+    }
+  } catch {}
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center relative overflow-hidden">
@@ -35,7 +45,10 @@ export default function LoginPage(props: { searchParams?: { error?: string } }) 
           <div className="text-[11px] font-mono tracking-widest text-white/50 uppercase">Accès réservé au personnel</div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form action="/api/auth/callback/credentials" method="POST" className="space-y-6">
+          <input type="hidden" name="csrfToken" value={csrfToken} />
+          <input type="hidden" name="callbackUrl" value="/admin" />
+
           <div className="space-y-2">
             <label className="text-[10px] font-mono text-white/50 uppercase">Email</label>
             <input
@@ -49,22 +62,13 @@ export default function LoginPage(props: { searchParams?: { error?: string } }) 
           
           <div className="space-y-2">
             <label className="text-[10px] font-mono text-white/50 uppercase">Mot de passe</label>
-            <div className="relative">
-              <input
-                name="password"
-                type={showPassword ? 'text' : 'password'}
-                required
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 pr-10 focus:border-[var(--green-l)] outline-none transition-colors"
-                placeholder="••••••••"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white transition-colors"
-              >
-                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-              </button>
-            </div>
+            <input
+              name="password"
+              type="password"
+              required
+              className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:border-[var(--green-l)] outline-none transition-colors"
+              placeholder="••••••••"
+            />
           </div>
 
           {errorMessage && (
