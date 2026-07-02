@@ -1,13 +1,37 @@
-import React from 'react';
-import { authenticate } from '@/lib/loginAction';
+'use client';
+
+import React, { useState } from 'react';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { Eye, EyeOff } from 'lucide-react';
 import Logo from '@/components/ui/Logo';
 
 export default function LoginPage(props: { searchParams?: { error?: string } }) {
-  const error = props?.searchParams?.error;
-  const errorMessages: Record<string, string> = {
-    '1': 'Email ou mot de passe incorrect',
-    '2': 'Une erreur est survenue',
+  const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState(props?.searchParams?.error ? 'Email ou mot de passe incorrect' : '');
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+
+    const result = await signIn('credentials', {
+      email,
+      password,
+      redirect: false,
+    });
+
+    if (result?.error) {
+      setError('Email ou mot de passe incorrect');
+      setLoading(false);
+    } else {
+      router.push('/admin');
+      router.refresh();
+    }
   };
 
   return (
@@ -21,12 +45,13 @@ export default function LoginPage(props: { searchParams?: { error?: string } }) 
           <div className="text-[11px] font-mono tracking-widest text-white/50 uppercase">Accès réservé au personnel</div>
         </div>
 
-        <form action={authenticate} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
             <label className="text-[10px] font-mono text-white/50 uppercase">Email</label>
             <input
-              name="email"
               type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
               required
               className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:border-[var(--green-l)] outline-none transition-colors"
               placeholder="admin@galsen.sn"
@@ -37,23 +62,33 @@ export default function LoginPage(props: { searchParams?: { error?: string } }) 
             <label className="text-[10px] font-mono text-white/50 uppercase">Mot de passe</label>
             <div className="relative">
               <input
-                name="password"
-                type="password"
+                type={showPassword ? 'text' : 'password'}
+                value={password}
+                onChange={e => setPassword(e.target.value)}
                 required
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:border-[var(--green-l)] outline-none transition-colors"
+                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 pr-10 focus:border-[var(--green-l)] outline-none transition-colors"
                 placeholder="••••••••"
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white transition-colors"
+              >
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
             </div>
           </div>
 
           {error && (
-            <div className="text-red-400 text-sm text-center font-mono bg-red-400/10 py-2 rounded-lg">
-              {errorMessages[error] || 'Erreur inconnue'}
-            </div>
+            <div className="text-red-400 text-sm text-center font-mono bg-red-400/10 py-2 rounded-lg">{error}</div>
           )}
 
-          <button type="submit" className="btn-primary w-full py-4 text-xs">
-            Se connecter
+          <button type="submit" disabled={loading} className="btn-primary w-full py-4 text-xs flex items-center justify-center gap-2">
+            {loading ? (
+              <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            ) : (
+              'Se connecter'
+            )}
           </button>
         </form>
       </div>
