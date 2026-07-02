@@ -37,7 +37,7 @@ export default function AproposPage() {
               Pionniers de la tech en Afrique de l&apos;Ouest.
             </motion.h1>
             <motion.div variants={fadeUp} custom={2} className="space-y-6 text-white/50 text-lg font-body">
-              <p>Fondée en 2019 à Dakar, Galsen Technologie est née d&apos;une conviction forte : l&apos;Afrique a le talent et le potentiel pour être un acteur majeur de l&apos;innovation technologique mondiale.</p>
+              <p>Fondée en 2026 à Dakar, Galsen Technologie est née d&apos;une conviction forte : l&apos;Afrique a le talent et le potentiel pour être un acteur majeur de l&apos;innovation technologique mondiale.</p>
               <p>Nous ne nous contentons pas d&apos;utiliser la technologie, nous la façonnons pour résoudre des défis locaux et internationaux, en mettant l&apos;accent sur l&apos;excellence, l&apos;éthique et l&apos;impact.</p>
             </motion.div>
             <motion.div variants={fadeUp} custom={3} className="grid grid-cols-2 gap-8 mt-12 pt-12 border-t border-white/5">
@@ -58,7 +58,7 @@ export default function AproposPage() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="relative aspect-square lg:aspect-auto lg:h-[600px] glass-card overflow-hidden"
           >
-            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070" className="object-cover w-full h-full opacity-60 grayscale" alt="Équipe Galsen Technologie" />
+            <img src="logo-galsen.png" className="object-cover w-full h-full opacity-60 grayscale" alt="Équipe Galsen Technologie" />
             <div className="absolute inset-0 bg-[var(--green-l)]/10 mix-blend-overlay" />
           </motion.div>
         </div>
