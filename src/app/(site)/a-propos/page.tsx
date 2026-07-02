@@ -91,7 +91,7 @@ export default function AproposPage() {
             >
               <div className="relative w-72 h-72 lg:w-full lg:aspect-square max-w-sm mx-auto lg:mx-0 rounded-2xl overflow-hidden glass-card group">
                 <img
-                  src="mouh.png"
+                  src="/mouh.png"
                   alt="Mouhamed Sow - Fondateur & CEO de Galsen Technologie"
                   className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700"
                 />
