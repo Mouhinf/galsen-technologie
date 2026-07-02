@@ -1,38 +1,54 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { Eye, EyeOff } from 'lucide-react';
 import Logo from '@/components/ui/Logo';
-import crypto from 'crypto';
 
-export default async function LoginPage(props: { searchParams?: { error?: string } }) {
-  const errorMessage = props?.searchParams?.error
-    ? 'Email ou mot de passe incorrect'
-    : '';
+export default function LoginPage() {
+  const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const baseUrl = process.env.NEXTAUTH_URL || 'https://galsen-technologie.vercel.app';
-  let csrfToken = '';
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
 
-  try {
-    const res = await fetch(`${baseUrl}/api/auth/csrf`, {
-      cache: 'no-store',
-      headers: { Accept: 'application/json' },
-    });
-    const data = await res.json();
-    csrfToken = data.csrfToken ?? '';
+    const form = e.currentTarget;
+    const email = (form.elements as any).email.value;
+    const password = (form.elements as any).password.value;
 
-    if (csrfToken) {
-      const secret = process.env.AUTH_SECRET || 'fallback';
-      const hash = crypto.createHmac('sha256', secret).update(csrfToken).digest('hex');
-      const cookieValue = `${csrfToken}|${hash}`;
-
-      const { cookies } = await import('next/headers');
-      const cookieStore = cookies();
-      cookieStore.set('__Host-authjs.csrf-token', cookieValue, {
-        path: '/',
-        httpOnly: true,
-        secure: true,
-        sameSite: 'lax',
+    try {
+      // Step 1: Get CSRF token
+      const csrfRes = await fetch('/api/auth/csrf', {
+        credentials: 'include',
+        headers: { Accept: 'application/json' },
       });
+      if (!csrfRes.ok) throw new Error('CSRF failed');
+      const { csrfToken } = await csrfRes.json();
+      if (!csrfToken) throw new Error('No CSRF token');
+
+      // Step 2: Login
+      const loginRes = await fetch('/api/auth/callback/credentials', {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ email, password, csrfToken, callbackUrl: '/admin' }),
+      });
+
+      if (loginRes.redirected) {
+        window.location.href = loginRes.url;
+      } else {
+        router.push('/admin');
+        router.refresh();
+      }
+    } catch (err) {
+      setError('Erreur de connexion. Vérifie tes identifiants.');
+      setLoading(false);
     }
-  } catch {}
+  };
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center relative overflow-hidden">
@@ -45,10 +61,7 @@ export default async function LoginPage(props: { searchParams?: { error?: string
           <div className="text-[11px] font-mono tracking-widest text-white/50 uppercase">Accès réservé au personnel</div>
         </div>
 
-        <form action="/api/auth/callback/credentials" method="POST" className="space-y-6">
-          <input type="hidden" name="csrfToken" value={csrfToken} />
-          <input type="hidden" name="callbackUrl" value="/admin" />
-
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
             <label className="text-[10px] font-mono text-white/50 uppercase">Email</label>
             <input
@@ -62,21 +75,34 @@ export default async function LoginPage(props: { searchParams?: { error?: string
           
           <div className="space-y-2">
             <label className="text-[10px] font-mono text-white/50 uppercase">Mot de passe</label>
-            <input
-              name="password"
-              type="password"
-              required
-              className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:border-[var(--green-l)] outline-none transition-colors"
-              placeholder="••••••••"
-            />
+            <div className="relative">
+              <input
+                name="password"
+                type={showPassword ? 'text' : 'password'}
+                required
+                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 pr-10 focus:border-[var(--green-l)] outline-none transition-colors"
+                placeholder="••••••••"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white transition-colors"
+              >
+                {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
           </div>
 
-          {errorMessage && (
-            <div className="text-red-400 text-sm text-center font-mono bg-red-400/10 py-2 rounded-lg">{errorMessage}</div>
+          {error && (
+            <div className="text-red-400 text-sm text-center font-mono bg-red-400/10 py-2 rounded-lg">{error}</div>
           )}
 
-          <button type="submit" className="btn-primary w-full py-4 text-xs">
-            Se connecter
+          <button type="submit" disabled={loading} className="btn-primary w-full py-4 text-xs flex items-center justify-center gap-2">
+            {loading ? (
+              <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+            ) : (
+              'Se connecter'
+            )}
           </button>
         </form>
       </div>
