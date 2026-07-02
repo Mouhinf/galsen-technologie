@@ -1,12 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Eye, EyeOff } from 'lucide-react';
 import Logo from '@/components/ui/Logo';
 
 export default function LoginPage() {
-  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -21,16 +19,13 @@ export default function LoginPage() {
     const password = (form.elements as any).password.value;
 
     try {
-      // Step 1: Get CSRF token
       const csrfRes = await fetch('/api/auth/csrf', {
         credentials: 'include',
         headers: { Accept: 'application/json' },
       });
-      if (!csrfRes.ok) throw new Error('CSRF failed');
       const { csrfToken } = await csrfRes.json();
       if (!csrfToken) throw new Error('No CSRF token');
 
-      // Step 2: Login
       const loginRes = await fetch('/api/auth/callback/credentials', {
         method: 'POST',
         credentials: 'include',
@@ -38,14 +33,14 @@ export default function LoginPage() {
         body: new URLSearchParams({ email, password, csrfToken, callbackUrl: '/admin' }),
       });
 
-      if (loginRes.redirected) {
-        window.location.href = loginRes.url;
+      if (loginRes.url?.includes('error=')) {
+        setError('Email ou mot de passe incorrect.');
+        setLoading(false);
       } else {
-        router.push('/admin');
-        router.refresh();
+        window.location.href = '/admin';
       }
-    } catch (err) {
-      setError('Erreur de connexion. Vérifie tes identifiants.');
+    } catch {
+      setError('Erreur réseau. Vérifie ta connexion.');
       setLoading(false);
     }
   };
