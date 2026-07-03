@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
@@ -30,14 +29,6 @@ const ICON_MAP: Record<string, string> = {
   Zap: '⚡',
 };
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({
-    opacity: 1, y: 0,
-    transition: { duration: 0.6, delay: i * 0.08, ease: [0.25, 0.46, 0.45, 0.94] },
-  }),
-};
-
 const ServicesGrid = () => {
   const [services, setServices] = useState<ServiceData[]>([]);
   const [loading, setLoading] = useState(true);
@@ -59,22 +50,17 @@ const ServicesGrid = () => {
   return (
     <section className="py-28 relative overflow-hidden" id="services">
       <div className="max-w-[1320px] mx-auto px-4">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
-          className="mb-16"
-        >
-          <motion.div variants={fadeUp} custom={0} className="section-label mb-6">
+        <div className="mb-16">
+          <div className="section-label mb-6">
             Nos Services
-          </motion.div>
-          <motion.h2 variants={fadeUp} custom={1} className="text-4xl md:text-5xl font-display font-bold text-white mb-4">
+          </div>
+          <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">
             Ce que nous faisons
-          </motion.h2>
-          <motion.p variants={fadeUp} custom={2} className="text-white/60 font-body max-w-xl">
+          </h2>
+          <p className="text-white/60 font-body max-w-xl">
             Des solutions technologiques de pointe adaptées au marché africain et international.
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -94,13 +80,8 @@ const ServicesGrid = () => {
               { title: 'IA & Data', desc: 'ML, NLP, automatisation pour booster votre productivité.', icon: '🧠', color: '#F5D020', badge: 'INTELLIGENCE ARTIFICIELLE' },
               { title: 'Cybersécurité', desc: 'Audit, Pentest, SIEM. Protection de vos actifs numériques.', icon: '🛡️', color: '#C8001E', badge: 'SÉCURITÉ' },
             ].map((service, i) => (
-              <motion.div
+              <div
                 key={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUp}
-                custom={i}
                 className="relative p-8 rounded-2xl group cursor-pointer overflow-hidden bg-white/[0.02] border border-white/[0.06] hover:border-transparent transition-all duration-500"
               >
                 <div className="flex justify-between items-start mb-8">
@@ -109,7 +90,7 @@ const ServicesGrid = () => {
                 </div>
                 <h3 className="text-xl font-heading font-bold text-white mb-3">{service.title}</h3>
                 <p className="text-white/60 text-sm font-body leading-relaxed mb-8">{service.desc}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         ) : (

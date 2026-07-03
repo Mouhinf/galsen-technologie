@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -15,14 +14,6 @@ interface ProjectData {
   techStack: string;
   imageUrl: string;
 }
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({
-    opacity: 1, y: 0,
-    transition: { duration: 0.6, delay: i * 0.1, ease: [0.25, 0.46, 0.45, 0.94] },
-  }),
-};
 
 const fallbackProjects = [
   { title: 'AI Health Monitor', slug: 'ai-health-monitor', category: 'IA & DATA', tech: ['Python', 'TensorFlow', 'FastAPI'], image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop' },
@@ -57,34 +48,24 @@ export default function FeaturedProjects() {
   return (
     <section className="py-28 relative">
       <div className="max-w-[1320px] mx-auto px-4">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6"
-        >
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
           <div>
-            <motion.div variants={fadeUp} custom={0} className="section-label mb-6">Réalisations</motion.div>
-            <motion.h2 variants={fadeUp} custom={1} className="text-4xl md:text-5xl font-display font-bold text-white">
+            <div className="section-label mb-6">Réalisations</div>
+            <h2 className="text-4xl md:text-5xl font-display font-bold text-white">
               Nos projets phares
-            </motion.h2>
+            </h2>
           </div>
-          <motion.div variants={fadeUp} custom={2}>
+          <div>
             <Link href="/realisations" className="btn-secondary text-[11px] py-2 px-6 flex items-center gap-2">
               Voir tout <ArrowRight size={14} />
             </Link>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {display.map((project, i) => (
             <Link key={i} href={`/realisations/${project.slug}`}>
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUp}
-                custom={i}
+              <div
                 className="group relative overflow-hidden rounded-2xl glass-card cursor-pointer"
               >
                 <div className="aspect-video relative overflow-hidden">
@@ -103,7 +84,7 @@ export default function FeaturedProjects() {
                   </div>
                 </div>
                 <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-[var(--green-l)] to-[var(--gold)] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-              </motion.div>
+              </div>
             </Link>
           ))}
         </div>

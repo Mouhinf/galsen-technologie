@@ -1,7 +1,4 @@
-'use client';
-
 import React from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
 import { Search, Rocket, Code2, ShieldCheck, CheckCircle2 } from 'lucide-react';
 
 const steps = [
@@ -12,66 +9,33 @@ const steps = [
   { id: '05', title: 'Déploiement', icon: CheckCircle2, desc: 'Mise en production et monitoring 24/7' },
 ];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 25 },
-  visible: (i: number) => ({
-    opacity: 1, y: 0,
-    transition: { duration: 0.6, delay: i * 0.12, ease: [0.25, 0.46, 0.45, 0.94] },
-  }),
-};
-
 const ProcessTimeline = () => {
-  const containerRef = React.useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start center', 'end center'],
-  });
-
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 80,
-    damping: 30,
-    restDelta: 0.001,
-  });
-
   return (
-    <section className="py-28 relative" ref={containerRef}>
+    <section className="py-28 relative">
       <div className="max-w-[1320px] mx-auto px-4">
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="text-center mb-20"
-        >
-          <motion.div variants={fadeUp} custom={0} className="section-label justify-center mb-6">
+        <div className="text-center mb-20">
+          <div className="section-label justify-center mb-6">
             Notre Processus
-          </motion.div>
-          <motion.h2 variants={fadeUp} custom={1} className="text-4xl md:text-5xl font-display font-bold text-white mb-4">
+          </div>
+          <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">
             Comment nous travaillons
-          </motion.h2>
-          <motion.p variants={fadeUp} custom={2} className="text-white/60 font-body max-w-md mx-auto">
+          </h2>
+          <p className="text-white/60 font-body max-w-md mx-auto">
             Une méthodologie éprouvée pour des résultats prévisibles et de qualité.
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
         <div className="relative">
           {/* Background line */}
           <div className="absolute top-[40px] left-0 w-full h-[1px] bg-white/[0.04] hidden lg:block" />
-          {/* Animated green line */}
-          <motion.div
-            style={{ scaleX, transformOrigin: '0%' }}
-            className="absolute top-[40px] left-0 w-full h-[2px] bg-gradient-to-r from-[var(--green-l)] via-[var(--blue)] to-[var(--gold)] hidden lg:block z-10"
-          />
+          {/* Static gradient line (was framer-motion animated) */}
+          <div className="absolute top-[40px] left-0 w-full h-[2px] bg-gradient-to-r from-[var(--green-l)] via-[var(--blue)] to-[var(--gold)] hidden lg:block z-10" />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-6 relative z-20">
             {steps.map((step, i) => (
-              <motion.div
+              <div
                 key={step.id}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUp}
-                custom={i}
                 className="text-center group"
               >
                 <div className="relative inline-block mb-8">
@@ -93,7 +57,7 @@ const ProcessTimeline = () => {
                 <p className="text-white/50 text-sm font-body leading-relaxed max-w-[180px] mx-auto">
                   {step.desc}
                 </p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
