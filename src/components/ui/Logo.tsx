@@ -13,7 +13,7 @@ const Logo = ({ size = 48, className = '', priority = false }: LogoProps) => {
           src="/logo-galsen.webp"
           alt="Galsen Technologie"
           width={525}
-          height={475}
+          height={483}
           className={cn('object-contain', className)}
           loading={priority ? 'eager' : 'lazy'}
           decoding="async"

@@ -205,7 +205,7 @@ const Hero = () => {
                 src="/logo-galsen.webp"
                 alt="Galsen Technologie"
                 width={525}
-                height={475}
+                height={483}
                 className="w-[200px] md:w-[240px] lg:w-[260px] h-auto drop-shadow-[0_0_60px_rgba(34,197,94,0.25)]"
                 fetchPriority="high"
                 decoding="async"
