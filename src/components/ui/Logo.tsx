@@ -14,6 +14,7 @@ const Logo = ({ size = 48, className = '', priority = false }: LogoProps) => {
           alt="Galsen Technologie"
           width={525}
           height={483}
+          style={{ width: `${size}px`, height: 'auto' }}
           className={cn('object-contain', className)}
           loading={priority ? 'eager' : 'lazy'}
           decoding="async"
