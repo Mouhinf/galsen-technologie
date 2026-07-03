@@ -47,7 +47,7 @@ export default function ServiceDetailClient({ service }: ServiceDetailClientProp
       <section className="pt-32 pb-16 relative">
         <div className="absolute inset-0 z-0">
           {service.imageUrl && (
-            <Image src={service.imageUrl} alt={service.title} fill className="object-cover opacity-20" />
+            <Image src={service.imageUrl} alt={service.title} fill sizes="100vw" className="object-cover opacity-20" />
           )}
           <div className="absolute inset-0 bg-gradient-to-b from-black via-black/80 to-black" />
         </div>

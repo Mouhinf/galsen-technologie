@@ -88,7 +88,7 @@ export default function FeaturedProjects() {
                 className="group relative overflow-hidden rounded-2xl glass-card cursor-pointer"
               >
                 <div className="aspect-video relative overflow-hidden">
-                  <Image src={project.image} alt={project.title} fill className="object-cover group-hover:scale-110 transition-transform duration-700 opacity-50 group-hover:opacity-70" />
+                  <Image src={project.image} alt={project.title} fill sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" className="object-cover group-hover:scale-110 transition-transform duration-700 opacity-50 group-hover:opacity-70" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
                   <div className="absolute top-4 left-4 text-[9px] font-mono tracking-widest bg-[var(--green-l)]/20 text-[var(--green-l)] border border-[var(--green-l)]/30 px-3 py-1 rounded-full backdrop-blur-sm">
                     {project.category}

@@ -47,7 +47,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
       {/* Hero */}
       <section className="pt-32 pb-16 relative">
         <div className="absolute inset-0 z-0">
-          <Image src={project.imageUrl} alt={project.title} fill className="object-cover opacity-20" />
+          <Image src={project.imageUrl} alt={project.title} fill sizes="100vw" className="object-cover opacity-20" />
           <div className="absolute inset-0 bg-gradient-to-b from-black via-black/80 to-black" />
         </div>
 
@@ -86,7 +86,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
           <div className="lg:col-span-3 space-y-10">
             {/* Image */}
             <div className="rounded-2xl overflow-hidden glass-card relative aspect-video">
-              <Image src={project.imageUrl} alt={project.title} fill className="object-cover" />
+              <Image src={project.imageUrl} alt={project.title} fill sizes="(min-width: 1024px) 600px, 100vw" className="object-cover" />
             </div>
 
             {/* Tech Stack */}

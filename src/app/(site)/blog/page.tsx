@@ -141,7 +141,7 @@ export default function BlogPage() {
                     className="flex flex-col h-full"
                   >
                     <div className="aspect-[16/9] relative overflow-hidden">
-                      <Image src={post.imageUrl} alt={post.title} fill className="object-cover opacity-60 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" />
+                      <Image src={post.imageUrl} alt={post.title} fill sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" className="object-cover opacity-60 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" />
                       <div className="absolute top-4 left-4 text-[9px] font-mono tracking-widest text-black bg-[var(--green-l)] px-2 py-1 rounded">
                         {post.category.toUpperCase()}
                       </div>

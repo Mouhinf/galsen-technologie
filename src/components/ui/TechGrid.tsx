@@ -10,7 +10,7 @@ const TechGrid = () => {
     const chars = '01アイウエオカキクケコサシスセソタチツテト<>{}[]=/\\|_-+*&%$#@!';
     
     setParticles(
-      Array.from({ length: 40 }).map((_, i) => ({
+      Array.from({ length: 20 }).map((_, i) => ({
         id: i,
         left: `${Math.random() * 100}%`,
         delay: `${Math.random() * 10}s`,
@@ -20,7 +20,7 @@ const TechGrid = () => {
     );
 
     setMatrixCols(
-      Array.from({ length: 8 }).map((_, i) => ({
+      Array.from({ length: 4 }).map((_, i) => ({
         id: i,
         left: `${10 + Math.random() * 80}%`,
         delay: `${Math.random() * 5}s`,

@@ -101,7 +101,7 @@ export default async function ServicesPage() {
                   ) : (
                     <Link href={`/services/${service.slug}`} className="glass-card aspect-video relative overflow-hidden group block">
                       {service.imageUrl && (
-                        <Image src={service.imageUrl} fill className="object-cover opacity-50 group-hover:scale-105 transition-transform duration-700" alt={service.title} />
+                        <Image src={service.imageUrl} fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover opacity-50 group-hover:scale-105 transition-transform duration-700" alt={service.title} />
                       )}
                       <div className="absolute inset-0 bg-gradient-to-tl from-black via-transparent to-transparent" />
                       <div className="absolute bottom-6 left-6 right-6">
@@ -116,7 +116,7 @@ export default async function ServicesPage() {
                   {isEven ? (
                     <Link href={`/services/${service.slug}`} className="glass-card aspect-video relative overflow-hidden group block">
                       {service.imageUrl && (
-                        <Image src={service.imageUrl} fill className="object-cover opacity-50 group-hover:scale-105 transition-transform duration-700" alt={service.title} />
+                        <Image src={service.imageUrl} fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover opacity-50 group-hover:scale-105 transition-transform duration-700" alt={service.title} />
                       )}
                       <div className="absolute inset-0 bg-gradient-to-tr from-black via-transparent to-transparent" />
                       <div className="absolute bottom-6 left-6 right-6">

@@ -51,5 +51,12 @@
     "ts-jest": "^29.4.11",
     "tsx": "^4.22.5",
     "typescript": "^5"
-  }
+  },
+  "browserslist": [
+    "> 0.5%",
+    "last 2 versions",
+    "not dead",
+    "not ie > 0",
+    "not op_mini all"
+  ]
 }
