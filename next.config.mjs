@@ -2,8 +2,7 @@
 const nextConfig = {
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion', 'recharts', 'date-fns'],
-  },
-  eslint: {
+  },  eslint: {
     ignoreDuringBuilds: true,
   },
   typescript: {

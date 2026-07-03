@@ -8,7 +8,6 @@ import FeaturedProjects from '@/components/site/FeaturedProjects';
 import ProcessTimeline from '@/components/site/ProcessTimeline';
 import Footer from '@/components/site/Footer';
 import TechGrid from '@/components/ui/TechGrid';
-import { motion } from 'framer-motion';
 import { Star, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -20,14 +19,6 @@ const fallbackTestimonials = [
   { name: 'Awa Diop', role: 'Directrice Innovation, Orange', text: 'Le professionnalisme et la réactivité de Galsen sont sans égal sur le marché local. Un partenaire de confiance.' },
   { name: 'Jean-Pierre Kouamé', role: 'Fondateur, TechHub Dakar', text: 'Des solutions robustes et modernes qui répondent parfaitement aux enjeux technologiques de demain.' },
 ];
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({
-    opacity: 1, y: 0,
-    transition: { duration: 0.6, delay: i * 0.1, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
-  }),
-};
 
 interface TestimonialData {
   id: string;
@@ -111,19 +102,14 @@ export default function Home() {
       {/* ═══ Why Us ═══ */}
       <section className="py-28 relative">
         <div className="max-w-[1320px] mx-auto px-4">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-100px' }}
-            className="text-center mb-16"
-          >
-            <motion.div variants={fadeUp} custom={0} className="section-label justify-center mb-6">
+          <div className="text-center mb-16">
+            <div className="section-label justify-center mb-6">
               Pourquoi Nous
-            </motion.div>
-            <motion.h2 variants={fadeUp} custom={1} className="text-4xl md:text-5xl font-display font-bold text-white">
+            </div>
+            <h2 className="text-4xl md:text-5xl font-display font-bold text-white">
               Ce qui nous distingue
-            </motion.h2>
-          </motion.div>
+            </h2>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
@@ -132,13 +118,8 @@ export default function Home() {
               { title: 'Vision africaine', desc: 'Des solutions pensées pour l\'Afrique avec un impact global.', icon: '🌍', color: 'var(--blue)' },
               { title: 'Support 24/7', desc: 'Accompagnement continu après le déploiement de vos projets.', icon: '🤝', color: 'var(--purple)' },
             ].map((item, i) => (
-              <motion.div
+              <div
                 key={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUp}
-                custom={i}
                 className="p-8 glass-card group relative overflow-hidden"
               >
                 <div className="text-3xl mb-6 relative z-10">{item.icon}</div>
@@ -148,7 +129,7 @@ export default function Home() {
                 <p className="text-white/60 text-sm font-body leading-relaxed relative z-10">{item.desc}</p>
                 {/* Scan line */}
                 <div className="absolute left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[var(--green-l)]/30 to-transparent opacity-0 group-hover:opacity-100" style={{ animation: 'scan-sweep 2s ease-in-out infinite' }} />
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -161,34 +142,24 @@ export default function Home() {
       {/* ═══ Blog ═══ */}
       <section className="py-28 relative overflow-hidden">
         <div className="max-w-[1320px] mx-auto px-4">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6"
-          >
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
             <div>
-              <motion.div variants={fadeUp} custom={0} className="section-label mb-6">Blog</motion.div>
-              <motion.h2 variants={fadeUp} custom={1} className="text-4xl md:text-5xl font-display font-bold text-white">
+              <div className="section-label mb-6">Blog</div>
+              <h2 className="text-4xl md:text-5xl font-display font-bold text-white">
                 Derniers articles
-              </motion.h2>
+              </h2>
             </div>
-            <motion.div variants={fadeUp} custom={2}>
+            <div>
               <Link href="/blog" className="btn-secondary text-[11px] py-2 px-6 flex items-center gap-2">
                 Voir tout <ArrowRight size={14} />
               </Link>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {displayBlogPosts.map((post, i) => (
               <Link key={post.slug} href={`/blog/${post.slug}`}>
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true }}
-                  variants={fadeUp}
-                  custom={i}
+                <div
                   className="group glass-card overflow-hidden flex flex-col cursor-pointer h-full"
                 >
                   <div className="aspect-[16/9] relative overflow-hidden">
@@ -209,7 +180,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-[var(--green-l)] via-[var(--gold)] to-[var(--green-l)] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-                </motion.div>
+                </div>
               </Link>
             ))}
           </div>
@@ -219,27 +190,17 @@ export default function Home() {
       {/* ═══ Testimonials ═══ */}
       <section className="py-28 relative overflow-hidden">
         <div className="max-w-[1320px] mx-auto px-4">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <motion.div variants={fadeUp} custom={0} className="section-label justify-center mb-6">Témoignages</motion.div>
-            <motion.h2 variants={fadeUp} custom={1} className="text-4xl md:text-5xl font-display font-bold text-white">
+          <div className="text-center mb-16">
+            <div className="section-label justify-center mb-6">Témoignages</div>
+            <h2 className="text-4xl md:text-5xl font-display font-bold text-white">
               Ils parlent de nous
-            </motion.h2>
-          </motion.div>
+            </h2>
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {displayTestimonials.map((t: any, i: number) => (
-              <motion.div
+              <div
                 key={i}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUp}
-                custom={i}
                 className="p-8 glass-card relative group"
               >
                 {/* Large quote */}
@@ -264,7 +225,7 @@ export default function Home() {
                     <div className="text-white/50 text-[11px] font-mono">{t.role}</div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -282,29 +243,23 @@ export default function Home() {
         }} />
 
         <div className="max-w-[800px] mx-auto px-4 text-center relative z-10">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-          >
-            <motion.div variants={fadeUp} custom={0} className="section-label justify-center mb-8">
-              Prêt ?
-            </motion.div>
-            <motion.h2 variants={fadeUp} custom={1} className="text-4xl md:text-6xl font-display font-bold text-white mb-6 leading-tight">
-              Prêt à transformer votre entreprise ?
-            </motion.h2>
-            <motion.p variants={fadeUp} custom={2} className="text-white/60 text-lg mb-12 max-w-lg mx-auto">
-              Donnez à votre projet l&apos;élan technologique qu&apos;il mérite.
-            </motion.p>
-            <motion.div variants={fadeUp} custom={3} className="flex flex-wrap justify-center gap-6">
-              <Link href="/contact" className="btn-primary text-sm">
-                Démarrer un projet
-              </Link>
-              <Link href="/services" className="btn-secondary text-sm">
-                Explorer nos services
-              </Link>
-            </motion.div>
-          </motion.div>
+          <div className="section-label justify-center mb-8">
+            Prêt ?
+          </div>
+          <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-6 leading-tight">
+            Prêt à transformer votre entreprise ?
+          </h2>
+          <p className="text-white/60 text-lg mb-12 max-w-lg mx-auto">
+            Donnez à votre projet l&apos;élan technologique qu&apos;il mérite.
+          </p>
+          <div className="flex flex-wrap justify-center gap-6">
+            <Link href="/contact" className="btn-primary text-sm">
+              Démarrer un projet
+            </Link>
+            <Link href="/services" className="btn-secondary text-sm">
+              Explorer nos services
+            </Link>
+          </div>
         </div>
       </section>
 

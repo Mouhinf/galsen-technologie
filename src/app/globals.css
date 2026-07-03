@@ -203,7 +203,8 @@
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: text-shimmer 4s linear infinite;
+  will-change: background-position;
+  animation: text-shimmer 6s linear infinite;
 }
 
 /* Matrix column */
@@ -240,9 +241,9 @@
 
 /* Scan line sweep */
 @keyframes scan-sweep {
-  0%   { top: -2px; opacity: 0; }
+  0%   { transform: translateY(-2px); opacity: 0; }
   50%  { opacity: 1; }
-  100% { top: 100%; opacity: 0; }
+  100% { transform: translateY(100%); opacity: 0; }
 }
 
 /* Logo floating animation (CSS, no JS needed) */
