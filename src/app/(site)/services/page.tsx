@@ -3,6 +3,7 @@ import TechGrid from '@/components/ui/TechGrid';
 import Navbar from '@/components/site/Navbar';
 import Footer from '@/components/site/Footer';
 import prisma from '@/lib/prisma';
+import Image from 'next/image';
 import Link from 'next/link';
 import { MessageCircle, ArrowRight } from 'lucide-react';
 
@@ -100,7 +101,7 @@ export default async function ServicesPage() {
                   ) : (
                     <Link href={`/services/${service.slug}`} className="glass-card aspect-video relative overflow-hidden group block">
                       {service.imageUrl && (
-                        <img src={service.imageUrl} className="object-cover w-full h-full opacity-50 group-hover:scale-105 transition-transform duration-700" alt={service.title} />
+                        <Image src={service.imageUrl} fill className="object-cover opacity-50 group-hover:scale-105 transition-transform duration-700" alt={service.title} />
                       )}
                       <div className="absolute inset-0 bg-gradient-to-tl from-black via-transparent to-transparent" />
                       <div className="absolute bottom-6 left-6 right-6">
@@ -115,7 +116,7 @@ export default async function ServicesPage() {
                   {isEven ? (
                     <Link href={`/services/${service.slug}`} className="glass-card aspect-video relative overflow-hidden group block">
                       {service.imageUrl && (
-                        <img src={service.imageUrl} className="object-cover w-full h-full opacity-50 group-hover:scale-105 transition-transform duration-700" alt={service.title} />
+                        <Image src={service.imageUrl} fill className="object-cover opacity-50 group-hover:scale-105 transition-transform duration-700" alt={service.title} />
                       )}
                       <div className="absolute inset-0 bg-gradient-to-tr from-black via-transparent to-transparent" />
                       <div className="absolute bottom-6 left-6 right-6">

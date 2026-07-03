@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import TechGrid from '@/components/ui/TechGrid';
 import Navbar from '@/components/site/Navbar';
 import Footer from '@/components/site/Footer';
@@ -41,7 +42,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
         {/* Hero Image */}
         <div className="max-w-[1000px] mx-auto px-4 mb-16">
           <div className="aspect-[21/9] rounded-2xl overflow-hidden glass-card">
-            <img src={post.imageUrl} alt={post.title} className="w-full h-full object-cover opacity-80" />
+            <Image src={post.imageUrl} alt={post.title} fill className="object-cover opacity-80" />
           </div>
         </div>
 

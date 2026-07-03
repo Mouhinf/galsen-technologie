@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { ArrowLeft, Send, MessageCircle, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 import { sanitizeHtml } from '@/lib/sanitize';
@@ -46,7 +47,7 @@ export default function ServiceDetailClient({ service }: ServiceDetailClientProp
       <section className="pt-32 pb-16 relative">
         <div className="absolute inset-0 z-0">
           {service.imageUrl && (
-            <img src={service.imageUrl} alt={service.title} className="w-full h-full object-cover opacity-20" />
+            <Image src={service.imageUrl} alt={service.title} fill className="object-cover opacity-20" />
           )}
           <div className="absolute inset-0 bg-gradient-to-b from-black via-black/80 to-black" />
         </div>

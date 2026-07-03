@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { ArrowLeft, Send, MessageCircle, CheckCircle2, ExternalLink, Calendar, User } from 'lucide-react';
 import Link from 'next/link';
 import { sanitizeHtml } from '@/lib/sanitize';
@@ -46,7 +47,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
       {/* Hero */}
       <section className="pt-32 pb-16 relative">
         <div className="absolute inset-0 z-0">
-          <img src={project.imageUrl} alt={project.title} className="w-full h-full object-cover opacity-20" />
+          <Image src={project.imageUrl} alt={project.title} fill className="object-cover opacity-20" />
           <div className="absolute inset-0 bg-gradient-to-b from-black via-black/80 to-black" />
         </div>
 
@@ -84,8 +85,8 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
           {/* Left: Content */}
           <div className="lg:col-span-3 space-y-10">
             {/* Image */}
-            <div className="rounded-2xl overflow-hidden glass-card">
-              <img src={project.imageUrl} alt={project.title} className="w-full aspect-video object-cover" />
+            <div className="rounded-2xl overflow-hidden glass-card relative aspect-video">
+              <Image src={project.imageUrl} alt={project.title} fill className="object-cover" />
             </div>
 
             {/* Tech Stack */}

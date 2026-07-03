@@ -10,6 +10,7 @@ import Footer from '@/components/site/Footer';
 import TechGrid from '@/components/ui/TechGrid';
 import { motion } from 'framer-motion';
 import { Star, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 
 const partners = ['Madar', 'Linguère Digital Innovation', 'Assirik Tours', 'Diaz Automobile', 'SLAAC Voyages'];
@@ -191,7 +192,7 @@ export default function Home() {
                   className="group glass-card overflow-hidden flex flex-col cursor-pointer h-full"
                 >
                   <div className="aspect-[16/9] relative overflow-hidden">
-                    <img src={post.imageUrl} alt={post.title} className="object-cover w-full h-full opacity-60 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" />
+                    <Image src={post.imageUrl} alt={post.title} fill className="object-cover opacity-60 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" />
                     <div className="absolute top-3 left-3 text-[8px] font-mono tracking-widest text-black bg-[var(--green-l)] px-2 py-1 rounded">
                       {post.category.toUpperCase()}
                     </div>

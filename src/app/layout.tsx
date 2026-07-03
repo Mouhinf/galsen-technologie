@@ -1,4 +1,5 @@
 import '@/app/globals.css';
+import { fontVariables } from '@/lib/fonts';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 
 export const metadata = {
@@ -13,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr" suppressHydrationWarning>
+    <html lang="fr" suppressHydrationWarning className={fontVariables}>
       <body className="bg-black text-white selection:bg-[#22C55E] selection:text-black font-body">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
           {children}

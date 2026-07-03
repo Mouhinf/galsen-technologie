@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { Database, Code2, BrainCircuit, Globe, Quote } from 'lucide-react';
 import TechGrid from '@/components/ui/TechGrid';
 import Navbar from '@/components/site/Navbar';
@@ -58,7 +59,7 @@ export default function AproposPage() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="relative aspect-square lg:aspect-auto lg:h-[600px] glass-card overflow-hidden"
           >
-            <img src="logo-galsen.png" className="object-cover w-full h-full opacity-60 grayscale" alt="Équipe Galsen Technologie" />
+            <Image src="/logo-galsen.png" fill className="object-cover opacity-60 grayscale" alt="Équipe Galsen Technologie" />
             <div className="absolute inset-0 bg-[var(--green-l)]/10 mix-blend-overlay" />
           </motion.div>
         </div>

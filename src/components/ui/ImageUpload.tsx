@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
+import Image from 'next/image';
 import { Upload, X, ImageIcon } from 'lucide-react';
 
 interface ImageUploadProps {
@@ -59,7 +60,7 @@ export default function ImageUpload({ value, onChange, label }: ImageUploadProps
 
       {preview ? (
         <div className="relative rounded-xl overflow-hidden border border-white/10 group">
-          <img src={preview} alt="Preview" className="w-full h-48 object-cover" />
+          <Image src={preview} alt="Preview" width={400} height={192} className="w-full h-48 object-cover" />
           <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
             <button
               onClick={() => inputRef.current?.click()}
