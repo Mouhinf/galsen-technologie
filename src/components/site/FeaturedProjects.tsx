@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 
 interface ProjectData {
@@ -16,9 +15,9 @@ interface ProjectData {
 }
 
 const fallbackProjects = [
-  { title: 'AI Health Monitor', slug: 'ai-health-monitor', category: 'IA & DATA', tech: ['Python', 'TensorFlow', 'FastAPI'], image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop' },
-  { title: 'EcoPay Sénégal', slug: 'ecopay-senegal', category: 'WEB & MOBILE', tech: ['Next.js', 'Flutter', 'Stripe'], image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=2070&auto=format&fit=crop' },
-  { title: 'SecureCloud Gov', slug: 'securecloud-gov', category: 'CYBERSÉCURITÉ', tech: ['AWS', 'Docker', 'SIEM'], image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop' },
+  { title: 'AI Health Monitor', slug: 'ai-health-monitor', category: 'IA & DATA', tech: ['Python', 'TensorFlow', 'FastAPI'], image: '/projects/ai-health.webp' },
+  { title: 'EcoPay Sénégal', slug: 'ecopay-senegal', category: 'WEB & MOBILE', tech: ['Next.js', 'Flutter', 'Stripe'], image: '/projects/ecopay.webp' },
+  { title: 'SecureCloud Gov', slug: 'securecloud-gov', category: 'CYBERSÉCURITÉ', tech: ['AWS', 'Docker', 'SIEM'], image: '/projects/securecloud.webp' },
 ];
 
 export default function FeaturedProjects() {
@@ -69,7 +68,7 @@ export default function FeaturedProjects() {
                 className="group relative overflow-hidden rounded-2xl glass-card cursor-pointer"
               >
                 <div className="aspect-video relative overflow-hidden">
-                  <Image src={project.image} alt={project.title} fill sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" className="object-cover group-hover:scale-110 transition-transform duration-700 opacity-50 group-hover:opacity-70" />
+                  <img src={project.image} alt={project.title} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-50 group-hover:opacity-70" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
                   <div className="absolute top-4 left-4 text-[9px] font-mono tracking-widest bg-[var(--green-l)]/20 text-[var(--green-l)] border border-[var(--green-l)]/30 px-3 py-1 rounded-full backdrop-blur-sm">
                     {project.category}

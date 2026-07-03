@@ -22,12 +22,12 @@ interface ProjectData {
 }
 
 const fallbackProjects = [
-  { slug: 'ai-health-monitor', title: 'AI Health Monitor', category: 'IA & DATA', client: 'Ministère Santé', year: '2023', imageUrl: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070', techStack: '["Python","TensorFlow","FastAPI"]' },
-  { slug: 'ecopay-app', title: 'EcoPay App', category: 'WEB & MOBILE', client: 'EcoBank', year: '2024', imageUrl: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=2070', techStack: '["Next.js","Flutter","Stripe"]' },
-  { slug: 'securecloud-gov', title: 'SecureCloud Gov', category: 'CYBERSÉCURITÉ', client: 'ADIE', year: '2023', imageUrl: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070', techStack: '["AWS","Docker","SIEM"]' },
-  { slug: 'smartagri-data', title: 'SmartAgri Data', category: 'IA & DATA', client: 'AgriSen', year: '2022', imageUrl: 'https://images.unsplash.com/photo-1586771107445-d3ca888129ff?q=80&w=2072', techStack: '["IoT","ML","React"]' },
-  { slug: 'logistics-tracker', title: 'Logistics Tracker', category: 'WEB & MOBILE', client: 'Port Dakar', year: '2024', imageUrl: 'https://images.unsplash.com/photo-1586528116311-ad8ed7c80a71?q=80&w=2070', techStack: '["Node.js","MongoDB","React Native"]' },
-  { slug: 'edutech-portal', title: 'EduTech Portal', category: 'CLOUD', client: 'UCAD', year: '2023', imageUrl: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=1974', techStack: '["AWS","Next.js","PostgreSQL"]' },
+  { slug: 'ai-health-monitor', title: 'AI Health Monitor', category: 'IA & DATA', client: 'Ministère Santé', year: '2023', imageUrl: '/projects/ai-health.webp', techStack: '["Python","TensorFlow","FastAPI"]' },
+  { slug: 'ecopay-app', title: 'EcoPay App', category: 'WEB & MOBILE', client: 'EcoBank', year: '2024', imageUrl: '/projects/ecopay.webp', techStack: '["Next.js","Flutter","Stripe"]' },
+  { slug: 'securecloud-gov', title: 'SecureCloud Gov', category: 'CYBERSÉCURITÉ', client: 'ADIE', year: '2023', imageUrl: '/projects/securecloud.webp', techStack: '["AWS","Docker","SIEM"]' },
+  { slug: 'smartagri-data', title: 'SmartAgri Data', category: 'IA & DATA', client: 'AgriSen', year: '2022', imageUrl: '/projects/smartagri.webp', techStack: '["IoT","ML","React"]' },
+  { slug: 'logistics-tracker', title: 'Logistics Tracker', category: 'WEB & MOBILE', client: 'Port Dakar', year: '2024', imageUrl: '/projects/logistics.webp', techStack: '["Node.js","MongoDB","React Native"]' },
+  { slug: 'edutech-portal', title: 'EduTech Portal', category: 'CLOUD', client: 'UCAD', year: '2023', imageUrl: '/projects/edutech.webp', techStack: '["AWS","Next.js","PostgreSQL"]' },
 ];
 
 const fadeUp = {

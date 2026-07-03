@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Filter } from 'lucide-react';
-import Image from 'next/image';
 import TechGrid from '@/components/ui/TechGrid';
 import Navbar from '@/components/site/Navbar';
 import Footer from '@/components/site/Footer';
@@ -20,12 +19,12 @@ interface PostData {
 }
 
 const fallbackPosts = [
-  { slug: "futur-ia-afrique", title: "L'avenir de l'IA générative dans le secteur bancaire africain", category: "IA & Data", date: "24 Mai 2024", imageUrl: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=2065", excerpt: "Découvrez comment l'IA générative révolutionne le secteur bancaire en Afrique.", createdAt: "" },
-  { slug: "cyber-menaces-2024", title: "Les 5 grandes menaces de cybersécurité en 2024", category: "Cybersécurité", date: "12 Mai 2024", imageUrl: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070", excerpt: "Les cyberattaques évoluent rapidement. Voici les menaces à surveiller.", createdAt: "" },
-  { slug: "nextjs-vs-react", title: "Pourquoi nous avons choisi Next.js 14 pour nos clients", category: "Développement", date: "03 Mai 2024", imageUrl: "https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=2070", excerpt: "Next.js 14 offre des performances inégalées pour le web moderne.", createdAt: "" },
-  { slug: "cloud-souverain", title: "L'importance d'un cloud souverain au Sénégal", category: "Cloud", date: "28 Avr 2024", imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072", excerpt: "Pourquoi le Sénégal doit investir dans un cloud souverain.", createdAt: "" },
-  { slug: "formation-tech", title: "Retour sur notre dernier bootcamp Full-Stack", category: "Formation", date: "15 Avr 2024", imageUrl: "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=2070", excerpt: "Notre bootcamp a formé 20 nouveaux développeurs Full-Stack.", createdAt: "" },
-  { slug: "startup-agile", title: "Comment implémenter l'agilité dans une startup africaine", category: "Stratégie", date: "02 Avr 2024", imageUrl: "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=2070", excerpt: "L'agilité est clé pour les startups. Voici comment l'adopter.", createdAt: "" },
+  { slug: "futur-ia-afrique", title: "L'avenir de l'IA générative dans le secteur bancaire africain", category: "IA & Data", date: "24 Mai 2024", imageUrl: "/blog/futur-ia.webp", excerpt: "Découvrez comment l'IA générative révolutionne le secteur bancaire en Afrique.", createdAt: "" },
+  { slug: "cyber-menaces-2024", title: "Les 5 grandes menaces de cybersécurité en 2024", category: "Cybersécurité", date: "12 Mai 2024", imageUrl: "/blog/cyber-menaces.webp", excerpt: "Les cyberattaques évoluent rapidement. Voici les menaces à surveiller.", createdAt: "" },
+  { slug: "nextjs-vs-react", title: "Pourquoi nous avons choisi Next.js 14 pour nos clients", category: "Développement", date: "03 Mai 2024", imageUrl: "/blog/nextjs.webp", excerpt: "Next.js 14 offre des performances inégalées pour le web moderne.", createdAt: "" },
+  { slug: "cloud-souverain", title: "L'importance d'un cloud souverain au Sénégal", category: "Cloud", date: "28 Avr 2024", imageUrl: "/blog/cloud-souverain.webp", excerpt: "Pourquoi le Sénégal doit investir dans un cloud souverain.", createdAt: "" },
+  { slug: "formation-tech", title: "Retour sur notre dernier bootcamp Full-Stack", category: "Formation", date: "15 Avr 2024", imageUrl: "/blog/bootcamp.webp", excerpt: "Notre bootcamp a formé 20 nouveaux développeurs Full-Stack.", createdAt: "" },
+  { slug: "startup-agile", title: "Comment implémenter l'agilité dans une startup africaine", category: "Stratégie", date: "02 Avr 2024", imageUrl: "/blog/agile.webp", excerpt: "L'agilité est clé pour les startups. Voici comment l'adopter.", createdAt: "" },
 ];
 
 const fadeUp = {
@@ -141,7 +140,7 @@ export default function BlogPage() {
                     className="flex flex-col h-full"
                   >
                     <div className="aspect-[16/9] relative overflow-hidden">
-                      <Image src={post.imageUrl} alt={post.title} fill sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" className="object-cover opacity-60 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" />
+                      <img src={post.imageUrl} alt={post.title} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" />
                       <div className="absolute top-4 left-4 text-[9px] font-mono tracking-widest text-black bg-[var(--green-l)] px-2 py-1 rounded">
                         {post.category.toUpperCase()}
                       </div>
