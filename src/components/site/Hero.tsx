@@ -201,14 +201,14 @@ const Hero = () => {
             <div
               className="float-animation"
             >
-              <Image
+              <img
                 src="/logo-galsen.webp"
                 alt="Galsen Technologie"
                 width={525}
                 height={475}
-                sizes="(min-width: 1024px) 260px, (min-width: 768px) 240px, 200px"
                 className="w-[200px] md:w-[240px] lg:w-[260px] h-auto drop-shadow-[0_0_60px_rgba(34,197,94,0.25)]"
-                priority
+                fetchPriority="high"
+                decoding="async"
               />
             </div>
 

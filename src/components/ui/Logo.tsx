@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 import { cn } from '@/lib/utils';
 
 interface LogoProps {
@@ -10,14 +9,14 @@ interface LogoProps {
 
 const Logo = ({ size = 48, className = '', priority = false }: LogoProps) => {
   return (
-        <Image
+        <img
           src="/logo-galsen.webp"
           alt="Galsen Technologie"
           width={525}
           height={475}
-          sizes={`${size}px`}
           className={cn('object-contain', className)}
-          priority={priority}
+          loading={priority ? 'eager' : 'lazy'}
+          decoding="async"
         />
   );
 };
