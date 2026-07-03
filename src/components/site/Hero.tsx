@@ -202,7 +202,7 @@ const Hero = () => {
               className="float-animation"
             >
               <Image
-                src="/logo-galsen.png"
+                src="/logo-galsen.webp"
                 alt="Galsen Technologie"
                 width={525}
                 height={475}

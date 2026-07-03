@@ -59,7 +59,7 @@ export default function AproposPage() {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="relative aspect-square lg:aspect-auto lg:h-[600px] glass-card overflow-hidden"
           >
-            <Image src="/logo-galsen.png" fill sizes="(min-width: 1024px) 500px, 100vw" className="object-cover opacity-60 grayscale" alt="Équipe Galsen Technologie" />
+            <Image src="/logo-galsen.webp" fill sizes="(min-width: 1024px) 500px, 100vw" className="object-cover opacity-60 grayscale" alt="Équipe Galsen Technologie" />
             <div className="absolute inset-0 bg-[var(--green-l)]/10 mix-blend-overlay" />
           </motion.div>
         </div>

@@ -11,7 +11,7 @@ interface LogoProps {
 const Logo = ({ size = 48, className = '', priority = false }: LogoProps) => {
   return (
         <Image
-          src="/logo-galsen.png"
+          src="/logo-galsen.webp"
           alt="Galsen Technologie"
           width={525}
           height={475}
