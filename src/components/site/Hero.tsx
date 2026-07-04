@@ -133,7 +133,7 @@ const Hero = () => {
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black leading-[1.05] mb-8"
           >
             <span className="block text-white/90">Experts en</span>
-            <span className="block h-[1.15em] overflow-hidden">
+            <span className="block min-h-[1.15em]">
               <TypingText />
             </span>
             <span className="block text-white/70 font-light text-[0.55em] mt-2">

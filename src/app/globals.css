@@ -195,18 +195,18 @@
   50%      { opacity: 0; }
 }
 
-/* Gradient text shimmer */
-@keyframes text-shimmer {
-  0%   { background-position-x: -200%; }
-  100% { background-position-x: 200%; }
-}
+/* Gradient text shimmer — uses background-position (paint) but minimal cost */
 .text-shimmer {
   background: linear-gradient(90deg, #22C55E, #FDE047, #22C55E, #00B8FF, #22C55E);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  will-change: background-position;
+  background-clip: text;
   animation: text-shimmer 6s linear infinite;
+}
+@keyframes text-shimmer {
+  0%   { background-position-x: -200%; }
+  100% { background-position-x: 200%; }
 }
 
 /* Matrix column */

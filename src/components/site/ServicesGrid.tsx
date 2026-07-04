@@ -76,11 +76,11 @@ const ServicesGrid = ({ services = [] }: ServicesGridProps) => {
                 />
 
                 <div className="relative z-10">
-                  <div className="flex justify-between items-start mb-8">
-                    <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-white/[0.04] border border-white/[0.08] group-hover:scale-110 group-hover:shadow-lg transition-all duration-500 text-xl">
+                  <div className="flex justify-between items-start gap-3 mb-8">
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-white/[0.04] border border-white/[0.08] group-hover:scale-110 group-hover:shadow-lg transition-all duration-500 text-xl shrink-0">
                       {ICON_MAP[icon] ? <><span aria-hidden="true">{ICON_MAP[icon]}</span><span className="sr-only">{icon}</span></> : <><span aria-hidden="true">🔧</span><span className="sr-only">Service</span></>}
                     </div>
-                    <div className="text-[9px] font-mono tracking-[2px] text-white/70 uppercase border border-white/[0.06] px-3 py-1 rounded-full group-hover:text-white/70 group-hover:border-white/15 transition-colors">
+                    <div className="text-[9px] font-mono tracking-[1px] text-white/70 uppercase border border-white/[0.06] px-2.5 py-1 rounded-full group-hover:text-white/70 group-hover:border-white/15 transition-colors whitespace-nowrap overflow-hidden text-ellipsis max-w-[140px] text-right">
                       {badge}
                     </div>
                   </div>
