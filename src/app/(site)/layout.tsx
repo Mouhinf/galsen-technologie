@@ -1,8 +1,12 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Galsen Technologie | IA & Tech au Sénégal',
-  description: 'Galsen Technologie propulse votre entreprise vers le futur numérique. IA, cybersécurité, développement — nous construisons l\'Afrique tech.',
+  title: {
+    default: 'Galsen Technologie | IA, Cybersécurité & Tech au Sénégal',
+    template: '%s | Galsen Technologie',
+  },
+  description: 'Galsen Technologie propulse votre entreprise vers le futur numérique. IA, cybersécurité, développement web, cloud et formation tech à Dakar.',
+  alternates: { canonical: 'https://galsen.lingueredigital.com' },
 };
 
 export default function SiteLayout({

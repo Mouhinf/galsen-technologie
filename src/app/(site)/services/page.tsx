@@ -3,7 +3,12 @@ import TechGrid from '@/components/ui/TechGrid';
 import Navbar from '@/components/site/Navbar';
 import Footer from '@/components/site/Footer';
 import prisma from '@/lib/prisma';
-import Image from 'next/image';
+
+export const metadata = {
+  title: 'Services | Galsen Technologie',
+  description: 'Services numériques : développement web & mobile, IA & data science, cybersécurité, cloud & infrastructure, formation tech.',
+  alternates: { canonical: 'https://galsen.lingueredigital.com/services' },
+};
 import Link from 'next/link';
 import { MessageCircle, ArrowRight } from 'lucide-react';
 
@@ -47,7 +52,7 @@ export default async function ServicesPage() {
     `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Bonjour, je suis intéressé par votre service "${service}".`)}`;
 
   return (
-    <main className="min-h-screen">
+    <main id="main-content" className="min-h-screen">
       <TechGrid />
       <Navbar />
       
@@ -55,7 +60,7 @@ export default async function ServicesPage() {
         <div className="max-w-[1320px] mx-auto px-4">
           <div className="section-label mb-6">Expertise & Solutions</div>
           <h1 className="text-5xl md:text-6xl font-display font-bold text-white mb-8">Nos Services</h1>
-          <p className="text-white/50 text-xl max-w-2xl font-body leading-relaxed">
+          <p className="text-white/70 text-xl max-w-2xl font-body leading-relaxed">
             Nous combinons innovation de pointe et expertise locale pour offrir des solutions technologiques transformatrices.
           </p>
         </div>
@@ -76,7 +81,7 @@ export default async function ServicesPage() {
                         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                       </div>
                       <h2 className="text-4xl font-heading font-bold text-white mb-6">{service.title}</h2>
-                      <p className="text-white/50 mb-6 leading-relaxed">{service.description}</p>
+                      <p className="text-white/70 mb-6 leading-relaxed">{service.description}</p>
                       {service.features.length > 0 && (
                         <ul className="space-y-4 mb-10">
                           {service.features.slice(0, 4).map((item: string) => (
@@ -93,7 +98,7 @@ export default async function ServicesPage() {
                         <Link href={`/services/${service.slug}`} className="btn-primary inline-flex items-center gap-2 text-xs">
                           En savoir plus <ArrowRight size={14} />
                         </Link>
-                        <a href={whatsappUrl(service.title)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-7 py-3 rounded-lg border border-[#25D366]/30 text-[#25D366] hover:bg-[#25D366]/10 transition-all text-xs font-semibold tracking-widest uppercase">
+                        <a href={whatsappUrl(service.title)} target="_blank" rel="noopener noreferrer" aria-label={`Contacter via WhatsApp pour ${service.title}`} className="inline-flex items-center gap-2 px-7 py-3 rounded-lg border border-[#25D366]/30 text-[#25D366] hover:bg-[#25D366]/10 transition-all text-xs font-semibold tracking-widest uppercase">
                           <MessageCircle size={16} /> WhatsApp
                         </a>
                       </div>
@@ -101,7 +106,7 @@ export default async function ServicesPage() {
                   ) : (
                     <Link href={`/services/${service.slug}`} className="glass-card aspect-video relative overflow-hidden group block">
                       {service.imageUrl && (
-                        <Image src={service.imageUrl} fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover opacity-50 group-hover:scale-105 transition-transform duration-700" alt={service.title} />
+                      <img src={service.imageUrl} alt={service.title} width={800} height={450} loading="lazy" decoding="async" className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700" />
                       )}
                       <div className="absolute inset-0 bg-gradient-to-tl from-black via-transparent to-transparent" />
                       <div className="absolute bottom-6 left-6 right-6">
@@ -116,7 +121,7 @@ export default async function ServicesPage() {
                   {isEven ? (
                     <Link href={`/services/${service.slug}`} className="glass-card aspect-video relative overflow-hidden group block">
                       {service.imageUrl && (
-                        <Image src={service.imageUrl} fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover opacity-50 group-hover:scale-105 transition-transform duration-700" alt={service.title} />
+                      <img src={service.imageUrl} alt={service.title} width={800} height={450} loading="lazy" decoding="async" className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700" />
                       )}
                       <div className="absolute inset-0 bg-gradient-to-tr from-black via-transparent to-transparent" />
                       <div className="absolute bottom-6 left-6 right-6">
@@ -131,7 +136,7 @@ export default async function ServicesPage() {
                         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                       </div>
                       <h2 className="text-4xl font-heading font-bold text-white mb-6">{service.title}</h2>
-                      <p className="text-white/50 mb-6 leading-relaxed">{service.description}</p>
+                      <p className="text-white/70 mb-6 leading-relaxed">{service.description}</p>
                       {service.features.length > 0 && (
                         <ul className="space-y-4 mb-10">
                           {service.features.slice(0, 4).map((item: string) => (
@@ -148,7 +153,7 @@ export default async function ServicesPage() {
                         <Link href={`/services/${service.slug}`} className="btn-primary inline-flex items-center gap-2 text-xs">
                           En savoir plus <ArrowRight size={14} />
                         </Link>
-                        <a href={whatsappUrl(service.title)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-7 py-3 rounded-lg border border-[#25D366]/30 text-[#25D366] hover:bg-[#25D366]/10 transition-all text-xs font-semibold tracking-widest uppercase">
+                        <a href={whatsappUrl(service.title)} target="_blank" rel="noopener noreferrer" aria-label={`Contacter via WhatsApp pour ${service.title}`} className="inline-flex items-center gap-2 px-7 py-3 rounded-lg border border-[#25D366]/30 text-[#25D366] hover:bg-[#25D366]/10 transition-all text-xs font-semibold tracking-widest uppercase">
                           <MessageCircle size={16} /> WhatsApp
                         </a>
                       </div>
@@ -165,7 +170,7 @@ export default async function ServicesPage() {
       <section className="py-24 border-t border-white/5">
         <div className="max-w-[800px] mx-auto px-4 text-center">
           <h2 className="text-3xl font-display font-bold mb-6">Vous avez un projet en tête ?</h2>
-          <p className="text-white/50 mb-10 max-w-lg mx-auto">
+          <p className="text-white/70 mb-10 max-w-lg mx-auto">
             Discutons-en directement sur WhatsApp. Notre équipe vous répond sous 30 minutes.
           </p>
           <a

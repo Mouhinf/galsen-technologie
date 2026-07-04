@@ -1,14 +1,24 @@
 import React from 'react';
-import Image from 'next/image';
 import TechGrid from '@/components/ui/TechGrid';
 import Navbar from '@/components/site/Navbar';
 import Footer from '@/components/site/Footer';
 import Link from 'next/link';
 import prisma from '@/lib/prisma';
 import { notFound } from 'next/navigation';
-import { sanitizeHtml } from '@/lib/sanitize';
+import { serverSanitizeHtml } from '@/lib/server-sanitize';
+import { optimizeCloudinaryUrl } from '@/lib/cloudinary-url';
 
 export const dynamic = 'force-dynamic';
+
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+  const post = await prisma.post.findUnique({ where: { slug: params.slug } });
+  if (!post) return { title: 'Article non trouvé | Galsen Technologie' };
+  return {
+    title: `${post.title} | Galsen Technologie`,
+    description: post.excerpt || post.title,
+    alternates: { canonical: `https://galsen.lingueredigital.com/blog/${params.slug}` },
+  };
+}
 
 export default async function BlogPostPage({ params }: { params: { slug: string } }) {
   const post = await prisma.post.findUnique({ where: { slug: params.slug } });
@@ -21,7 +31,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   const formattedDate = new Date(post.createdAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
 
   return (
-    <main className="min-h-screen">
+    <main id="main-content" className="min-h-screen">
       <TechGrid />
       <Navbar />
       
@@ -34,7 +44,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-8 leading-tight">
             {post.title}
           </h1>
-          <div className="flex items-center justify-center gap-4 text-white/50 text-sm">
+          <div className="flex items-center justify-center gap-4 text-white/70 text-sm">
             <span>Par {post.author}</span>
           </div>
         </header>
@@ -42,7 +52,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
         {/* Hero Image */}
         <div className="max-w-[1000px] mx-auto px-4 mb-16">
           <div className="aspect-[21/9] rounded-2xl overflow-hidden glass-card">
-            <Image src={post.imageUrl} alt={post.title} fill sizes="(min-width: 768px) 1000px, 100vw" className="object-cover opacity-80" />
+            <img src={optimizeCloudinaryUrl(post.imageUrl, { width: 1000, height: 430 })} alt={post.title} width={1000} height={430} fetchPriority="high" decoding="async" className="object-cover w-full h-full opacity-80" />
           </div>
         </div>
 
@@ -51,7 +61,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           {post.excerpt && (
             <p className="lead text-xl text-white/70 mb-8">{post.excerpt}</p>
           )}
-          <div dangerouslySetInnerHTML={{ __html: sanitizeHtml(post.content) }} />
+          <div dangerouslySetInnerHTML={{ __html: serverSanitizeHtml(post.content) }} />
         </div>
 
         {/* Tags */}
@@ -59,7 +69,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
           <div className="max-w-[700px] mx-auto px-4 mt-12 pt-8 border-t border-white/10">
             <div className="flex flex-wrap gap-2">
               {tags.map((tag: string) => (
-                <span key={tag} className="text-[10px] font-mono bg-white/5 text-white/50 px-3 py-1.5 rounded-full border border-white/10">
+                <span key={tag} className="text-[10px] font-mono bg-white/5 text-white/70 px-3 py-1.5 rounded-full border border-white/10">
                   #{tag}
                 </span>
               ))}

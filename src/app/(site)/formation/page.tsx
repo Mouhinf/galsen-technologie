@@ -3,6 +3,12 @@ import TechGrid from '@/components/ui/TechGrid';
 import Navbar from '@/components/site/Navbar';
 import Footer from '@/components/site/Footer';
 
+export const metadata = {
+  title: 'Formation | Galsen Technologie',
+  description: 'Formations tech à Dakar : développement web, IA, data science, cybersécurité et cloud. Bootcamps et programmes certifiants.',
+  alternates: { canonical: 'https://galsen.lingueredigital.com/formation' },
+};
+
 const formations = [
   {
     title: "Full-Stack Web Development",
@@ -35,7 +41,7 @@ const formations = [
 
 export default function FormationPage() {
   return (
-    <main className="min-h-screen">
+    <main id="main-content" className="min-h-screen">
       <TechGrid />
       <Navbar />
       
@@ -48,7 +54,7 @@ export default function FormationPage() {
             <span className="bg-[var(--purple)] w-6 h-[1px] opacity-50" />
           </div>
           <h1 className="text-5xl md:text-7xl font-display font-bold text-white mb-8">Formez-vous aux <br/>métiers de demain</h1>
-          <p className="text-white/50 text-xl max-w-2xl mx-auto font-body">
+          <p className="text-white/70 text-xl max-w-2xl mx-auto font-body">
             Bootcamps intensifs dispensés par nos experts pour vous propulser dans le secteur de la tech.
           </p>
         </div>
@@ -64,25 +70,25 @@ export default function FormationPage() {
               />
               
               <div className="flex gap-2 mb-6">
-                <span className="text-[9px] font-mono border border-white/10 px-2 py-1 rounded text-white/60 uppercase">{f.duration}</span>
-                <span className="text-[9px] font-mono border border-white/10 px-2 py-1 rounded text-white/60 uppercase">{f.level}</span>
+                <span className="text-[9px] font-mono border border-white/10 px-2 py-1 rounded text-white/70 uppercase">{f.duration}</span>
+                <span className="text-[9px] font-mono border border-white/10 px-2 py-1 rounded text-white/70 uppercase">{f.level}</span>
               </div>
               
-              <h3 className="text-2xl font-heading font-bold mb-4">{f.title}</h3>
-              <p className="text-white/50 text-sm mb-8 flex-grow">{f.desc}</p>
+              <h2 className="text-2xl font-heading font-bold mb-4">{f.title}</h2>
+              <p className="text-white/70 text-sm mb-8 flex-grow">{f.desc}</p>
               
               <div className="border-t border-white/5 pt-6 mt-auto">
                 <div className="flex justify-between items-end mb-6">
                   <div>
-                    <div className="text-[10px] font-mono text-white/60 mb-1">PROCHAINE SESSION</div>
+                    <div className="text-[10px] font-mono text-white/70 mb-1">PROCHAINE SESSION</div>
                     <div className="text-sm font-bold">15 Septembre 2024</div>
                   </div>
                   <div className="text-right">
-                    <div className="text-[10px] font-mono text-white/60 mb-1">TARIF</div>
+                    <div className="text-[10px] font-mono text-white/70 mb-1">TARIF</div>
                     <div className="text-lg font-bold" style={{ color: f.color }}>{f.price}</div>
                   </div>
                 </div>
-                <button className="w-full btn-secondary text-xs py-3 hover:!bg-white/5">Télécharger le programme</button>
+                <a href="https://wa.me/221700003004?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%20par%20la%20formation%20" target="_blank" rel="noopener noreferrer" className="w-full btn-secondary text-xs py-3 hover:!bg-white/5 inline-block text-center">Télécharger le programme</a>
               </div>
             </div>
           ))}

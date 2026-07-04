@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
-import Image from 'next/image';
+import React, { useState, useRef, useEffect } from 'react';
 import { Upload, X, ImageIcon } from 'lucide-react';
 
 interface ImageUploadProps {
@@ -14,7 +13,13 @@ export default function ImageUpload({ value, onChange, label }: ImageUploadProps
   const [uploading, setUploading] = useState(false);
   const [preview, setPreview] = useState(value);
   const [dragOver, setDragOver] = useState(false);
+  const [imgError, setImgError] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setPreview(value);
+    setImgError(false);
+  }, [value]);
 
   const handleFile = async (file: File) => {
     if (!file.type.startsWith('image/')) return;
@@ -60,7 +65,13 @@ export default function ImageUpload({ value, onChange, label }: ImageUploadProps
 
       {preview ? (
         <div className="relative rounded-xl overflow-hidden border border-white/10 group">
-          <Image src={preview} alt="Preview" width={400} height={192} className="w-full h-48 object-cover" />
+          {imgError ? (
+            <div className="w-full h-48 flex items-center justify-center bg-red-500/10 text-red-400 text-sm">
+              Échec du chargement de l'image
+            </div>
+          ) : (
+            <img src={preview} alt="Preview" width={400} height={192} className="w-full h-48 object-cover" onError={() => setImgError(true)} />
+          )}
           <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
             <button
               onClick={() => inputRef.current?.click()}

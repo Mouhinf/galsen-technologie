@@ -21,7 +21,7 @@ const ProcessTimeline = () => {
           <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">
             Comment nous travaillons
           </h2>
-          <p className="text-white/60 font-body max-w-md mx-auto">
+          <p className="text-white/70 font-body max-w-md mx-auto">
             Une méthodologie éprouvée pour des résultats prévisibles et de qualité.
           </p>
         </div>
@@ -46,7 +46,7 @@ const ProcessTimeline = () => {
                   {/* Pulse ring on hover */}
                   <div className="absolute inset-0 rounded-full border border-[var(--green-l)]/0 group-hover:border-[var(--green-l)]/20 scale-100 group-hover:scale-[1.6] opacity-100 group-hover:opacity-0 transition-all duration-700" />
                   {/* Step number */}
-                  <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-[var(--bg-secondary)] border border-white/10 flex items-center justify-center text-[9px] font-mono text-white/55 group-hover:text-[var(--green-l)] group-hover:border-[var(--green-l)]/30 transition-colors z-30">
+                  <div className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-[var(--bg-secondary)] border border-white/10 flex items-center justify-center text-[9px] font-mono text-white/70 group-hover:text-[var(--green-l)] group-hover:border-[var(--green-l)]/30 transition-colors z-30">
                     {step.id}
                   </div>
                 </div>
@@ -54,7 +54,7 @@ const ProcessTimeline = () => {
                 <h3 className="text-base font-heading font-bold text-white mb-2 group-hover:text-[var(--green-l)] transition-colors">
                   {step.title}
                 </h3>
-                <p className="text-white/50 text-sm font-body leading-relaxed max-w-[180px] mx-auto">
+                <p className="text-white/70 text-sm font-body leading-relaxed max-w-[180px] mx-auto">
                   {step.desc}
                 </p>
               </div>

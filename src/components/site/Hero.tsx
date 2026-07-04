@@ -136,13 +136,13 @@ const Hero = () => {
             <span className="block h-[1.15em] overflow-hidden">
               <TypingText />
             </span>
-            <span className="block text-white/60 font-light text-[0.55em] mt-2">
+            <span className="block text-white/70 font-light text-[0.55em] mt-2">
               au service de l&apos;Afrique.
             </span>
           </h1>
 
           <p
-            className="text-white/60 text-base md:text-lg font-body max-w-lg mb-16 leading-relaxed mx-auto lg:mx-0"
+            className="text-white/70 text-base md:text-lg font-body max-w-lg mb-16 leading-relaxed mx-auto lg:mx-0"
           >
             Galsen Technologie propulse votre entreprise vers le futur numérique.
             IA, cybersécurité, développement — nous construisons l&apos;Afrique tech de demain.
@@ -166,7 +166,7 @@ const Hero = () => {
             className="flex flex-wrap gap-2 justify-center lg:justify-start"
           >
             {['Next.js', 'Python', 'TensorFlow', 'AWS', 'React', 'Docker'].map((t) => (
-              <span key={t} className="text-[9px] font-mono text-white/60 bg-white/[0.03] border border-white/[0.06] px-3 py-1 rounded-full">
+              <span key={t} className="text-[9px] font-mono text-white/70 bg-white/[0.03] border border-white/[0.06] px-3 py-1 rounded-full">
                 {t}
               </span>
             ))}
@@ -240,7 +240,7 @@ const Hero = () => {
       <div
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 scroll-bounce"
       >
-        <span className="text-[9px] font-mono text-white/60 uppercase tracking-[3px]">Scroll</span>
+        <span className="text-[9px] font-mono text-white/70 uppercase tracking-[3px]">Scroll</span>
         <div className="w-5 h-8 border border-white/15 rounded-full flex justify-center pt-1.5">
           <div
             className="w-1 h-1.5 bg-[var(--green-l)] rounded-full scroll-dot"

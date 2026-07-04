@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import Logo from '@/components/ui/Logo';
 import { cn } from '@/lib/utils';
@@ -39,7 +38,7 @@ const Navbar = () => {
       )}
     >
       <div className="max-w-[1320px] mx-auto h-full px-4 flex items-center justify-between">
-        <Link href="/" className="flex-shrink-0">
+        <Link href="/" aria-label="Accueil Galsen Technologie" className="flex-shrink-0">
           <Logo size={42} />
         </Link>
 
@@ -56,10 +55,7 @@ const Navbar = () => {
             >
               {link.name}
               {pathname === link.href && (
-                <motion.div
-                  layoutId="underline"
-                  className="absolute bottom-0 left-0 w-full h-[1px] bg-[var(--green-l)] glow-green"
-                />
+                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-[var(--green-l)] glow-green" />
               )}
             </Link>
           ))}
@@ -73,7 +69,8 @@ const Navbar = () => {
 
         {/* Mobile Toggle */}
         <button 
-          aria-label="Menu"
+          aria-label={isOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+          aria-expanded={isOpen}
           className="lg:hidden text-white"
           onClick={() => setIsOpen(!isOpen)}
         >
@@ -82,37 +79,33 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 top-[52px] bg-black z-40 lg:hidden flex flex-col items-center justify-center gap-8"
-          >
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                className={cn(
-                  'text-2xl font-display uppercase tracking-widest',
-                  pathname === link.href ? 'text-[var(--green-l)]' : 'text-white/70'
-                )}
-              >
-                {link.name}
-              </Link>
-            ))}
-            <Link 
-              href="/contact" 
-              className="btn-primary mt-4"
-              onClick={() => setIsOpen(false)}
-            >
-              Prendre RDV
-            </Link>
-          </motion.div>
+      <div
+        className={cn(
+          'fixed inset-0 top-[52px] bg-black z-40 lg:hidden flex flex-col items-center justify-center gap-8 transition-all duration-300',
+          isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
         )}
-      </AnimatePresence>
+      >
+        {navLinks.map((link) => (
+          <Link
+            key={link.href}
+            href={link.href}
+            onClick={() => setIsOpen(false)}
+            className={cn(
+              'text-2xl font-display uppercase tracking-widest',
+              pathname === link.href ? 'text-[var(--green-l)]' : 'text-white/70'
+            )}
+          >
+            {link.name}
+          </Link>
+        ))}
+        <Link 
+          href="/contact" 
+          className="btn-primary mt-4"
+          onClick={() => setIsOpen(false)}
+        >
+          Prendre RDV
+        </Link>
+      </div>
     </nav>
   );
 };

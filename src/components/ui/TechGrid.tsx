@@ -7,8 +7,8 @@ const TechGrid = () => {
   const [matrixCols, setMatrixCols] = useState<{ id: number; left: string; delay: string; chars: string }[]>([]);
 
   useEffect(() => {
-    const chars = '01アイウエオカキクケコサシスセソタチツテト<>{}[]=/\\|_-+*&%$#@!';
-    
+    const chars = '01<>{}[]=/\\|_-+*&%$#@!';
+
     setParticles(
       Array.from({ length: 20 }).map((_, i) => ({
         id: i,
@@ -30,7 +30,7 @@ const TechGrid = () => {
   }, []);
 
   return (
-    <>
+    <div aria-hidden="true" role="presentation">
       <div className="tech-grid" />
       <div className="scanlines" />
       <div className="hero-glow" />
@@ -40,13 +40,13 @@ const TechGrid = () => {
         <span
           key={p.id}
           className="binary-particle"
-          style={{ left: p.left, animationDelay: p.delay, animationDuration: p.duration }}
+          style={{ left: p.left, animationDelay: p.delay, animationDuration: p.duration, willChange: 'transform, opacity' }}
         >
           {p.char}
         </span>
       ))}
 
-      {/* Matrix columns - very subtle vertical code rain */}
+      {/* Matrix columns - vertical code rain */}
       {matrixCols.map((col) => (
         <div
           key={`matrix-${col.id}`}
@@ -61,19 +61,19 @@ const TechGrid = () => {
         </div>
       ))}
 
-      {/* Corner Accents - more elaborate */}
+      {/* Corner Accents */}
       <div className="fixed top-0 left-0 w-40 h-[1px] bg-gradient-to-r from-[var(--green-l)] to-transparent opacity-30" />
       <div className="fixed top-0 left-0 w-[1px] h-40 bg-gradient-to-b from-[var(--green-l)] to-transparent opacity-30" />
-      
+
       <div className="fixed top-0 right-0 w-40 h-[1px] bg-gradient-to-l from-[var(--gold)] to-transparent opacity-30" />
       <div className="fixed top-0 right-0 w-[1px] h-40 bg-gradient-to-b from-[var(--gold)] to-transparent opacity-30" />
-      
+
       <div className="fixed bottom-0 left-0 w-40 h-[1px] bg-gradient-to-r from-[var(--red)] to-transparent opacity-30" />
       <div className="fixed bottom-0 left-0 w-[1px] h-40 bg-gradient-to-t from-[var(--red)] to-transparent opacity-30" />
 
       <div className="fixed bottom-0 right-0 w-40 h-[1px] bg-gradient-to-l from-[var(--blue)] to-transparent opacity-20" />
       <div className="fixed bottom-0 right-0 w-[1px] h-40 bg-gradient-to-t from-[var(--blue)] to-transparent opacity-20" />
-    </>
+    </div>
   );
 };
 

@@ -1,19 +1,11 @@
-'use client';
-
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
+import type { Service } from '@prisma/client';
 
-interface ServiceData {
-  id: string;
-  title: string;
-  slug: string;
-  description: string;
-  icon: string;
-  color: string;
-  features: string;
-  imageUrl: string | null;
+interface ServicesGridProps {
+  services?: Service[];
 }
 
 const ICON_MAP: Record<string, string> = {
@@ -29,23 +21,18 @@ const ICON_MAP: Record<string, string> = {
   Zap: '⚡',
 };
 
-const ServicesGrid = () => {
-  const [services, setServices] = useState<ServiceData[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch('/api/services')
-      .then(res => res.json())
-      .then(data => {
-        setServices(data.filter((s: any) => s.active));
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
-
-  const getTags = (s: ServiceData) => {
+const ServicesGrid = ({ services = [] }: ServicesGridProps) => {
+  const getTags = (s: Service) => {
     try { return JSON.parse(s.features).slice(0, 3); } catch { return []; }
   };
+
+  const fallbackServices = [
+    { title: 'Web & Mobile', description: 'Sites, apps PWA, e-commerce sur mesure.', icon: '💻', color: '#22C55E', badge: 'DÉVELOPPEMENT' },
+    { title: 'IA & Data', description: 'ML, NLP, automatisation pour booster votre productivité.', icon: '🧠', color: '#F5D020', badge: 'INTELLIGENCE ARTIFICIELLE' },
+    { title: 'Cybersécurité', description: 'Audit, Pentest, SIEM. Protection de vos actifs numériques.', icon: '🛡️', color: '#C8001E', badge: 'SÉCURITÉ' },
+  ];
+
+  const display = services.length > 0 ? services : fallbackServices;
 
   return (
     <section className="py-28 relative overflow-hidden" id="services">
@@ -57,123 +44,105 @@ const ServicesGrid = () => {
           <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">
             Ce que nous faisons
           </h2>
-          <p className="text-white/60 font-body max-w-xl">
+          <p className="text-white/70 font-body max-w-xl">
             Des solutions technologiques de pointe adaptées au marché africain et international.
           </p>
         </div>
 
-        {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="p-8 rounded-2xl bg-white/[0.02] border border-white/[0.06] animate-pulse">
-                <div className="w-12 h-12 rounded-xl bg-white/5 mb-8" />
-                <div className="h-6 bg-white/5 rounded w-3/4 mb-3" />
-                <div className="h-4 bg-white/5 rounded w-full mb-2" />
-                <div className="h-4 bg-white/5 rounded w-2/3" />
-              </div>
-            ))}
-          </div>
-        ) : services.length === 0 ? (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-            {[
-              { title: 'Web & Mobile', desc: 'Sites, apps PWA, e-commerce sur mesure.', icon: '💻', color: '#22C55E', badge: 'DÉVELOPPEMENT' },
-              { title: 'IA & Data', desc: 'ML, NLP, automatisation pour booster votre productivité.', icon: '🧠', color: '#F5D020', badge: 'INTELLIGENCE ARTIFICIELLE' },
-              { title: 'Cybersécurité', desc: 'Audit, Pentest, SIEM. Protection de vos actifs numériques.', icon: '🛡️', color: '#C8001E', badge: 'SÉCURITÉ' },
-            ].map((service, i) => (
-              <div
-                key={i}
-                className="relative p-8 rounded-2xl group cursor-pointer overflow-hidden bg-white/[0.02] border border-white/[0.06] hover:border-transparent transition-all duration-500"
-              >
-                <div className="flex justify-between items-start mb-8">
-                  <div className="text-3xl">{service.icon}</div>
-                  <div className="text-[9px] font-mono tracking-[2px] text-white/55 uppercase border border-white/[0.06] px-3 py-1 rounded-full">{service.badge}</div>
-                </div>
-                <h3 className="text-xl font-heading font-bold text-white mb-3">{service.title}</h3>
-                <p className="text-white/60 text-sm font-body leading-relaxed mb-8">{service.desc}</p>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {services.map((service, i) => {
-              const tags = getTags(service);
-              const isLarge = i === 0;
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {display.map((service, i) => {
+            const isDb = 'id' in service;
+            const tags = isDb ? getTags(service as Service) : [];
+            const isLarge = i === 0;
+            const title = 'title' in service ? service.title : service.title;
+            const description = 'description' in service ? service.description : service.description;
+            const color = 'color' in service ? service.color : service.color;
+            const icon = 'icon' in service ? service.icon : service.icon;
+            const badge = 'badge' in service ? service.badge : service.icon;
+            const slug = 'slug' in service ? service.slug : '#';
 
-              return (
-                <Link
-                  key={service.id}
-                  href={`/services/${service.slug}`}
-                  className={cn(
-                    'relative p-8 rounded-2xl group overflow-hidden',
-                    'bg-white/[0.02] border border-white/[0.06]',
-                    'hover:border-transparent transition-all duration-500',
-                    isLarge ? 'lg:col-span-2' : 'lg:col-span-1',
-                    i === services.length - 1 && services.length % 3 === 1 ? 'lg:col-span-3' : ''
-                  )}
-                >
-                  <div
-                    className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                    style={{
-                      background: `conic-gradient(from 0deg, transparent 60%, ${service.color}40 70%, transparent 80%)`,
-                      padding: '1px',
-                      WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-                      WebkitMaskComposite: 'xor' as any,
-                      maskComposite: 'exclude',
-                      animation: 'border-spin 3s linear infinite',
-                    }}
-                  />
+            const card = (
+              <div className="relative p-8 rounded-2xl group overflow-hidden bg-white/[0.02] border border-white/[0.06] hover:border-transparent transition-all duration-500 h-full">
+                <div
+                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                  style={{
+                    background: `conic-gradient(from 0deg, transparent 60%, ${color}40 70%, transparent 80%)`,
+                    padding: '1px',
+                    WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                    WebkitMaskComposite: 'xor',
+                    maskComposite: 'exclude',
+                    animation: 'border-spin 3s linear infinite',
+                  }}
+                />
 
-                  <div className="relative z-10">
-                    <div className="flex justify-between items-start mb-8">
-                      <div
-                        className="w-12 h-12 rounded-xl flex items-center justify-center bg-white/[0.04] border border-white/[0.08] group-hover:scale-110 group-hover:shadow-lg transition-all duration-500 text-xl"
-                      >
-                        {ICON_MAP[service.icon] || '🔧'}
-                      </div>
-                      <div className="text-[9px] font-mono tracking-[2px] text-white/55 uppercase border border-white/[0.06] px-3 py-1 rounded-full group-hover:text-white/70 group-hover:border-white/15 transition-colors">
-                        {service.icon}
-                      </div>
+                <div className="relative z-10">
+                  <div className="flex justify-between items-start mb-8">
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center bg-white/[0.04] border border-white/[0.08] group-hover:scale-110 group-hover:shadow-lg transition-all duration-500 text-xl">
+                      {ICON_MAP[icon] ? <><span aria-hidden="true">{ICON_MAP[icon]}</span><span className="sr-only">{icon}</span></> : <><span aria-hidden="true">🔧</span><span className="sr-only">Service</span></>}
                     </div>
-
-                    <h3 className="text-xl font-heading font-bold text-white mb-3 group-hover:text-white transition-colors">
-                      {service.title}
-                    </h3>
-                    <p className="text-white/60 text-sm font-body leading-relaxed mb-8 line-clamp-2">
-                      {service.description}
-                    </p>
-
-                    {tags.length > 0 && (
-                      <div className="flex flex-wrap gap-2">
-                        {tags.map((tag: string) => (
-                          <span
-                            key={tag}
-                            className="text-[9px] font-mono text-white/50 bg-white/[0.03] border border-white/[0.05] px-2.5 py-1 rounded-md group-hover:border-white/10 group-hover:text-white/60 transition-colors"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
+                    <div className="text-[9px] font-mono tracking-[2px] text-white/70 uppercase border border-white/[0.06] px-3 py-1 rounded-full group-hover:text-white/70 group-hover:border-white/15 transition-colors">
+                      {badge}
+                    </div>
                   </div>
 
-                  <div className="absolute top-8 right-8 opacity-0 group-hover:opacity-100 translate-x-2 -translate-y-2 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-500">
-                    <ArrowUpRight size={18} style={{ color: service.color || '#22C55E' }} />
-                  </div>
+                  <h3 className="text-xl font-heading font-bold text-white mb-3 group-hover:text-white transition-colors">
+                    {title}
+                  </h3>
+                  <p className="text-white/70 text-sm font-body leading-relaxed mb-8 line-clamp-2">
+                    {description}
+                  </p>
 
-                  <div
-                    className="absolute -bottom-20 -right-20 w-40 h-40 rounded-full blur-[80px] opacity-0 group-hover:opacity-15 transition-opacity duration-700"
-                    style={{ backgroundColor: service.color || '#22C55E' }}
-                  />
+                  {tags.length > 0 && (
+                    <div className="flex flex-wrap gap-2">
+                      {tags.map((tag: string) => (
+                        <span
+                          key={tag}
+                          className="text-[9px] font-mono text-white/70 bg-white/[0.03] border border-white/[0.05] px-2.5 py-1 rounded-md group-hover:border-white/10 group-hover:text-white/70 transition-colors"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
 
-                  <div
-                    className="absolute bottom-0 left-0 w-full h-[1px] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
-                    style={{ background: `linear-gradient(90deg, ${service.color || '#22C55E'}60, transparent)` }}
-                  />
-                </Link>
-              );
-            })}
-          </div>
-        )}
+                <div className="absolute top-8 right-8 opacity-0 group-hover:opacity-100 translate-x-2 -translate-y-2 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-500">
+                  <ArrowUpRight size={18} style={{ color: color || '#22C55E' }} />
+                </div>
+
+                <div
+                  className="absolute -bottom-20 -right-20 w-40 h-40 rounded-full blur-[80px] opacity-0 group-hover:opacity-15 transition-opacity duration-700"
+                  style={{ backgroundColor: color || '#22C55E' }}
+                />
+
+                <div
+                  className="absolute bottom-0 left-0 w-full h-[1px] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"
+                  style={{ background: `linear-gradient(90deg, ${color || '#22C55E'}60, transparent)` }}
+                />
+              </div>
+            );
+
+            return isDb ? (
+              <Link
+                key={(service as Service).id}
+                href={`/services/${slug}`}
+                className={cn(
+                  isLarge ? 'lg:col-span-2' : 'lg:col-span-1',
+                  i === display.length - 1 && display.length % 3 === 1 ? 'lg:col-span-3' : ''
+                )}
+              >
+                {card}
+              </Link>
+            ) : (
+              <div key={i} className={cn(
+                isLarge ? 'lg:col-span-2' : 'lg:col-span-1',
+                i === display.length - 1 && display.length % 3 === 1 ? 'lg:col-span-3' : ''
+              )}>
+                {card}
+              </div>
+            );
+          })}
+        </div>
 
         <div className="text-center mt-12">
           <Link href="/services" className="btn-secondary inline-flex items-center gap-2">

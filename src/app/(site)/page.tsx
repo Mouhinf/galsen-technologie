@@ -1,6 +1,4 @@
-'use client';
-
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Navbar from '@/components/site/Navbar';
 import Hero from '@/components/site/Hero';
 import ServicesGrid from '@/components/site/ServicesGrid';
@@ -10,6 +8,11 @@ import Footer from '@/components/site/Footer';
 import TechGrid from '@/components/ui/TechGrid';
 import { Star, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { optimizeCloudinaryUrl } from '@/lib/cloudinary-url';
+import { getServices, getFeaturedProjects, getLatestPosts, getTestimonials } from '@/lib/data';
+import type { Post, Testimonial } from '@prisma/client';
+
+export const dynamic = 'force-dynamic';
 
 const partners = ['Madar', 'Linguère Digital Innovation', 'Assirik Tours', 'Diaz Automobile', 'SLAAC Voyages'];
 
@@ -19,65 +22,36 @@ const fallbackTestimonials = [
   { name: 'Jean-Pierre Kouamé', role: 'Fondateur, TechHub Dakar', text: 'Des solutions robustes et modernes qui répondent parfaitement aux enjeux technologiques de demain.' },
 ];
 
-interface TestimonialData {
-  id: string;
-  name: string;
-  role: string;
-  content: string;
-  rating: number;
-}
-
-interface BlogPost {
-  slug: string;
-  title: string;
-  excerpt: string;
-  category: string;
-  imageUrl: string;
-  createdAt: string;
-}
-
 const fallbackBlogPosts = [
   { slug: "futur-ia-afrique", title: "L'avenir de l'IA générative dans le secteur bancaire africain", excerpt: "Découvrez comment l'IA générative révolutionne le secteur bancaire en Afrique.", category: "IA & Data", imageUrl: "/blog/futur-ia.webp", createdAt: "" },
   { slug: "cyber-menaces-2024", title: "Les 5 grandes menaces de cybersécurité en 2024", excerpt: "Les cyberattaques évoluent rapidement. Voici les menaces à surveiller.", category: "Cybersécurité", imageUrl: "/blog/cyber-menaces.webp", createdAt: "" },
   { slug: "nextjs-vs-react", title: "Pourquoi nous avons choisi Next.js 14 pour nos clients", excerpt: "Next.js 14 offre des performances inégalées pour le web moderne.", category: "Développement", imageUrl: "/blog/nextjs.webp", createdAt: "" },
 ];
 
-export default function Home() {
-  const [testimonials, setTestimonials] = useState<TestimonialData[] | null>(null);
-  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+function formatDate(dateStr: string) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
+}
 
-  useEffect(() => {
-    fetch('/api/testimonials?published=true')
-      .then(res => res.json())
-      .then(data => {
-        const published = data.filter((t: any) => t.published).slice(0, 3);
-        setTestimonials(published.length > 0 ? published : null);
-      })
-      .catch(() => setTestimonials(null));
-  }, []);
+export default async function Home() {
+  const services = await getServices();
+  const featuredProjects = await getFeaturedProjects(3);
+  const latestPosts = await getLatestPosts(3);
+  const testimonials = await getTestimonials();
 
-  useEffect(() => {
-    fetch('/api/posts')
-      .then(res => res.json())
-      .then(data => {
-        const published = data.filter((p: any) => p.published).slice(0, 3);
-        setBlogPosts(published.length > 0 ? published : fallbackBlogPosts);
-      })
-      .catch(() => setBlogPosts(fallbackBlogPosts));
-  }, []);
-
-  const displayTestimonials = testimonials ?? fallbackTestimonials;
-  const displayBlogPosts: BlogPost[] = blogPosts.length > 0 ? blogPosts : fallbackBlogPosts;
+  const displayTestimonials = testimonials.length > 0 ? testimonials.slice(0, 3) : fallbackTestimonials;
+  const displayBlogPosts: Post[] = latestPosts.length > 0 ? latestPosts : fallbackBlogPosts as any;
 
   return (
-    <main className="min-h-screen">
+    <main id="main-content" className="min-h-screen">
       <TechGrid />
       <Navbar />
       <Hero />
 
       {/* ═══ Partners Marquee ═══ */}
       <section className="py-10 border-y border-white/5 bg-white/[0.01] overflow-hidden">
-        <p className="text-center text-[9px] font-mono tracking-[5px] uppercase text-white/60 mb-8">
+        <p className="text-center text-[9px] font-mono tracking-[5px] uppercase text-white/70 mb-8">
           Ils nous font confiance
         </p>
         <div className="relative">
@@ -87,7 +61,7 @@ export default function Home() {
             {partners.map((name, i) => (
               <span
                 key={i}
-                className="inline-block mx-12 text-xl font-display font-black tracking-wider text-white/55 hover:text-[var(--green-l)]/60 transition-colors duration-500 cursor-default select-none"
+                className="inline-block mx-12 text-xl font-display font-black tracking-wider text-white/70 hover:text-[var(--green-l)]/60 transition-colors duration-500 cursor-default select-none"
               >
                 {name}
               </span>
@@ -96,7 +70,7 @@ export default function Home() {
         </div>
       </section>
 
-      <ServicesGrid />
+      <ServicesGrid services={services} />
 
       {/* ═══ Why Us ═══ */}
       <section className="py-28 relative">
@@ -112,20 +86,20 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { title: 'Expertise locale', desc: 'Équipe 100% sénégalaise comprenant les réalités du marché africain.', icon: '🔒', color: 'var(--green-l)' },
-              { title: 'Livraison rapide', desc: 'Sprints agiles et méthodologies modernes pour tenir les délais.', icon: '⚡', color: 'var(--gold)' },
-              { title: 'Vision africaine', desc: 'Des solutions pensées pour l\'Afrique avec un impact global.', icon: '🌍', color: 'var(--blue)' },
-              { title: 'Support 24/7', desc: 'Accompagnement continu après le déploiement de vos projets.', icon: '🤝', color: 'var(--purple)' },
+              { title: 'Expertise locale', desc: 'Équipe 100% sénégalaise comprenant les réalités du marché africain.', icon: '🔒', iconLabel: 'Sécurité', color: 'var(--green-l)' },
+              { title: 'Livraison rapide', desc: 'Sprints agiles et méthodologies modernes pour tenir les délais.', icon: '⚡', iconLabel: 'Rapidité', color: 'var(--gold)' },
+              { title: 'Vision africaine', desc: 'Des solutions pensées pour l\'Afrique avec un impact global.', icon: '🌍', iconLabel: 'Monde', color: 'var(--blue)' },
+              { title: 'Support 24/7', desc: 'Accompagnement continu après le déploiement de vos projets.', icon: '🤝', iconLabel: 'Partenariat', color: 'var(--purple)' },
             ].map((item, i) => (
               <div
                 key={i}
                 className="p-8 glass-card group relative overflow-hidden"
               >
-                <div className="text-3xl mb-6 relative z-10">{item.icon}</div>
+                <div className="text-3xl mb-6 relative z-10"><span aria-hidden="true">{item.icon}</span><span className="sr-only">{item.iconLabel}</span></div>
                 <h3 className="text-lg font-heading font-bold mb-3 group-hover:text-[var(--green-l)] transition-colors relative z-10">
                   {item.title}
                 </h3>
-                <p className="text-white/60 text-sm font-body leading-relaxed relative z-10">{item.desc}</p>
+                <p className="text-white/70 text-sm font-body leading-relaxed relative z-10">{item.desc}</p>
                 {/* Scan line */}
                 <div className="absolute left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[var(--green-l)]/30 to-transparent opacity-0 group-hover:opacity-100" style={{ animation: 'scan-sweep 2s ease-in-out infinite' }} />
               </div>
@@ -134,7 +108,7 @@ export default function Home() {
         </div>
       </section>
 
-      <FeaturedProjects />
+      <FeaturedProjects projects={featuredProjects} />
 
       <ProcessTimeline />
 
@@ -156,13 +130,12 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {displayBlogPosts.map((post, i) => (
-              <Link key={post.slug} href={`/blog/${post.slug}`}>
-                <div
-                  className="group glass-card overflow-hidden flex flex-col cursor-pointer h-full"
-                >
-                  <div className="aspect-[16/9] relative overflow-hidden">
-                    <img src={post.imageUrl} alt={post.title} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" />
+            {displayBlogPosts.map((post) => {
+              const isFallback = fallbackBlogPosts.some(bp => bp.slug === post.slug);
+              const cardContent = (
+                <>
+                  <div className="aspect-[16/9] relative overflow-hidden bg-white/5">
+                    <img src={optimizeCloudinaryUrl(post.imageUrl, { width: 600 })} alt={post.title} width={600} height={338} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700" />
                     <div className="absolute top-3 left-3 text-[8px] font-mono tracking-widest text-black bg-[var(--green-l)] px-2 py-1 rounded">
                       {post.category.toUpperCase()}
                     </div>
@@ -171,7 +144,7 @@ export default function Home() {
                     <h3 className="text-base font-heading font-bold text-white mb-3 group-hover:text-[var(--green-l)] transition-colors line-clamp-2">
                       {post.title}
                     </h3>
-                    <p className="text-white/60 text-xs leading-relaxed mb-4 line-clamp-2 flex-grow">
+                    <p className="text-white/70 text-xs leading-relaxed mb-4 line-clamp-2 flex-grow">
                       {post.excerpt}
                     </p>
                     <div className="flex items-center text-[10px] text-[var(--green-l)] font-mono uppercase tracking-widest gap-1.5">
@@ -179,9 +152,18 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-[var(--green-l)] via-[var(--gold)] to-[var(--green-l)] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+                </>
+              );
+              return isFallback ? (
+                <div key={post.slug} className="group glass-card overflow-hidden flex flex-col cursor-default h-full">
+                  {cardContent}
                 </div>
-              </Link>
-            ))}
+              ) : (
+                <Link key={post.slug} href={`/blog/${post.slug}`} className="group glass-card overflow-hidden flex flex-col cursor-pointer h-full">
+                  {cardContent}
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -221,7 +203,7 @@ export default function Home() {
                   </div>
                   <div>
                     <div className="text-white font-bold text-sm">{t.name}</div>
-                    <div className="text-white/50 text-[11px] font-mono">{t.role}</div>
+                    <div className="text-white/70 text-[11px] font-mono">{t.role}</div>
                   </div>
                 </div>
               </div>
@@ -248,7 +230,7 @@ export default function Home() {
           <h2 className="text-4xl md:text-6xl font-display font-bold text-white mb-6 leading-tight">
             Prêt à transformer votre entreprise ?
           </h2>
-          <p className="text-white/60 text-lg mb-12 max-w-lg mx-auto">
+          <p className="text-white/70 text-lg mb-12 max-w-lg mx-auto">
             Donnez à votre projet l&apos;élan technologique qu&apos;il mérite.
           </p>
           <div className="flex flex-wrap justify-center gap-6">

@@ -1,17 +1,11 @@
-'use client';
-
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { optimizeCloudinaryUrl } from '@/lib/cloudinary-url';
+import type { Project } from '@prisma/client';
 
-interface ProjectData {
-  id: string;
-  title: string;
-  slug: string;
-  category: string;
-  description: string;
-  techStack: string;
-  imageUrl: string;
+interface FeaturedProjectsProps {
+  projects?: Project[];
 }
 
 const fallbackProjects = [
@@ -20,29 +14,14 @@ const fallbackProjects = [
   { title: 'SecureCloud Gov', slug: 'securecloud-gov', category: 'CYBERSÉCURITÉ', tech: ['AWS', 'Docker', 'SIEM'], image: '/projects/securecloud.webp' },
 ];
 
-export default function FeaturedProjects() {
-  const [projects, setProjects] = useState<ProjectData[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch('/api/projects')
-      .then(res => res.json())
-      .then(data => {
-        setProjects(data.filter((p: any) => p.published));
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
-
-  const getTech = (p: ProjectData) => {
+export default function FeaturedProjects({ projects = [] }: FeaturedProjectsProps) {
+  const getTech = (p: Project) => {
     try { return JSON.parse(p.techStack); } catch { return []; }
   };
 
-  const display = loading
-    ? fallbackProjects
-    : projects.length > 0
-      ? projects.slice(0, 3).map(p => ({ title: p.title, slug: p.slug, category: p.category.toUpperCase(), tech: getTech(p) as string[], image: p.imageUrl }))
-      : fallbackProjects;
+  const display = projects.length > 0
+    ? projects.slice(0, 3).map(p => ({ title: p.title, slug: p.slug, category: p.category.toUpperCase(), tech: getTech(p) as string[], image: p.imageUrl }))
+    : fallbackProjects;
 
   return (
     <section className="py-28 relative">
@@ -62,13 +41,12 @@ export default function FeaturedProjects() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {display.map((project, i) => (
-            <Link key={i} href={`/realisations/${project.slug}`}>
-              <div
-                className="group relative overflow-hidden rounded-2xl glass-card cursor-pointer"
-              >
-                <div className="aspect-video relative overflow-hidden">
-                  <img src={project.image} alt={project.title} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-50 group-hover:opacity-70" />
+          {display.map((project, i) => {
+            const isFallback = fallbackProjects.some(fp => fp.slug === project.slug);
+            const cardContent = (
+              <>
+                <div className="aspect-video relative overflow-hidden bg-white/5">
+                  <img src={optimizeCloudinaryUrl(project.image, { width: 600, height: 338 })} alt={project.title} width={600} height={338} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-50 group-hover:opacity-70" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
                   <div className="absolute top-4 left-4 text-[9px] font-mono tracking-widest bg-[var(--green-l)]/20 text-[var(--green-l)] border border-[var(--green-l)]/30 px-3 py-1 rounded-full backdrop-blur-sm">
                     {project.category}
@@ -78,14 +56,23 @@ export default function FeaturedProjects() {
                   <h3 className="text-xl font-heading font-bold text-white mb-4 group-hover:text-[var(--green-l)] transition-colors">{project.title}</h3>
                   <div className="flex gap-2 flex-wrap">
                     {project.tech.map((t: string) => (
-                      <span key={t} className="text-[9px] font-mono text-white/50 bg-white/[0.04] px-2 py-1 rounded border border-white/[0.06]">{t}</span>
+                      <span key={t} className="text-[9px] font-mono text-white/70 bg-white/[0.04] px-2 py-1 rounded border border-white/[0.06]">{t}</span>
                     ))}
                   </div>
                 </div>
                 <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-[var(--green-l)] to-[var(--gold)] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+              </>
+            );
+            return isFallback ? (
+              <div key={i} className="group relative overflow-hidden rounded-2xl glass-card cursor-default">
+                {cardContent}
               </div>
-            </Link>
-          ))}
+            ) : (
+              <Link key={i} href={`/realisations/${project.slug}`} className="group relative overflow-hidden rounded-2xl glass-card cursor-pointer">
+                {cardContent}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -13,23 +13,23 @@ const Footer = () => {
             Galsen Technologie propulse votre entreprise vers le futur numérique. IA, cybersécurité, développement — nous construisons l'Afrique tech.
           </p>
           <div className="flex gap-4">
-            <Link href="#" aria-label="LinkedIn" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--green-l)]/20 hover:text-[var(--green-l)] transition-all">
+            <Link href="https://www.linkedin.com/company/galsen-technologie" aria-label="LinkedIn" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--green-l)]/20 hover:text-[var(--green-l)] transition-all">
               <span>IN</span>
             </Link>
-            <Link href="#" aria-label="Twitter" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--green-l)]/20 hover:text-[var(--green-l)] transition-all">
+            <Link href="https://twitter.com/GalsenTech" aria-label="Twitter" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--green-l)]/20 hover:text-[var(--green-l)] transition-all">
               <span>TW</span>
             </Link>
-            <Link href="#" aria-label="GitHub" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--green-l)]/20 hover:text-[var(--green-l)] transition-all">
+            <Link href="https://github.com/Mouhinf/galsen-technologie" aria-label="GitHub" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--green-l)]/20 hover:text-[var(--green-l)] transition-all">
               <span>GH</span>
             </Link>
-            <Link href="#" aria-label="WhatsApp" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--green-l)]/20 hover:text-[var(--green-l)] transition-all">
+            <Link href="https://wa.me/221700003004" aria-label="WhatsApp" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--green-l)]/20 hover:text-[var(--green-l)] transition-all">
               <WhatsApp size={18} />
             </Link>
           </div>
         </div>
 
         <div>
-          <h2 className="text-white font-heading font-semibold mb-6 text-sm">Services</h2>
+          <h3 className="text-white font-heading font-semibold mb-6 text-sm">Services</h3>
           <ul className="space-y-4 text-white/60 text-sm font-body">
             <li><Link href="/services" className="hover:text-[var(--green-l)] transition-colors">Web & Mobile</Link></li>
             <li><Link href="/services" className="hover:text-[var(--green-l)] transition-colors">IA & Data</Link></li>
@@ -40,7 +40,7 @@ const Footer = () => {
         </div>
 
         <div>
-          <h2 className="text-white font-heading font-semibold mb-6 text-sm">Navigation</h2>
+          <h3 className="text-white font-heading font-semibold mb-6 text-sm">Navigation</h3>
           <ul className="space-y-4 text-white/60 text-sm font-body">
             <li><Link href="/a-propos" className="hover:text-[var(--green-l)] transition-colors">À Propos</Link></li>
             <li><Link href="/realisations" className="hover:text-[var(--green-l)] transition-colors">Réalisations</Link></li>
@@ -51,21 +51,22 @@ const Footer = () => {
         </div>
 
         <div>
-          <h2 className="text-white font-heading font-semibold mb-6 text-sm">Newsletter</h2>
+          <h3 className="text-white font-heading font-semibold mb-6 text-sm">Newsletter</h3>
           <p className="text-white/60 text-sm mb-4 font-body">Restez informé de nos dernières innovations.</p>
           <form className="space-y-3">
             <input 
               type="email" 
+              aria-label="Adresse email pour la newsletter"
               placeholder="votre@email.com" 
               className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-[var(--green-l)] transition-colors"
             />
-            <button className="btn-primary w-full text-[10px] py-2">S'abonner</button>
+            <button aria-label="S'abonner à la newsletter" className="btn-primary w-full text-[10px] py-2">S'abonner</button>
           </form>
         </div>
       </div>
 
       <div className="max-w-[1320px] mx-auto px-4 mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 relative z-10 text-white/60 text-[12px]">
-        <p>© 2024 Galsen Technologie. Tous droits réservés.</p>
+        <p>© {new Date().getFullYear()} Galsen Technologie. Tous droits réservés.</p>
         <div className="flex gap-6">
           <Link href="/legal" className="hover:text-white transition-colors">Mentions Légales</Link>
           <Link href="/privacy" className="hover:text-white transition-colors">Confidentialité</Link>
