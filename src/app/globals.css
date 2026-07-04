@@ -119,6 +119,21 @@
     pointer-events: none;
   }
 
+  .binary-particle {
+    position: fixed; top: 0; z-index: -1;
+    font-size: 10px; font-family: 'JetBrains Mono', monospace;
+    color: var(--green-l); opacity: 0.04;
+    pointer-events: none;
+    animation: binary-fall linear infinite;
+  }
+
+  @keyframes binary-fall {
+    0% { transform: translateY(-10px); opacity: 0; }
+    10% { opacity: 0.04; }
+    90% { opacity: 0.04; }
+    100% { transform: translateY(100vh); opacity: 0; }
+  }
+
   .hero-glow {
     position: fixed; top: -10%; left: 50%;
     transform: translateX(-50%);
