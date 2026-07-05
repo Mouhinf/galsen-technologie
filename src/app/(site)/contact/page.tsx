@@ -56,7 +56,7 @@ const ContactPage = () => {
                 {[
                   { icon: "📍", label: "Adresse", value: "Dakar, Sénégal - Plateau, Rue Carnot" },
                   { icon: "📞", label: "Téléphone", value: "+221 70 000 30 04" },
-                  { icon: "✉", label: "Email", value: "contact@galsentechnologie.sn" },
+                  { icon: "✉", label: "Email", value: "galsentechnologie@gmail.com" },
                   { icon: "⏰", label: "Horaires", value: "Lun–Ven: 8h – 18h" }
                 ].map((item, i) => (
                   <div key={i} className="flex gap-6 items-start">

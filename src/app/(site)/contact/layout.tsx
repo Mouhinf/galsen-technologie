@@ -2,7 +2,7 @@ import React from 'react';
 
 export const metadata = {
   title: 'Contact & Devis Gratuit | Projet Web, IA, Mobile à Dakar — Galsen Technologie Sénégal',
-  description: 'Contactez Galsen Technologie à Dakar pour votre projet web, mobile ou IA. Devis gratuit sous 24h. ☎ +221 70 000 30 04 — contact@galsentechnologie.sn',
+  description: 'Contactez Galsen Technologie à Dakar pour votre projet web, mobile ou IA. Devis gratuit sous 24h. ☎ +221 70 000 30 04 — galsentechnologie@gmail.com',
   alternates: { canonical: 'https://galsen.lingueredigital.com/contact' },
   openGraph: {
     title: 'Contact & Devis Gratuit | Galsen Technologie Dakar',

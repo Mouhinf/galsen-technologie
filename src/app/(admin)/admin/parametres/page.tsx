@@ -13,7 +13,7 @@ const TABS = [
 const GENERAL_FIELDS = [
   { key: 'site_name', label: 'Nom du site', type: 'text', default: 'Galsen Technologie' },
   { key: 'tagline', label: 'Tagline', type: 'text', default: 'IA & Tech au Sénégal' },
-  { key: 'contact_email', label: 'Email de contact', type: 'email', default: 'contact@galsentechnologie.sn' },
+  { key: 'contact_email', label: 'Email de contact', type: 'email', default: 'galsentechnologie@gmail.com' },
   { key: 'phone', label: 'Téléphone', type: 'tel', default: '+221 70 000 30 04' },
   { key: 'address', label: 'Adresse', type: 'text', default: 'Dakar, Sénégal - Plateau, Rue Carnot' },
   { key: 'linkedin', label: 'LinkedIn', type: 'url', default: '' },
@@ -33,8 +33,8 @@ const EMAIL_FIELDS = [
   { key: 'email_smtp_port', label: 'Port SMTP', type: 'text', default: '587' },
   { key: 'email_smtp_user', label: 'Utilisateur SMTP', type: 'text', default: '' },
   { key: 'email_smtp_pass', label: 'Mot de passe SMTP', type: 'password', default: '' },
-  { key: 'email_from', label: 'Email expéditeur', type: 'email', default: 'noreply@galsentechnologie.sn' },
-  { key: 'email_notifications', label: 'Notifications (destinataire)', type: 'email', default: 'contact@galsentechnologie.sn' },
+  { key: 'email_from', label: 'Email expéditeur', type: 'email', default: 'galsentechnologie@gmail.com' },
+  { key: 'email_notifications', label: 'Notifications (destinataire)', type: 'email', default: 'galsentechnologie@gmail.com' },
 ];
 
 const SECURITY_FIELDS = [
