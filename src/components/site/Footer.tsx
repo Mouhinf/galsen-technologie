@@ -77,7 +77,7 @@ const Footer = () => {
 
       {/* SEO text */}
       <div className="pt-8 pb-4">
-        <p className="text-white/[0.07] text-[11px] leading-relaxed text-center max-w-3xl mx-auto">
+        <p className="text-white/20 text-[11px] leading-relaxed text-center max-w-3xl mx-auto">
           Galsen Technologie — Entreprise Informatique à Dakar, Sénégal. Développement web, IA, cybersécurité, cloud &amp; formation tech.
         </p>
       </div>

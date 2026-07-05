@@ -75,7 +75,7 @@ export default function FormationPage() {
                 <span className="text-[9px] font-mono border border-white/10 px-2 py-1 rounded text-white/70 uppercase">{f.level}</span>
               </div>
               
-              <h2 className="text-2xl font-heading font-bold mb-4">{f.title}</h2>
+              <h2 className="text-2xl font-heading font-bold mb-4 text-white">{f.title}</h2>
               <p className="text-white/70 text-sm mb-8 flex-grow">{f.desc}</p>
               
               <div className="border-t border-white/5 pt-6 mt-auto">

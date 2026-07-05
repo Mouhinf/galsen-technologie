@@ -41,7 +41,7 @@ export default async function ServiceDetailPage({ params }: { params: { slug: st
       <section className="pt-32 pb-16 relative">
         <div className="absolute inset-0 z-0">
           {service.imageUrl && (
-            <img src={optimizeCloudinaryUrl(service.imageUrl, { width: 1200, height: 600 })} alt="" width={1200} height={600} fetchPriority="high" decoding="async" className="absolute inset-0 w-full h-full object-cover opacity-20" />
+            <img src={optimizeCloudinaryUrl(service.imageUrl, { width: 1200, height: 600 })} alt={`${service.title} — Galsen Technologie`} width={1200} height={600} fetchPriority="high" decoding="async" className="absolute inset-0 w-full h-full object-cover opacity-20" />
           )}
           <div className="absolute inset-0 bg-gradient-to-b from-black via-black/80 to-black" />
         </div>
