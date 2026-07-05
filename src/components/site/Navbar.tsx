@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import Logo from '@/components/ui/Logo';
 import { cn } from '@/lib/utils';
+import { useTracking } from '@/lib/hooks/useTracking';
 
 const navLinks = [
   { name: 'Accueil', href: '/' },
@@ -21,6 +22,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const { trackEvent } = useTracking();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -62,7 +64,7 @@ const Navbar = () => {
         </div>
 
         <div className="hidden lg:block">
-          <Link href="/contact" className="btn-primary text-[11px] px-5 py-2">
+          <Link href="/contact" className="btn-primary text-[11px] px-5 py-2" onClick={() => trackEvent('cta_click', { label: 'navbar_rdv' })}>
             Prendre RDV
           </Link>
         </div>
@@ -101,7 +103,7 @@ const Navbar = () => {
         <Link 
           href="/contact" 
           className="btn-primary mt-4"
-          onClick={() => setIsOpen(false)}
+          onClick={() => { setIsOpen(false); trackEvent('cta_click', { label: 'mobile_rdv' }); }}
         >
           Prendre RDV
         </Link>

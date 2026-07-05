@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { ArrowRight, BrainCircuit, Shield, Cloud, Code2, Cpu, Wifi, Zap, Database } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useTracking } from '@/lib/hooks/useTracking';
 
 /* ─── Orbiting Icons ─── */
 const orbitIcons = [
@@ -111,6 +112,7 @@ const NeuralNetwork = () => (
    HERO COMPONENT
    ═══════════════════════════════════════════════ */
 const Hero = () => {
+  const { trackEvent } = useTracking();
   return (
     <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
 
@@ -152,11 +154,11 @@ const Hero = () => {
           <div
             className="flex flex-wrap gap-4 justify-center lg:justify-start mb-10"
           >
-            <Link href="/services" className="btn-primary flex items-center gap-2 group">
+            <Link href="/services" className="btn-primary flex items-center gap-2 group" onClick={() => trackEvent('cta_click', { label: 'decouvrir_services' })}>
               Découvrir nos services
               <ArrowRight className="group-hover:translate-x-1 transition-transform" size={18} />
             </Link>
-            <Link href="/realisations" className="btn-secondary">
+            <Link href="/realisations" className="btn-secondary" onClick={() => trackEvent('cta_click', { label: 'voir_realisations' })}>
               Voir nos réalisations
             </Link>
           </div>

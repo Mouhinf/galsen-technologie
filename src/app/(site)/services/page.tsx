@@ -3,6 +3,7 @@ import TechGrid from '@/components/ui/TechGrid';
 import Navbar from '@/components/site/Navbar';
 import Footer from '@/components/site/Footer';
 import prisma from '@/lib/prisma';
+import { TrackedLink } from '@/components/ui/TrackedLink';
 
 export const metadata = {
   title: 'Services | Galsen Technologie',
@@ -98,9 +99,9 @@ export default async function ServicesPage() {
                         <Link href={`/services/${service.slug}`} className="btn-primary inline-flex items-center gap-2 text-xs">
                           En savoir plus <ArrowRight size={14} />
                         </Link>
-                        <a href={whatsappUrl(service.title)} target="_blank" rel="noopener noreferrer" aria-label={`Contacter via WhatsApp pour ${service.title}`} className="inline-flex items-center gap-2 px-7 py-3 rounded-lg border border-[#25D366]/30 text-[#25D366] hover:bg-[#25D366]/10 transition-all text-xs font-semibold tracking-widest uppercase">
+                        <TrackedLink href={whatsappUrl(service.title)} label={`whatsapp_${service.slug}`} target="_blank" rel="noopener noreferrer" aria-label={`Contacter via WhatsApp pour ${service.title}`} className="inline-flex items-center gap-2 px-7 py-3 rounded-lg border border-[#25D366]/30 text-[#25D366] hover:bg-[#25D366]/10 transition-all text-xs font-semibold tracking-widest uppercase">
                           <MessageCircle size={16} /> WhatsApp
-                        </a>
+                        </TrackedLink>
                       </div>
                     </>
                   ) : (
@@ -153,9 +154,9 @@ export default async function ServicesPage() {
                         <Link href={`/services/${service.slug}`} className="btn-primary inline-flex items-center gap-2 text-xs">
                           En savoir plus <ArrowRight size={14} />
                         </Link>
-                        <a href={whatsappUrl(service.title)} target="_blank" rel="noopener noreferrer" aria-label={`Contacter via WhatsApp pour ${service.title}`} className="inline-flex items-center gap-2 px-7 py-3 rounded-lg border border-[#25D366]/30 text-[#25D366] hover:bg-[#25D366]/10 transition-all text-xs font-semibold tracking-widest uppercase">
+                        <TrackedLink href={whatsappUrl(service.title)} label={`whatsapp_${service.slug}`} target="_blank" rel="noopener noreferrer" aria-label={`Contacter via WhatsApp pour ${service.title}`} className="inline-flex items-center gap-2 px-7 py-3 rounded-lg border border-[#25D366]/30 text-[#25D366] hover:bg-[#25D366]/10 transition-all text-xs font-semibold tracking-widest uppercase">
                           <MessageCircle size={16} /> WhatsApp
-                        </a>
+                        </TrackedLink>
                       </div>
                     </>
                   )}
@@ -173,14 +174,15 @@ export default async function ServicesPage() {
           <p className="text-white/70 mb-10 max-w-lg mx-auto">
             Discutons-en directement sur WhatsApp. Notre équipe vous répond sous 30 minutes.
           </p>
-          <a
+          <TrackedLink
             href={`https://wa.me/${WHATSAPP_NUMBER}`}
+            label="whatsapp_global_cta"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 bg-[#25D366] text-black px-8 py-4 rounded-xl font-bold hover:bg-[#25D366]/90 transition-all text-sm uppercase tracking-widest"
           >
             <MessageCircle size={20} /> Nous écrire sur WhatsApp
-          </a>
+          </TrackedLink>
         </div>
       </section>
 

@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Logo from '@/components/ui/Logo';
 import { Phone as WhatsApp } from 'lucide-react';
+import { TrackedLink } from '@/components/ui/TrackedLink';
 
 const Footer = () => {
   return (
@@ -22,7 +23,7 @@ const Footer = () => {
             <Link href="https://github.com/Mouhinf/galsen-technologie" aria-label="GitHub" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--green-l)]/20 hover:text-[var(--green-l)] transition-all">
               <span>GH</span>
             </Link>
-            <Link href="https://wa.me/221700003004" aria-label="WhatsApp" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--green-l)]/20 hover:text-[var(--green-l)] transition-all">
+            <TrackedLink href="https://wa.me/221700003004" label="footer_whatsapp" aria-label="WhatsApp" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--green-l)]/20 hover:text-[var(--green-l)] transition-all">
               <WhatsApp size={18} />
             </Link>
           </div>

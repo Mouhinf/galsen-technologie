@@ -44,12 +44,13 @@ export default function AdminStatsPage() {
   const [sessions, setSessions] = useState<{ avgPagesPerSession: string; avgDurationSec: number; bounceRate: string; totalSessions: number; pageviews: number } | null>(null);
   const [compare, setCompare] = useState<{ currentVisits: number; prevVisits: number; change: string; currentSessions: number; prevSessions: number } | null>(null);
   const [latest, setLatest] = useState<{ id: string; path: string; device: string; country: string | null; createdAt: string }[]>([]);
+  const [countries, setCountries] = useState<{ country: string; count: number }[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchAll = useCallback(async () => {
     setLoading(true);
     try {
-      const [visitsRes, pagesRes, actionsRes, devicesRes, refsRes, hourlyRes, sessRes, compareRes, latestRes] = await Promise.all([
+      const [visitsRes, pagesRes, actionsRes, devicesRes, refsRes, hourlyRes, sessRes, compareRes, latestRes, countriesRes] = await Promise.all([
         fetch(`/api/admin/stats/visits?period=${period}`),
         fetch('/api/admin/stats/top-pages'),
         fetch('/api/admin/stats/actions'),
@@ -59,6 +60,7 @@ export default function AdminStatsPage() {
         fetch('/api/admin/stats/sessions'),
         fetch('/api/admin/stats/compare'),
         fetch('/api/admin/stats/latest'),
+        fetch('/api/admin/stats/countries'),
       ]);
 
       if (visitsRes.ok) { const v = await visitsRes.json(); setVisitsData(v.data || []); setTotals({ today: v.today || 0, thisWeek: v.thisWeek || 0, thisMonth: v.thisMonth || 0, total: v.total || 0 }); }
@@ -70,6 +72,7 @@ export default function AdminStatsPage() {
       if (sessRes.ok) setSessions(await sessRes.json());
       if (compareRes.ok) setCompare(await compareRes.json());
       if (latestRes.ok) setLatest(await latestRes.json());
+      if (countriesRes.ok) setCountries(await countriesRes.json());
     } catch (e) {
       console.error('Failed to load stats', e);
     } finally {
@@ -293,6 +296,31 @@ export default function AdminStatsPage() {
                 </ResponsiveContainer>
               ) : (
                 <p className="text-white/30 text-sm text-center py-12">Aucune donnée.</p>
+              )}
+            </div>
+
+            {/* Countries */}
+            <div className="p-6 bg-white/[0.02] border border-white/[0.06] rounded-xl">
+              <h3 className="text-sm font-heading font-bold text-white mb-6">Pays</h3>
+              {countries.length > 0 ? (
+                <div className="space-y-2">
+                  {countries.slice(0, 8).map((c, i) => {
+                    const max = countries[0]?.count || 1;
+                    const pct = (c.count / max) * 100;
+                    return (
+                      <div key={c.country} className="flex items-center gap-3 text-sm">
+                        <span className="text-white/50 w-4 text-[10px] font-mono">{i + 1}</span>
+                        <span className="text-white/80 w-24 truncate">{c.country}</span>
+                        <div className="flex-1 h-2 bg-white/5 rounded-full overflow-hidden">
+                          <div className="h-full rounded-full bg-gradient-to-r from-[var(--green-l)] to-[var(--green-l)]/40" style={{ width: `${pct}%` }} />
+                        </div>
+                        <span className="text-white font-mono text-xs w-10 text-right">{c.count}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <p className="text-white/30 text-sm text-center py-8">Aucune donnée.</p>
               )}
             </div>
 

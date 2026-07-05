@@ -5,9 +5,11 @@ import { Send, CheckCircle2 } from 'lucide-react';
 import TechGrid from '@/components/ui/TechGrid';
 import Navbar from '@/components/site/Navbar';
 import Footer from '@/components/site/Footer';
+import { useTracking } from '@/lib/hooks/useTracking';
 
 const ContactPage = () => {
   const [submitted, setSubmitted] = useState(false);
+  const { trackEvent } = useTracking();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '', service: 'Web & Mobile' });
 
@@ -28,6 +30,7 @@ const ContactPage = () => {
         }),
       });
       setSubmitted(true);
+      trackEvent('form_submit', { form: 'contact', service: form.service });
     } finally {
       setLoading(false);
     }
