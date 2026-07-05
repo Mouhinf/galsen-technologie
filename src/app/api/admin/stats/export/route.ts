@@ -9,12 +9,12 @@ export async function GET() {
   const visits = await prisma.visit.findMany({
     orderBy: { createdAt: 'desc' },
     take: 10000,
-    select: { path: true, referrer: true, device: true, country: true, createdAt: true, userAgent: true },
+    select: { path: true, referrer: true, device: true, country: true, city: true, region: true, createdAt: true, userAgent: true },
   });
 
-  const header = 'path,referrer,device,country,date';
+  const header = 'path,referrer,device,country,city,region,date';
   const rows = visits.map(v =>
-    `"${v.path}","${v.referrer || ''}","${v.device}","${v.country || ''}","${v.createdAt.toISOString()}"`
+    `"${v.path}","${v.referrer || ''}","${v.device}","${v.country || ''}","${v.city || ''}","${v.region || ''}","${v.createdAt.toISOString()}"`
   ).join('\n');
 
   return new NextResponse(`${header}\n${rows}`, {

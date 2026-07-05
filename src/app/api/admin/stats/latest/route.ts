@@ -9,7 +9,7 @@ export async function GET() {
   const visits = await prisma.visit.findMany({
     orderBy: { createdAt: 'desc' },
     take: 50,
-    select: { id: true, path: true, device: true, country: true, createdAt: true },
+    select: { id: true, path: true, device: true, country: true, city: true, region: true, createdAt: true },
   });
 
   return NextResponse.json(visits);

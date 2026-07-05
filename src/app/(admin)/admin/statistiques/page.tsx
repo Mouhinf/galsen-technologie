@@ -43,8 +43,8 @@ export default function AdminStatsPage() {
   const [hourly, setHourly] = useState<{ hour: string; count: number }[]>([]);
   const [sessions, setSessions] = useState<{ avgPagesPerSession: string; avgDurationSec: number; bounceRate: string; totalSessions: number; pageviews: number } | null>(null);
   const [compare, setCompare] = useState<{ currentVisits: number; prevVisits: number; change: string; currentSessions: number; prevSessions: number } | null>(null);
-  const [latest, setLatest] = useState<{ id: string; path: string; device: string; country: string | null; createdAt: string }[]>([]);
-  const [countries, setCountries] = useState<{ country: string; count: number }[]>([]);
+  const [latest, setLatest] = useState<{ id: string; path: string; device: string; country: string | null; city: string | null; region: string | null; createdAt: string }[]>([]);
+  const [countries, setCountries] = useState<{ country: string; count: number; cities: { city: string; count: number }[] }[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchAll = useCallback(async () => {
@@ -303,18 +303,31 @@ export default function AdminStatsPage() {
             <div className="p-6 bg-white/[0.02] border border-white/[0.06] rounded-xl">
               <h3 className="text-sm font-heading font-bold text-white mb-6">Pays</h3>
               {countries.length > 0 ? (
-                <div className="space-y-2">
+                <div className="space-y-3">
                   {countries.slice(0, 8).map((c, i) => {
                     const max = countries[0]?.count || 1;
                     const pct = (c.count / max) * 100;
                     return (
-                      <div key={c.country} className="flex items-center gap-3 text-sm">
-                        <span className="text-white/50 w-4 text-[10px] font-mono">{i + 1}</span>
-                        <span className="text-white/80 w-24 truncate">{c.country}</span>
-                        <div className="flex-1 h-2 bg-white/5 rounded-full overflow-hidden">
-                          <div className="h-full rounded-full bg-gradient-to-r from-[var(--green-l)] to-[var(--green-l)]/40" style={{ width: `${pct}%` }} />
+                      <div key={c.country}>
+                        <div className="flex items-center gap-3 text-sm">
+                          <span className="text-white/50 w-4 text-[10px] font-mono">{i + 1}</span>
+                          <span className="text-white/80 w-24 truncate">{c.country}</span>
+                          <div className="flex-1 h-2 bg-white/5 rounded-full overflow-hidden">
+                            <div className="h-full rounded-full bg-gradient-to-r from-[var(--green-l)] to-[var(--green-l)]/40" style={{ width: `${pct}%` }} />
+                          </div>
+                          <span className="text-white font-mono text-xs w-10 text-right">{c.count}</span>
                         </div>
-                        <span className="text-white font-mono text-xs w-10 text-right">{c.count}</span>
+                        {c.country === 'Sénégal' || c.country === 'Senegal' ? (
+                          <div className="ml-7 mt-1 space-y-0.5">
+                            {c.cities.map(city => (
+                              <div key={city.city} className="flex items-center gap-2 text-[11px] text-white/50">
+                                <span className="w-1 h-1 rounded-full bg-[var(--gold)]" />
+                                <span>{city.city}</span>
+                                <span className="font-mono text-white/40">{city.count}</span>
+                              </div>
+                            ))}
+                          </div>
+                        ) : null}
                       </div>
                     );
                   })}
@@ -336,7 +349,7 @@ export default function AdminStatsPage() {
                         <span className="text-white/70 truncate max-w-[180px]">{v.path}</span>
                       </div>
                       <div className="flex items-center gap-3 shrink-0">
-                        {v.country && <span className="text-white/40 text-[10px]">{v.country}</span>}
+                        {v.country && <span className="text-white/40 text-[10px]">{v.country === 'Sénégal' || v.country === 'Senegal' ? `${v.city || ''}${v.city ? ', ' : ''}${v.country}` : v.country}</span>}
                         {(() => { const Icon = DEVICE_ICONS[v.device] || Monitor; return <Icon size={12} className="text-white/30" />; })()}
                         <span className="text-white/30 text-[10px]">{new Date(v.createdAt).toLocaleString('fr-FR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</span>
                       </div>

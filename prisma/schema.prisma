@@ -122,6 +122,8 @@ model Visit {
   referrer  String?
   userAgent String?
   country   String?
+  city      String?
+  region    String?
   device    String   @default("desktop")
   createdAt DateTime @default(now())
 
