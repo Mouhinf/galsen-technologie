@@ -5,8 +5,8 @@ import Footer from '@/components/site/Footer';
 import { TrackedLink } from '@/components/ui/TrackedLink';
 
 export const metadata = {
-  title: 'Formation | Galsen Technologie',
-  description: 'Formations tech à Dakar : développement web, IA, data science, cybersécurité et cloud. Bootcamps et programmes certifiants.',
+  title: 'Formation Informatique Dakar | Bootcamp Développeur Web, IA, Cybersécurité — Galsen Academy',
+  description: 'Galsen Academy : bootcamps développement web (12 sem.), IA & Data (10 sem.), cybersécurité (8 sem.) à Dakar. Formateurs experts. Certifiants. Inscriptions ouvertes.',
   alternates: { canonical: 'https://galsen.lingueredigital.com/formation' },
 };
 

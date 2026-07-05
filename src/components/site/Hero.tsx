@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { ArrowRight, BrainCircuit, Shield, Cloud, Code2, Cpu, Wifi, Zap, Database } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -17,49 +17,6 @@ const orbitIcons = [
   { icon: Zap, delay: 6, color: '#FDE047' },
   { icon: Database, delay: 7, color: '#00B8FF' },
 ];
-
-/* ─── Typing Effect ─── */
-const phrases = [
-  'Intelligence Artificielle',
-  'Machine Learning',
-  'Cybersécurité',
-  'Cloud Computing',
-  'Développement Web',
-];
-
-const TypingText = () => {
-  const [index, setIndex] = useState(0);
-  const [text, setText] = useState('');
-  const [deleting, setDeleting] = useState(false);
-
-  useEffect(() => {
-    const current = phrases[index];
-    const speed = deleting ? 30 : 60;
-
-    if (!deleting && text === current) {
-      setTimeout(() => setDeleting(true), 2000);
-      return;
-    }
-    if (deleting && text === '') {
-      setDeleting(false);
-      setIndex((i) => (i + 1) % phrases.length);
-      return;
-    }
-
-    const timer = setTimeout(() => {
-      setText(deleting ? current.slice(0, text.length - 1) : current.slice(0, text.length + 1));
-    }, speed);
-
-    return () => clearTimeout(timer);
-  }, [text, deleting, index]);
-
-  return (
-    <span className="text-shimmer">
-      {text}
-      <span className="inline-block w-[1px] h-[1em] bg-[var(--green-l)] ml-1 align-middle" style={{ animation: 'blink-cursor 0.8s infinite' }} />
-    </span>
-  );
-};
 
 /* ─── Neural Network SVG ─── */
 const NeuralNetwork = () => (
@@ -132,15 +89,10 @@ const Hero = () => {
           </div>
 
           <h1
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black leading-[1.05] mb-8"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black leading-[1.05] mb-6"
           >
-            <span className="block text-white/90">Experts en</span>
-            <span className="block min-h-[1.15em]">
-              <TypingText />
-            </span>
-            <span className="block text-white/70 font-light text-[0.55em] mt-2">
-              au service de l&apos;Afrique.
-            </span>
+            <span className="block text-white/90">Entreprise Informatique à Dakar —</span>
+            <span className="block text-white">Développement Web, IA & Cybersécurité au Sénégal</span>
           </h1>
 
           <p

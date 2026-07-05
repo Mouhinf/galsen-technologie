@@ -6,8 +6,8 @@ import prisma from '@/lib/prisma';
 import { TrackedLink } from '@/components/ui/TrackedLink';
 
 export const metadata = {
-  title: 'Services | Galsen Technologie',
-  description: 'Services numériques : développement web & mobile, IA & data science, cybersécurité, cloud & infrastructure, formation tech.',
+  title: 'Nos Services IT | Développement Web, IA, Cybersécurité, Cloud — Galsen Technologie Dakar',
+  description: 'Découvrez les 6 services de Galsen Technologie : développement web, IA & data science, cybersécurité, cloud, formation tech et conseil IT. Agence informatique à Dakar.',
   alternates: { canonical: 'https://galsen.lingueredigital.com/services' },
 };
 import Link from 'next/link';

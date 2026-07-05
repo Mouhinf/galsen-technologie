@@ -32,11 +32,12 @@ const Footer = () => {
         <div>
           <h3 className="text-white font-heading font-semibold mb-6 text-sm">Services</h3>
           <ul className="space-y-4 text-white/60 text-sm font-body">
-            <li><Link href="/services" className="hover:text-[var(--green-l)] transition-colors">Web & Mobile</Link></li>
-            <li><Link href="/services" className="hover:text-[var(--green-l)] transition-colors">IA & Data</Link></li>
-            <li><Link href="/services" className="hover:text-[var(--green-l)] transition-colors">Cybersécurité</Link></li>
-            <li><Link href="/services" className="hover:text-[var(--green-l)] transition-colors">Cloud & Infra</Link></li>
-            <li><Link href="/services" className="hover:text-[var(--green-l)] transition-colors">Formation Tech</Link></li>
+            <li><Link href="/services/developpement-web-et-mobile" className="hover:text-[var(--green-l)] transition-colors">Web & Mobile</Link></li>
+            <li><Link href="/services/intelligence-artificielle-et-data" className="hover:text-[var(--green-l)] transition-colors">IA & Data</Link></li>
+            <li><Link href="/services/cybersecurite" className="hover:text-[var(--green-l)] transition-colors">Cybersécurité</Link></li>
+            <li><Link href="/services/cloud-et-infrastructure" className="hover:text-[var(--green-l)] transition-colors">Cloud & Infra</Link></li>
+            <li><Link href="/services/formation-tech" className="hover:text-[var(--green-l)] transition-colors">Formation Tech</Link></li>
+            <li><Link href="/services/conseil-it-et-transformation-digitale" className="hover:text-[var(--green-l)] transition-colors">Conseil IT</Link></li>
           </ul>
         </div>
 

@@ -9,8 +9,8 @@ import type { Post } from '@prisma/client';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'Blog | Galsen Technologie',
-  description: 'Actualités tech, tutoriels, études de cas et réflexions sur l\'innovation numérique au Sénégal et en Afrique.',
+  title: 'Blog Tech Sénégal | IA, Web, Cybersécurité, Digital Afrique — Galsen Technologie',
+  description: 'Blog tech de Galsen Technologie : IA, développement web, cybersécurité, cloud et transformation digitale au Sénégal et en Afrique. Articles par des experts.',
   alternates: { canonical: 'https://galsen.lingueredigital.com/blog' },
 };
 

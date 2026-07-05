@@ -9,8 +9,8 @@ import type { Project } from '@prisma/client';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'Réalisations | Galsen Technologie',
-  description: 'Découvrez nos projets qui transforment le paysage technologique africain. IA, cybersécurité, cloud et développement web.',
+  title: 'Nos Réalisations | Portfolio Projets Web & Mobile Dakar — Galsen Technologie',
+  description: 'Portfolio de projets réalisés par Galsen Technologie : sites web, applications mobiles, plateformes IA pour des clients au Sénégal et en Afrique de l\'Ouest.',
   alternates: { canonical: 'https://galsen.lingueredigital.com/realisations' },
 };
 
