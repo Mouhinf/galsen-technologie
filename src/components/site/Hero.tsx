@@ -29,7 +29,7 @@ const phrases = [
 
 const TypingText = () => {
   const [index, setIndex] = useState(0);
-  const [text, setText] = useState(phrases[0]);
+  const [text, setText] = useState('');
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
@@ -136,6 +136,7 @@ const Hero = () => {
           >
             <span className="block text-white/90">Experts en</span>
             <span className="block min-h-[1.15em]">
+              <span className="sr-only">Intelligence Artificielle, Machine Learning, Cybersécurité, Cloud Computing, Développement Web</span>
               <TypingText />
             </span>
             <span className="block text-white/70 font-light text-[0.55em] mt-2">
