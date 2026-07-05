@@ -2,6 +2,7 @@ import React from 'react';
 import TechGrid from '@/components/ui/TechGrid';
 import Navbar from '@/components/site/Navbar';
 import Footer from '@/components/site/Footer';
+import { TrackedLink } from '@/components/ui/TrackedLink';
 
 export const metadata = {
   title: 'Formation | Galsen Technologie',
@@ -88,7 +89,7 @@ export default function FormationPage() {
                     <div className="text-lg font-bold" style={{ color: f.color }}>{f.price}</div>
                   </div>
                 </div>
-                <a href="https://wa.me/221700003004?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%20par%20la%20formation%20" target="_blank" rel="noopener noreferrer" className="w-full btn-secondary text-xs py-3 hover:!bg-white/5 inline-block text-center">Télécharger le programme</a>
+                <TrackedLink href="https://wa.me/221700003004?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%20par%20la%20formation%20" label="formation_cta" target="_blank" rel="noopener noreferrer" className="w-full btn-secondary text-xs py-3 hover:!bg-white/5 inline-block text-center">Télécharger le programme</TrackedLink>
               </div>
             </div>
           ))}

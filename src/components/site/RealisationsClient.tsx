@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { ArrowUpRight, Briefcase, Filter } from 'lucide-react';
 import Link from 'next/link';
 import { optimizeCloudinaryUrl } from '@/lib/cloudinary-url';
+import { useTracking } from '@/lib/hooks/useTracking';
 import type { Project } from '@prisma/client';
 
 interface ProjectData {
@@ -42,6 +43,7 @@ const formatCategory = (cat: string) => {
 };
 
 export default function RealisationsClient({ projects }: RealisationsClientProps) {
+  const { trackEvent } = useTracking();
   const display = projects.length > 0 ? projects : fallbackProjects;
   const [activeFilter, setActiveFilter] = useState('Tous');
 
@@ -162,7 +164,7 @@ export default function RealisationsClient({ projects }: RealisationsClientProps
                   {cardContent}
                 </div>
               ) : (
-                <Link key={p.slug} href={`/realisations/${p.slug}`} className="group relative overflow-hidden rounded-2xl glass-card cursor-pointer h-full animate-fade-in-up" style={{ animationDelay: `${i * 0.08}s` }}>
+                <Link key={p.slug} href={`/realisations/${p.slug}`} onClick={() => trackEvent('click', { label: p.title, href: `/realisations/${p.slug}` })} className="group relative overflow-hidden rounded-2xl glass-card cursor-pointer h-full animate-fade-in-up" style={{ animationDelay: `${i * 0.08}s` }}>
                   {cardContent}
                 </Link>
               );

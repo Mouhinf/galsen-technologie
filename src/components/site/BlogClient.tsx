@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Filter } from 'lucide-react';
 import Link from 'next/link';
 import { optimizeCloudinaryUrl } from '@/lib/cloudinary-url';
+import { useTracking } from '@/lib/hooks/useTracking';
 import type { Post } from '@prisma/client';
 
 interface PostView {
@@ -36,6 +37,7 @@ const fallbackPosts = [
 ];
 
 export default function BlogClient({ posts }: BlogClientProps) {
+  const { trackEvent } = useTracking();
   const displayPosts = posts.length > 0 ? posts : fallbackPosts;
   const [activeFilter, setActiveFilter] = useState('Tous');
 
@@ -113,7 +115,7 @@ export default function BlogClient({ posts }: BlogClientProps) {
                   {cardContent}
                 </div>
               ) : (
-                <Link key={post.slug} href={`/blog/${post.slug}`} className="group glass-card overflow-hidden flex flex-col cursor-pointer">
+                <Link key={post.slug} href={`/blog/${post.slug}`} onClick={() => trackEvent('click', { label: post.title, href: `/blog/${post.slug}` })} className="group glass-card overflow-hidden flex flex-col cursor-pointer">
                   {cardContent}
                 </Link>
               );
