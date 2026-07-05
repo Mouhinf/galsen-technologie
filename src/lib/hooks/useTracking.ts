@@ -2,23 +2,19 @@
 
 import { useEffect, useRef, useCallback } from 'react';
 
-type GeoInfo = { country?: string; city?: string; region?: string };
+let cachedIP: string | null = null;
 
-let cachedGeo: GeoInfo | null = null;
-
-async function getGeo(): Promise<GeoInfo> {
-  if (cachedGeo) return cachedGeo;
+async function getMyIP(): Promise<string | null> {
+  if (cachedIP) return cachedIP;
   try {
-    const res = await fetch('https://ip-api.com/json/?fields=status,country,city,regionName', { signal: AbortSignal.timeout(4000) });
+    const res = await fetch('https://api.ipify.org?format=json', { signal: AbortSignal.timeout(5000) });
     if (res.ok) {
       const data = await res.json();
-      if (data.status === 'success' && data.country) {
-        cachedGeo = { country: data.country, city: data.city || undefined, region: data.regionName || undefined };
-        return cachedGeo;
-      }
+      cachedIP = data.ip || null;
+      return cachedIP;
     }
   } catch {}
-  return {};
+  return null;
 }
 
 function sendTrack(body: object) {
@@ -33,7 +29,6 @@ export function useTracking() {
   const sentDepths = useRef<Set<number>>(new Set());
   const scrollTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Scroll depth tracking
   useEffect(() => {
     const handleScroll = () => {
       if (scrollTimer.current) return;
@@ -60,12 +55,12 @@ export function useTracking() {
 }
 
 export async function trackPageView(path: string) {
-  const geo = await getGeo();
+  const clientIp = await getMyIP();
   sendTrack({
     type: 'pageview',
     path: path + window.location.search,
     referrer: document.referrer || null,
     userAgent: navigator.userAgent,
-    ...geo,
+    clientIp,
   });
 }
