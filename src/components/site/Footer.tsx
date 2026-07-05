@@ -75,6 +75,12 @@ const Footer = () => {
         </div>
       </div>
 
+      {/* SEO text */}
+      <div className="pt-8 pb-4">
+        <p className="text-white/[0.07] text-[11px] leading-relaxed text-center max-w-3xl mx-auto">
+          Galsen Technologie — Entreprise Informatique à Dakar, Sénégal. Développement web, IA, cybersécurité, cloud &amp; formation tech.
+        </p>
+      </div>
       {/* Tricolor stripe */}
       <div className="absolute bottom-0 left-0 w-full h-[3px] flex">
         <div className="flex-1 bg-[#1B6B3A]" />
