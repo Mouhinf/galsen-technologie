@@ -2,14 +2,7 @@
 
 import React, { useEffect, useRef, Suspense } from 'react';
 import { usePathname } from 'next/navigation';
-
-function sendTrack(body: object) {
-  try {
-    navigator.sendBeacon('/api/track', JSON.stringify(body));
-  } catch {
-    fetch('/api/track', { method: 'POST', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' }, keepalive: true }).catch(() => {});
-  }
-}
+import { trackPageView } from '@/lib/hooks/useTracking';
 
 function PageViewTracker() {
   const pathname = usePathname();
@@ -18,13 +11,7 @@ function PageViewTracker() {
   useEffect(() => {
     if (pathname === prevPath.current) return;
     prevPath.current = pathname;
-
-    sendTrack({
-      type: 'pageview',
-      path: pathname + window.location.search,
-      referrer: document.referrer || null,
-      userAgent: navigator.userAgent,
-    });
+    trackPageView(pathname);
   }, [pathname]);
 
   return null;

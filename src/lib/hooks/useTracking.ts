@@ -2,6 +2,33 @@
 
 import { useEffect, useRef, useCallback } from 'react';
 
+type GeoInfo = { country?: string; city?: string; region?: string };
+
+let cachedGeo: GeoInfo | null = null;
+
+async function getGeo(): Promise<GeoInfo> {
+  if (cachedGeo) return cachedGeo;
+  try {
+    const res = await fetch('http://ip-api.com/json/?fields=status,country,city,regionName', { signal: AbortSignal.timeout(4000) });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.status === 'success' && data.country) {
+        cachedGeo = { country: data.country, city: data.city || undefined, region: data.regionName || undefined };
+        return cachedGeo;
+      }
+    }
+  } catch {}
+  return {};
+}
+
+function sendTrack(body: object) {
+  try {
+    navigator.sendBeacon('/api/track', JSON.stringify(body));
+  } catch {
+    fetch('/api/track', { method: 'POST', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' }, keepalive: true }).catch(() => {});
+  }
+}
+
 export function useTracking() {
   const sentDepths = useRef<Set<number>>(new Set());
   const scrollTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -32,10 +59,13 @@ export function useTracking() {
   return { trackEvent };
 }
 
-function sendTrack(body: object) {
-  try {
-    navigator.sendBeacon('/api/track', JSON.stringify(body));
-  } catch {
-    fetch('/api/track', { method: 'POST', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' }, keepalive: true }).catch(() => {});
-  }
+export async function trackPageView(path: string) {
+  const geo = await getGeo();
+  sendTrack({
+    type: 'pageview',
+    path: path + window.location.search,
+    referrer: document.referrer || null,
+    userAgent: navigator.userAgent,
+    ...geo,
+  });
 }
