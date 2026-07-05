@@ -25,7 +25,7 @@ const Footer = () => {
             </Link>
             <TrackedLink href="https://wa.me/221700003004" label="footer_whatsapp" aria-label="WhatsApp" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-[var(--green-l)]/20 hover:text-[var(--green-l)] transition-all">
               <WhatsApp size={18} />
-            </Link>
+            </TrackedLink>
           </div>
         </div>
 
