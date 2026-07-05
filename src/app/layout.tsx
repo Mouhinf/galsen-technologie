@@ -1,7 +1,9 @@
+import Script from 'next/script';
 import '@/app/globals.css';
 import { fontVariables } from '@/lib/fonts';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
 import TrackingProvider from '@/components/providers/TrackingProvider';
+import WhatsAppButton from '@/components/ui/WhatsAppButton';
 
 export const viewport = {
   width: 'device-width',
@@ -25,7 +27,7 @@ export const metadata = {
     siteName: 'Galsen Technologie',
     locale: 'fr_SN',
     type: 'website',
-    images: [{ url: '/logo-galsen.webp', width: 525, height: 483, alt: 'Galsen Technologie — Entreprise informatique à Dakar, Sénégal' }],
+    images: [{ url: '/assets/og-cover.svg', width: 1200, height: 630, alt: 'Galsen Technologie — Entreprise informatique à Dakar, Sénégal' }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -33,7 +35,7 @@ export const metadata = {
     creator: '@GalsenTech',
     title: 'Galsen Technologie | Entreprise Informatique à Dakar, Sénégal',
     description: 'Galsen Technologie, entreprise informatique à Dakar. Développement web, IA, cybersécurité, cloud et formation.',
-    images: ['/logo-galsen.webp'],
+    images: ['/assets/og-cover.svg'],
   },
   robots: { index: true, follow: true },
   other: {
@@ -60,22 +62,34 @@ const jsonLd = {
       alternateName: ['Galsen Tech', 'Galsen AI', 'Galsen Dev', 'Galsen Digital', 'GalsenTech'],
       url: 'https://galsen.lingueredigital.com',
       logo: { '@type': 'ImageObject', url: 'https://galsen.lingueredigital.com/logo-galsen.webp', width: 525, height: 483 },
-      description: 'Entreprise informatique à Dakar, Sénégal spécialisée en développement web & mobile, intelligence artificielle, cybersécurité, cloud computing et formation tech.',
+      description: 'Entreprise informatique à Dakar, Sénégal. Développement web & mobile, intelligence artificielle, cybersécurité, cloud et formation tech.',
       foundingDate: '2020',
       address: { '@type': 'PostalAddress', addressLocality: 'Dakar', addressRegion: 'Dakar', addressCountry: 'SN' },
       contactPoint: { '@type': 'ContactPoint', telephone: '+221700003004', contactType: 'customer service', areaServed: ['SN', 'africa'], availableLanguage: ['French', 'English', 'Wolof'] },
       sameAs: ['https://www.linkedin.com/company/galsen-technologie', 'https://twitter.com/GalsenTech', 'https://github.com/Mouhinf/galsen-technologie', 'https://wa.me/221700003004'],
       areaServed: [{ '@type': 'Country', name: 'Sénégal' }, { '@type': 'Place', name: 'Afrique de l\'Ouest' }, { '@type': 'Place', name: 'Afrique' }],
+      hasOfferCatalog: {
+        '@type': 'OfferCatalog',
+        name: 'Services Informatiques Galsen',
+        itemListElement: [
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Développement Web & Mobile', url: 'https://galsen.lingueredigital.com/services/developpement-web-et-mobile' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Intelligence Artificielle & Data', url: 'https://galsen.lingueredigital.com/services/intelligence-artificielle-et-data' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Cybersécurité', url: 'https://galsen.lingueredigital.com/services/cybersecurite' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Cloud & Infrastructure', url: 'https://galsen.lingueredigital.com/services/cloud-et-infrastructure' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Formation Tech', url: 'https://galsen.lingueredigital.com/services/formation-tech' } },
+          { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Conseil IT & Transformation Digitale', url: 'https://galsen.lingueredigital.com/services/conseil-it-et-transformation-digitale' } },
+        ],
+      },
     },
     {
       '@type': 'LocalBusiness',
       name: 'Galsen Technologie',
-      image: 'https://galsen.lingueredigital.com/logo-galsen.webp',
       telephone: '+221700003004',
       url: 'https://galsen.lingueredigital.com',
+      image: 'https://galsen.lingueredigital.com/assets/og-cover.svg',
       priceRange: 'CFA 150,000 - CFA 5,000,000',
       currenciesAccepted: 'XOF',
-      paymentAccepted: 'Cash, Wave, Orange Money',
+      paymentAccepted: 'Cash, Wave, Orange Money, Virement',
       address: { '@type': 'PostalAddress', addressLocality: 'Dakar', addressRegion: 'Dakar', addressCountry: 'SN' },
       geo: { '@type': 'GeoCoordinates', latitude: '14.6928', longitude: '-17.4467' },
       openingHoursSpecification: [{ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '08:00', closes: '18:00' }],
@@ -98,6 +112,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="bg-black text-white selection:bg-[#22C55E] selection:text-black font-body">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-00LPQTMFNC" strategy="afterInteractive" />
+        <Script id="ga4" strategy="afterInteractive">
+          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-00LPQTMFNC');`}
+        </Script>
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:top-2 focus:left-2 focus:bg-[var(--green-l)] focus:text-black focus:px-4 focus:py-2 focus:rounded focus:text-sm">
           Aller au contenu principal
         </a>
@@ -106,6 +124,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {children}
           </TrackingProvider>
         </ThemeProvider>
+        <WhatsAppButton />
       </body>
     </html>
   );

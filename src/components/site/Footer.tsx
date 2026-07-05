@@ -77,8 +77,8 @@ const Footer = () => {
 
       {/* SEO text */}
       <div className="pt-8 pb-4">
-        <p className="text-white/20 text-[11px] leading-relaxed text-center max-w-3xl mx-auto">
-          Galsen Technologie — Entreprise Informatique à Dakar, Sénégal. Développement web, IA, cybersécurité, cloud &amp; formation tech.
+        <p className="text-white/25 text-[12px] leading-relaxed text-center max-w-[800px] mx-auto">
+          <strong className="text-white/40">Galsen Technologie</strong> est une entreprise informatique et agence digitale basée à <strong className="text-white/40">Dakar, Sénégal</strong>. Également connue sous les noms <strong className="text-white/40">Galsen Tech, Galsen AI et Galsen Dev</strong>, nous accompagnons les entreprises sénégalaises dans leur transformation numérique. Nos experts en développement web à Dakar, intelligence artificielle au Sénégal, cybersécurité, cloud computing et formation informatique à Dakar mettent leurs compétences au service de votre croissance. Que vous ayez besoin d&apos;un site web professionnel, d&apos;une application mobile, d&apos;un chatbot IA ou d&apos;une solution de cybersécurité, Galsen Technologie est votre partenaire tech de confiance à Dakar, Sénégal et dans toute l&apos;Afrique de l&apos;Ouest.
         </p>
       </div>
       {/* Tricolor stripe */}

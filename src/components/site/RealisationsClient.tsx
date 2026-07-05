@@ -24,13 +24,13 @@ interface RealisationsClientProps {
   projects: ProjectData[];
 }
 
-const fallbackProjects = [
-  { slug: 'ai-health-monitor', title: 'AI Health Monitor', category: 'IA & DATA', client: 'Ministère Santé', year: '2023', imageUrl: '/projects/ai-health.webp', techStack: '["Python","TensorFlow","FastAPI"]' },
-  { slug: 'ecopay-app', title: 'EcoPay App', category: 'WEB & MOBILE', client: 'EcoBank', year: '2024', imageUrl: '/projects/ecopay.webp', techStack: '["Next.js","Flutter","Stripe"]' },
-  { slug: 'securecloud-gov', title: 'SecureCloud Gov', category: 'CYBERSÉCURITÉ', client: 'ADIE', year: '2023', imageUrl: '/projects/securecloud.webp', techStack: '["AWS","Docker","SIEM"]' },
-  { slug: 'smartagri-data', title: 'SmartAgri Data', category: 'IA & DATA', client: 'AgriSen', year: '2022', imageUrl: '/projects/smartagri.webp', techStack: '["IoT","ML","React"]' },
-  { slug: 'logistics-tracker', title: 'Logistics Tracker', category: 'WEB & MOBILE', client: 'Port Dakar', year: '2024', imageUrl: '/projects/logistics.webp', techStack: '["Node.js","MongoDB","React Native"]' },
-  { slug: 'edutech-portal', title: 'EduTech Portal', category: 'CLOUD', client: 'UCAD', year: '2023', imageUrl: '/projects/edutech.webp', techStack: '["AWS","Next.js","PostgreSQL"]' },
+const fallbackProjects: ProjectData[] = [
+  { id: '', slug: 'ai-health-monitor', title: 'AI Health Monitor', category: 'IA & DATA', client: 'Ministère Santé', year: '2023', description: '', techStack: '["Python","TensorFlow","FastAPI"]', imageUrl: '/projects/ai-health.webp', liveUrl: null },
+  { id: '', slug: 'ecopay-app', title: 'EcoPay App', category: 'WEB & MOBILE', client: 'EcoBank', year: '2024', description: '', techStack: '["Next.js","Flutter","Stripe"]', imageUrl: '/projects/ecopay.webp', liveUrl: null },
+  { id: '', slug: 'securecloud-gov', title: 'SecureCloud Gov', category: 'CYBERSÉCURITÉ', client: 'ADIE', year: '2023', description: '', techStack: '["AWS","Docker","SIEM"]', imageUrl: '/projects/securecloud.webp', liveUrl: null },
+  { id: '', slug: 'smartagri-data', title: 'SmartAgri Data', category: 'IA & DATA', client: 'AgriSen', year: '2022', description: '', techStack: '["IoT","ML","React"]', imageUrl: '/projects/smartagri.webp', liveUrl: null },
+  { id: '', slug: 'logistics-tracker', title: 'Logistics Tracker', category: 'WEB & MOBILE', client: 'Port Dakar', year: '2024', description: '', techStack: '["Node.js","MongoDB","React Native"]', imageUrl: '/projects/logistics.webp', liveUrl: null },
+  { id: '', slug: 'edutech-portal', title: 'EduTech Portal', category: 'CLOUD', client: 'UCAD', year: '2023', description: '', techStack: '["AWS","Next.js","PostgreSQL"]', imageUrl: '/projects/edutech.webp', liveUrl: null },
 ];
 
 const getTech = (p: ProjectData) => {

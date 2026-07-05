@@ -32,7 +32,7 @@ const ServicesGrid = ({ services = [] }: ServicesGridProps) => {
     { title: 'Cybersécurité', description: 'Audit, Pentest, SIEM. Protection de vos actifs numériques.', icon: '🛡️', color: '#C8001E', badge: 'SÉCURITÉ' },
   ];
 
-  const display = services.length > 0 ? services : fallbackServices;
+  const display: (Service | typeof fallbackServices[number])[] = services.length > 0 ? services : fallbackServices;
 
   return (
     <section className="py-28 relative overflow-hidden" id="services">
@@ -54,12 +54,12 @@ const ServicesGrid = ({ services = [] }: ServicesGridProps) => {
             const isDb = 'id' in service;
             const tags = isDb ? getTags(service as Service) : [];
             const isLarge = i === 0;
-            const title = 'title' in service ? service.title : service.title;
-            const description = 'description' in service ? service.description : service.description;
-            const color = 'color' in service ? service.color : service.color;
-            const icon = 'icon' in service ? service.icon : service.icon;
-            const badge = 'badge' in service ? service.badge : service.icon;
-            const slug = 'slug' in service ? service.slug : '#';
+            const title = service.title;
+            const description = service.description;
+            const color = service.color;
+            const icon = service.icon;
+            const badge = 'badge' in service ? (service as { badge: string }).badge : (service as Service).icon;
+            const slug = 'slug' in service ? (service as Service).slug : '#';
 
             const card = (
               <div className="relative p-8 rounded-2xl group overflow-hidden bg-white/[0.02] border border-white/[0.06] hover:border-transparent transition-all duration-500 h-full">
