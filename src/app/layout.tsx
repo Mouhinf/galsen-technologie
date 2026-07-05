@@ -1,4 +1,4 @@
-import Script from 'next/script';
+import React from 'react';
 import '@/app/globals.css';
 import { fontVariables } from '@/lib/fonts';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
@@ -112,10 +112,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="bg-black text-white selection:bg-[#22C55E] selection:text-black font-body">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-00LPQTMFNC" strategy="afterInteractive" />
-        <Script id="ga4" strategy="afterInteractive">
+        {/* Google tag (gtag.js) */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-00LPQTMFNC" />
+        <script>
           {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-00LPQTMFNC');`}
-        </Script>
+        </script>
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:top-2 focus:left-2 focus:bg-[var(--green-l)] focus:text-black focus:px-4 focus:py-2 focus:rounded focus:text-sm">
           Aller au contenu principal
         </a>
