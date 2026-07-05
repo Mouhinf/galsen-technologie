@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArrowRight, BrainCircuit, Shield, Cloud, Code2, Cpu, Wifi, Zap, Database } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -17,6 +17,49 @@ const orbitIcons = [
   { icon: Zap, delay: 6, color: '#FDE047' },
   { icon: Database, delay: 7, color: '#00B8FF' },
 ];
+
+/* ─── Typing Effect ─── */
+const phrases = [
+  'Intelligence Artificielle',
+  'Machine Learning',
+  'Cybersécurité',
+  'Cloud Computing',
+  'Développement Web',
+];
+
+const TypingText = () => {
+  const [index, setIndex] = useState(0);
+  const [text, setText] = useState('');
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    const current = phrases[index];
+    let timeout: ReturnType<typeof setTimeout>;
+
+    if (!deleting && text === current) {
+      timeout = setTimeout(() => setDeleting(true), 2000);
+    } else if (deleting && text === '') {
+      setDeleting(false);
+      setIndex((i) => (i + 1) % phrases.length);
+    } else {
+      timeout = setTimeout(
+        () => {
+          setText(deleting ? current.slice(0, -1) : current.slice(0, text.length + 1));
+        },
+        deleting ? 40 : 100,
+      );
+    }
+
+    return () => clearTimeout(timeout);
+  }, [text, deleting, index]);
+
+  return (
+    <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-[var(--green-l)] via-[var(--gold)] to-[var(--green-l)]">
+      {text}
+      <span className="animate-pulse">|</span>
+    </span>
+  );
+};
 
 /* ─── Neural Network SVG ─── */
 const NeuralNetwork = () => (
@@ -89,10 +132,15 @@ const Hero = () => {
           </div>
 
           <h1
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black leading-[1.05] mb-6"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-black leading-[1.05] mb-8"
           >
-            <span className="block text-white/90">Entreprise Informatique à Dakar —</span>
-            <span className="block text-white">Développement Web, IA & Cybersécurité au Sénégal</span>
+            <span className="block text-white/90">Experts en</span>
+            <span className="block min-h-[1.15em]">
+              <TypingText />
+            </span>
+            <span className="block text-white/70 font-light text-[0.55em] mt-2">
+              au service de l&apos;Afrique.
+            </span>
           </h1>
 
           <p
