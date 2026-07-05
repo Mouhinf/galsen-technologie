@@ -7,7 +7,7 @@ import Logo from '@/components/ui/Logo';
 import { cn } from '@/lib/utils';
 import { 
   LayoutDashboard, Inbox, FolderKanban, PenTool, 
-  GraduationCap, Star, Users, Image as ImageIcon, Settings, LogOut 
+  GraduationCap, Star, Users, Image as ImageIcon, Settings, LogOut, BarChart3 
 } from 'lucide-react';
 
 const menuGroups = [
@@ -16,6 +16,7 @@ const menuGroups = [
     items: [
       { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
       { name: 'Messages', href: '/admin/messages', icon: Inbox },
+      { name: 'Statistiques', href: '/admin/statistiques', icon: BarChart3 },
     ]
   },
   {

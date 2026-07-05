@@ -1,6 +1,7 @@
 import '@/app/globals.css';
 import { fontVariables } from '@/lib/fonts';
 import { ThemeProvider } from '@/components/providers/ThemeProvider';
+import TrackingProvider from '@/components/providers/TrackingProvider';
 
 export const viewport = {
   width: 'device-width',
@@ -51,7 +52,9 @@ export default function RootLayout({
           Aller au contenu principal
         </a>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
-          {children}
+          <TrackingProvider>
+            {children}
+          </TrackingProvider>
         </ThemeProvider>
       </body>
     </html>
