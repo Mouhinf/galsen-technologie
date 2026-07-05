@@ -51,7 +51,7 @@ export default function RootLayout({
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:top-2 focus:left-2 focus:bg-[var(--green-l)] focus:text-black focus:px-4 focus:py-2 focus:rounded focus:text-sm">
           Aller au contenu principal
         </a>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+        <ThemeProvider>
           <TrackingProvider>
             {children}
           </TrackingProvider>
