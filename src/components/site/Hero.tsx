@@ -44,7 +44,7 @@ const TypingText = () => {
     } else {
       timeout = setTimeout(
         () => {
-          setText(deleting ? current.slice(0, -1) : current.slice(0, text.length + 1));
+          setText(deleting ? text.slice(0, -1) : current.slice(0, text.length + 1));
         },
         deleting ? 40 : 100,
       );
