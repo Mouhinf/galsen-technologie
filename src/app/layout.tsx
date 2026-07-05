@@ -27,7 +27,7 @@ export const metadata = {
     siteName: 'Galsen Technologie',
     locale: 'fr_SN',
     type: 'website',
-    images: [{ url: '/assets/og-cover.svg', width: 1200, height: 630, alt: 'Galsen Technologie — Entreprise informatique à Dakar, Sénégal' }],
+    images: [{ url: '/logo-galsen.png', width: 525, height: 483, alt: 'Galsen Technologie — Entreprise informatique à Dakar, Sénégal' }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -35,7 +35,7 @@ export const metadata = {
     creator: '@GalsenTech',
     title: 'Galsen Technologie | Entreprise Informatique à Dakar, Sénégal',
     description: 'Galsen Technologie, entreprise informatique à Dakar. Développement web, IA, cybersécurité, cloud et formation.',
-    images: ['/assets/og-cover.svg'],
+    images: ['/logo-galsen.png'],
   },
   robots: { index: true, follow: true },
   other: {
@@ -86,7 +86,7 @@ const jsonLd = {
       name: 'Galsen Technologie',
       telephone: '+221700003004',
       url: 'https://galsen.lingueredigital.com',
-      image: 'https://galsen.lingueredigital.com/assets/og-cover.svg',
+      image: 'https://galsen.lingueredigital.com/logo-galsen.png',
       priceRange: 'CFA 150,000 - CFA 5,000,000',
       currenciesAccepted: 'XOF',
       paymentAccepted: 'Cash, Wave, Orange Money, Virement',
