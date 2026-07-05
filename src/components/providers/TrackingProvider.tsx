@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import { useTracking } from '@/lib/hooks/useTracking';
 
 function Tracker() {
@@ -11,7 +11,9 @@ function Tracker() {
 export default function TrackingProvider({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Tracker />
+      <Suspense fallback={null}>
+        <Tracker />
+      </Suspense>
       {children}
     </>
   );
