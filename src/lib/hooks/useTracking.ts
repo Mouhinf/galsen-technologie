@@ -55,6 +55,7 @@ export function useTracking() {
 }
 
 export async function trackPageView(path: string) {
+  if (path.startsWith('/admin') || path.startsWith('/api/')) return;
   const clientIp = await getMyIP();
   sendTrack({
     type: 'pageview',

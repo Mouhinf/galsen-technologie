@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
       region = region || req.headers.get('x-vercel-ip-country-region') || null;
     }
 
-    if (type === 'pageview') {
+    if (type === 'pageview' && path && !path.startsWith('/admin') && !path.startsWith('/api/')) {
       await prisma.visit.create({
         data: { sessionId, path: path || '/', referrer: referrer || null, userAgent: ua, country, city, region, device },
       });
