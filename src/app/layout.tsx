@@ -109,6 +109,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <link rel="preconnect" href="https://res.cloudinary.com" />
         <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+        <meta name="google-site-verification" content="k3zie7KEq4iSgpYx6f6UfLjOQqqTc5jCHtY-t8LmPCs" />
       </head>
       <body className="bg-black text-white selection:bg-[#22C55E] selection:text-black font-body">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
