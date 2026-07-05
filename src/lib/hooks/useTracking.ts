@@ -9,7 +9,7 @@ let cachedGeo: GeoInfo | null = null;
 async function getGeo(): Promise<GeoInfo> {
   if (cachedGeo) return cachedGeo;
   try {
-    const res = await fetch('http://ip-api.com/json/?fields=status,country,city,regionName', { signal: AbortSignal.timeout(4000) });
+    const res = await fetch('https://ip-api.com/json/?fields=status,country,city,regionName', { signal: AbortSignal.timeout(4000) });
     if (res.ok) {
       const data = await res.json();
       if (data.status === 'success' && data.country) {
