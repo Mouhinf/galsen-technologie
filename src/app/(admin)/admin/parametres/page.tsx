@@ -14,7 +14,7 @@ const GENERAL_FIELDS = [
   { key: 'site_name', label: 'Nom du site', type: 'text', default: 'Galsen Technologie' },
   { key: 'tagline', label: 'Tagline', type: 'text', default: 'IA & Tech au Sénégal' },
   { key: 'contact_email', label: 'Email de contact', type: 'email', default: 'contact@galsentechnologie.sn' },
-  { key: 'phone', label: 'Téléphone', type: 'tel', default: '+221 33 800 00 00' },
+  { key: 'phone', label: 'Téléphone', type: 'tel', default: '+221 70 000 30 04' },
   { key: 'address', label: 'Adresse', type: 'text', default: 'Dakar, Sénégal - Plateau, Rue Carnot' },
   { key: 'linkedin', label: 'LinkedIn', type: 'url', default: '' },
   { key: 'twitter', label: 'Twitter / X', type: 'url', default: '' },

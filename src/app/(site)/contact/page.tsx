@@ -55,7 +55,7 @@ const ContactPage = () => {
               <div className="space-y-8 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
                 {[
                   { icon: "📍", label: "Adresse", value: "Dakar, Sénégal - Plateau, Rue Carnot" },
-                  { icon: "📞", label: "Téléphone", value: "+221 33 800 00 00" },
+                  { icon: "📞", label: "Téléphone", value: "+221 70 000 30 04" },
                   { icon: "✉", label: "Email", value: "contact@galsentechnologie.sn" },
                   { icon: "⏰", label: "Horaires", value: "Lun–Ven: 8h – 18h" }
                 ].map((item, i) => (
