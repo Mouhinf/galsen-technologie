@@ -29,7 +29,7 @@ const phrases = [
 
 const TypingText = () => {
   const [index, setIndex] = useState(0);
-  const [text, setText] = useState('');
+  const [text, setText] = useState(phrases[0]);
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
