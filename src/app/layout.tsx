@@ -17,7 +17,13 @@ export const metadata = {
     template: '%s | Galsen Technologie',
   },
   description: 'Galsen Technologie, entreprise informatique à Dakar, Sénégal. Développement web & mobile, Intelligence Artificielle, Cybersécurité, Cloud et Formation tech. Devis gratuit 24h. ☎ +221 70 000 30 04',
-  icons: { icon: '/favicon-32x32.png' },
+  icons: {
+    icon: [
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [{ url: '/logo-galsen-small.webp', sizes: '120x110', type: 'image/webp' }],
+  },
   metadataBase: new URL('https://galsen.lingueredigital.com'),
   alternates: { canonical: '/' },
   openGraph: {
