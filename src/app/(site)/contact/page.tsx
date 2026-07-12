@@ -11,6 +11,7 @@ const ContactPage = () => {
   const [submitted, setSubmitted] = useState(false);
   const { trackEvent } = useTracking();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '', service: 'Web & Mobile' });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -20,8 +21,9 @@ const ContactPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
     try {
-      await fetch('/api/messages', {
+      const res = await fetch('/api/messages', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -29,8 +31,14 @@ const ContactPage = () => {
           subject: `Demande - ${form.service}`,
         }),
       });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || 'Erreur lors de l\'envoi. Réessayez.');
+      }
       setSubmitted(true);
       trackEvent('form_submit', { form: 'contact', service: form.service });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Une erreur est survenue');
     } finally {
       setLoading(false);
     }
@@ -118,6 +126,9 @@ const ContactPage = () => {
                     <textarea id="contact-message" name="message" value={form.message} onChange={handleChange} required className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus:border-[var(--green-l)] outline-none transition-colors h-32 resize-none" placeholder="Décrivez votre projet..."></textarea>
                   </div>
 
+                  {error && (
+                    <p className="text-red-400 text-xs text-center">{error}</p>
+                  )}
                   <button type="submit" disabled={loading} className="btn-primary w-full py-4 text-xs flex items-center justify-center gap-2">
                     {loading ? (
                       <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />

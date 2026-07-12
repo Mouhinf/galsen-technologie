@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { generateSlug } from '@/lib/slug';
+import { serviceSchema, formatZodErrors } from '@/lib/validation';
 
 export async function GET() {
   const services = await prisma.service.findMany({ orderBy: { order: 'asc' } });
@@ -9,7 +10,14 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const slug = generateSlug(body.title);
+
+  const parsed = serviceSchema.safeParse(body);
+  if (!parsed.success) {
+    return NextResponse.json({ error: formatZodErrors(parsed.error) }, { status: 400 });
+  }
+
+  const data = parsed.data;
+  const slug = data.slug || generateSlug(data.title);
 
   // Check for unique slug
   const existing = await prisma.service.findUnique({ where: { slug } });
@@ -17,16 +25,16 @@ export async function POST(req: NextRequest) {
 
   const service = await prisma.service.create({
     data: {
-      title: body.title,
+      title: data.title,
       slug: finalSlug,
-      description: body.description,
-      content: body.content || '',
-      icon: body.icon || 'Code2',
-      color: body.color || '#22C55E',
-      features: body.features ? JSON.stringify(body.features) : '[]',
-      imageUrl: body.imageUrl || null,
-      active: body.active ?? true,
-      order: body.order ?? 0,
+      description: data.description,
+      content: data.content,
+      icon: data.icon,
+      color: data.color,
+      features: JSON.stringify(data.features || []),
+      imageUrl: data.imageUrl || null,
+      active: data.active,
+      order: data.order,
     },
   });
   return NextResponse.json(service, { status: 201 });

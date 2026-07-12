@@ -12,10 +12,9 @@ export const metadata = {
 };
 import Link from 'next/link';
 import { MessageCircle, ArrowRight } from 'lucide-react';
+import { WHATSAPP_NUMBER } from '@/lib/constants';
 
 export const dynamic = 'force-dynamic';
-
-const WHATSAPP_NUMBER = '221700003004';
 
 export default async function ServicesPage() {
   const services = await prisma.service.findMany({

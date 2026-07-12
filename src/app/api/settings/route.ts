@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { settingsSchema, formatZodErrors } from '@/lib/validation';
 
 export async function GET() {
   const settings = await prisma.setting.findMany();
@@ -10,17 +11,19 @@ export async function GET() {
 
 export async function PUT(req: NextRequest) {
   const body = await req.json();
-  if (!body || typeof body !== 'object') {
-    return NextResponse.json({ error: 'Invalid body' }, { status: 400 });
+
+  const parsed = settingsSchema.safeParse(body);
+  if (!parsed.success) {
+    return NextResponse.json({ error: formatZodErrors(parsed.error) }, { status: 400 });
   }
 
-  const entries = Object.entries(body).filter(([_, v]) => typeof v === 'string');
+  const entries = Object.entries(parsed.data);
 
   for (const [key, value] of entries) {
     await prisma.setting.upsert({
       where: { key },
-      update: { value: value as string },
-      create: { key, value: value as string, group: key.startsWith('seo_') ? 'seo' : key.startsWith('email_') ? 'emails' : 'general' },
+      update: { value },
+      create: { key, value, group: key.startsWith('seo_') ? 'seo' : key.startsWith('email_') ? 'emails' : 'general' },
     });
   }
 

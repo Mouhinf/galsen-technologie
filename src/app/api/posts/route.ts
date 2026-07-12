@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { generateSlug } from '@/lib/slug';
+import { postSchema, formatZodErrors } from '@/lib/validation';
 
 export async function GET() {
   const posts = await prisma.post.findMany({ orderBy: { createdAt: 'desc' } });
@@ -8,25 +10,26 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  // Generate slug from title
-  const slug = body.slug || body.title
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)/g, '');
+
+  const parsed = postSchema.safeParse(body);
+  if (!parsed.success) {
+    return NextResponse.json({ error: formatZodErrors(parsed.error) }, { status: 400 });
+  }
+
+  const data = parsed.data;
+  const slug = data.slug || generateSlug(data.title);
 
   const post = await prisma.post.create({
     data: {
-      title: body.title,
+      title: data.title,
       slug,
-      excerpt: body.excerpt,
-      content: body.content,
-      imageUrl: body.imageUrl,
-      category: body.category,
-      tags: body.tags ? JSON.stringify(body.tags) : '[]',
-      author: body.author || 'Galsen Technologie',
-      published: body.published ?? false,
+      excerpt: data.excerpt,
+      content: data.content,
+      imageUrl: data.imageUrl,
+      category: data.category,
+      tags: JSON.stringify(data.tags || []),
+      author: data.author,
+      published: data.published,
     },
   });
   return NextResponse.json(post, { status: 201 });

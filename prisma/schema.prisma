@@ -132,6 +132,13 @@ model Visit {
   @@index([sessionId])
 }
 
+model Subscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
 model UserAction {
   id         String   @id @default(cuid())
   sessionId  String

@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { generateSlug } from '@/lib/slug';
+import { postUpdateSchema, formatZodErrors } from '@/lib/validation';
 
 export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
   const post = await prisma.post.findUnique({ where: { id: params.id } });
@@ -9,25 +11,25 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
 
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
   const body = await req.json();
-  const data: any = {};
-  if (body.title !== undefined) {
-    data.title = body.title;
-    // Re-generate slug if title changed
-    data.slug = body.slug || body.title
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)/g, '');
+
+  const parsed = postUpdateSchema.safeParse(body);
+  if (!parsed.success) {
+    return NextResponse.json({ error: formatZodErrors(parsed.error) }, { status: 400 });
   }
-  if (body.slug !== undefined) data.slug = body.slug;
-  if (body.excerpt !== undefined) data.excerpt = body.excerpt;
-  if (body.content !== undefined) data.content = body.content;
-  if (body.imageUrl !== undefined) data.imageUrl = body.imageUrl;
-  if (body.category !== undefined) data.category = body.category;
-  if (body.tags !== undefined) data.tags = JSON.stringify(body.tags);
-  if (body.author !== undefined) data.author = body.author;
-  if (body.published !== undefined) data.published = body.published;
+
+  const data: any = {};
+  if (parsed.data.title !== undefined) {
+    data.title = parsed.data.title;
+    data.slug = parsed.data.slug || generateSlug(parsed.data.title);
+  }
+  if (parsed.data.slug !== undefined) data.slug = parsed.data.slug;
+  if (parsed.data.excerpt !== undefined) data.excerpt = parsed.data.excerpt;
+  if (parsed.data.content !== undefined) data.content = parsed.data.content;
+  if (parsed.data.imageUrl !== undefined) data.imageUrl = parsed.data.imageUrl;
+  if (parsed.data.category !== undefined) data.category = parsed.data.category;
+  if (parsed.data.tags !== undefined) data.tags = JSON.stringify(parsed.data.tags);
+  if (parsed.data.author !== undefined) data.author = parsed.data.author;
+  if (parsed.data.published !== undefined) data.published = parsed.data.published;
 
   const post = await prisma.post.update({ where: { id: params.id }, data });
   return NextResponse.json(post);

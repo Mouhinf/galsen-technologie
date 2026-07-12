@@ -2,6 +2,8 @@ import { NextRequest } from 'next/server';
 import prisma from '@/lib/prisma';
 import { checkRateLimit } from '@/lib/rate-limit';
 import { corsResponse, corsHeaders } from '@/lib/cors';
+import { serverSanitizeHtml } from '@/lib/server-sanitize';
+import { messageSchema, formatZodErrors } from '@/lib/validation';
 
 export async function POST(req: NextRequest) {
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
@@ -11,14 +13,24 @@ export async function POST(req: NextRequest) {
   if (!allowed) return response!;
 
   const body = await req.json();
+
+  const parsed = messageSchema.safeParse(body);
+  if (!parsed.success) {
+    return corsResponse({ error: formatZodErrors(parsed.error) }, 400, origin);
+  }
+
+  const data = parsed.data;
+
+  const messageContent = data.message || data.content || '';
+
   const message = await prisma.message.create({
     data: {
-      name: body.name,
-      email: body.email,
-      phone: body.phone || null,
-      service: body.service || 'Général',
-      subject: body.subject || 'Nouveau message',
-      content: body.message || body.content || '',
+      name: data.name,
+      email: data.email,
+      phone: data.phone || null,
+      service: data.service,
+      subject: data.subject,
+      content: serverSanitizeHtml(messageContent),
       status: 'UNREAD',
     },
   });

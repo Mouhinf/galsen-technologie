@@ -1,15 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { testimonialUpdateSchema, formatZodErrors } from '@/lib/validation';
 
 export async function PATCH(
-  _req: NextRequest,
+  req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    const body = await _req.json();
+    const body = await req.json();
+
+    const parsed = testimonialUpdateSchema.safeParse(body);
+    if (!parsed.success) {
+      return NextResponse.json({ error: formatZodErrors(parsed.error) }, { status: 400 });
+    }
+
+    // Only include fields that were actually provided
+    const data: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(parsed.data)) {
+      if (value !== undefined) {
+        data[key] = value;
+      }
+    }
+
     const testimonial = await prisma.testimonial.update({
       where: { id: params.id },
-      data: body,
+      data,
     });
     return NextResponse.json(testimonial);
   } catch {

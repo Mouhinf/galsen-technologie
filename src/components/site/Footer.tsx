@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Logo from '@/components/ui/Logo';
 import { Phone as WhatsApp } from 'lucide-react';
 import { TrackedLink } from '@/components/ui/TrackedLink';
+import NewsletterForm from '@/components/site/NewsletterForm';
 
 const Footer = () => {
   return (
@@ -55,15 +56,7 @@ const Footer = () => {
         <div>
           <h3 className="text-white font-heading font-semibold mb-6 text-sm">Newsletter</h3>
           <p className="text-white/60 text-sm mb-4 font-body">Restez informé de nos dernières innovations.</p>
-          <form className="space-y-3">
-            <input 
-              type="email" 
-              aria-label="Adresse email pour la newsletter"
-              placeholder="votre@email.com" 
-              className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-[var(--green-l)] transition-colors"
-            />
-            <button aria-label="S'abonner à la newsletter" className="btn-primary w-full text-[10px] py-2">S'abonner</button>
-          </form>
+          <NewsletterForm />
         </div>
       </div>
 

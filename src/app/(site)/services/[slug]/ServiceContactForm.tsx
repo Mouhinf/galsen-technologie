@@ -2,8 +2,7 @@
 
 import React, { useState } from 'react';
 import { Send, MessageCircle, CheckCircle2 } from 'lucide-react';
-
-const WHATSAPP_NUMBER = '221700003004';
+import { WHATSAPP_NUMBER } from '@/lib/constants';
 
 interface ServiceContactFormProps {
   serviceTitle: string;
@@ -12,20 +11,34 @@ interface ServiceContactFormProps {
 
 export default function ServiceContactForm({ serviceTitle, accentColor }: ServiceContactFormProps) {
   const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await fetch('/api/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ...form,
-        service: serviceTitle,
-        subject: `Demande de devis - ${serviceTitle}`,
-      }),
-    });
-    setSubmitted(true);
+    setError('');
+    setLoading(true);
+    try {
+      const res = await fetch('/api/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...form,
+          service: serviceTitle,
+          subject: `Demande de devis - ${serviceTitle}`,
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || 'Erreur lors de l\'envoi. Réessayez.');
+      }
+      setSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Une erreur est survenue');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Bonjour, je suis intéressé par votre service "${serviceTitle}". Pouvez-vous me donner plus d'informations ?`)}`;
@@ -70,8 +83,15 @@ export default function ServiceContactForm({ serviceTitle, accentColor }: Servic
                 <label htmlFor="svc-message" className="sr-only">Parlez-nous de votre projet</label>
                 <textarea id="svc-message" required rows={3} value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} placeholder="Parlez-nous de votre projet *" className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-sm focus:border-[var(--green-l)] focus:outline-none placeholder-white/30 transition-colors resize-none" />
               </div>
-              <button type="submit" className="w-full btn-primary text-xs flex items-center justify-center gap-2">
-                <Send size={14} /> Envoyer la demande
+              {error && (
+                <p className="text-red-400 text-xs text-center">{error}</p>
+              )}
+              <button type="submit" disabled={loading} className="w-full btn-primary text-xs flex items-center justify-center gap-2 disabled:opacity-50">
+                {loading ? (
+                  <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                ) : (
+                  <><Send size={14} /> Envoyer la demande</>
+                )}
               </button>
             </form>
           )}
