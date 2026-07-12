@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, ExternalLink, Calendar, User } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Calendar, User, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import TechGrid from '@/components/ui/TechGrid';
 import Navbar from '@/components/site/Navbar';
@@ -32,6 +32,12 @@ export default async function ProjectDetailPage({ params }: { params: { slug: st
   const techStack = (() => { try { return JSON.parse(project.techStack); } catch { return []; } })() as string[];
   const safeContent = serverSanitizeHtml(project.content);
 
+  const relatedProjects = await prisma.project.findMany({
+    where: { published: true, category: project.category, slug: { not: project.slug } },
+    take: 3,
+    orderBy: { createdAt: 'desc' },
+  });
+
   return (
     <main id="main-content" className="min-h-screen">
       <TechGrid />
@@ -44,6 +50,14 @@ export default async function ProjectDetailPage({ params }: { params: { slug: st
         </div>
 
         <div className="max-w-[1000px] mx-auto px-4 relative z-10">
+          <nav className="flex items-center gap-2 text-sm font-mono text-white/40 mb-8">
+            <Link href="/" className="hover:text-white/80 transition-colors">Accueil</Link>
+            <span>/</span>
+            <Link href="/realisations" className="hover:text-white/80 transition-colors">Réalisations</Link>
+            <span>/</span>
+            <span className="text-white/60">{project.title}</span>
+          </nav>
+
           <Link href="/realisations" className="inline-flex items-center gap-2 text-white/40 hover:text-white/80 text-sm font-mono mb-8 transition-colors">
             <ArrowLeft size={14} /> Retour aux réalisations
           </Link>
@@ -103,6 +117,31 @@ export default async function ProjectDetailPage({ params }: { params: { slug: st
           </div>
         </div>
       </section>
+
+      {relatedProjects.length > 0 && (
+        <section className="py-20 border-t border-white/5">
+          <div className="max-w-[1000px] mx-auto px-4">
+            <h2 className="text-2xl font-heading font-bold text-white mb-2">Projets similaires</h2>
+            <p className="text-white/60 text-sm mb-10">Découvrez d&apos;autres réalisations dans la catégorie <strong className="text-white/80">{project.category}</strong></p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {relatedProjects.map((p) => (
+                <Link key={p.id} href={`/realisations/${p.slug}`} className="group glass-card overflow-hidden rounded-xl transition-all hover:border-white/20">
+                  <div className="aspect-video relative overflow-hidden bg-white/5">
+                    <img src={optimizeCloudinaryUrl(p.imageUrl, { width: 600, height: 338 })} alt={p.title} width={600} height={338} loading="lazy" decoding="async" className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  </div>
+                  <div className="p-5">
+                    <div className="text-[9px] font-mono tracking-widest text-[var(--green-l)] mb-2">{p.category}</div>
+                    <h3 className="text-base font-heading font-bold text-white group-hover:text-[var(--green-l)] transition-colors line-clamp-2">{p.title}</h3>
+                    <div className="flex items-center gap-1 mt-3 text-xs text-[var(--green-l)] font-mono opacity-0 group-hover:opacity-100 transition-opacity">
+                      Voir le projet <ArrowRight size={12} />
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <Footer />
     </main>

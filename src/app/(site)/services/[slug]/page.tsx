@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import TechGrid from '@/components/ui/TechGrid';
 import Navbar from '@/components/site/Navbar';
@@ -33,6 +33,12 @@ export default async function ServiceDetailPage({ params }: { params: { slug: st
   const safeContent = serverSanitizeHtml(service.content);
   const color = service.color.startsWith('var') ? '#22C55E' : service.color;
 
+  const relatedServices = await prisma.service.findMany({
+    where: { active: true, slug: { not: service.slug } },
+    take: 3,
+    orderBy: { order: 'asc' },
+  });
+
   return (
     <main id="main-content" className="min-h-screen">
       <TechGrid />
@@ -47,6 +53,14 @@ export default async function ServiceDetailPage({ params }: { params: { slug: st
         </div>
 
         <div className="max-w-[1000px] mx-auto px-4 relative z-10">
+          <nav className="flex items-center gap-2 text-sm font-mono text-white/40 mb-8">
+            <Link href="/" className="hover:text-white/80 transition-colors">Accueil</Link>
+            <span>/</span>
+            <Link href="/services" className="hover:text-white/80 transition-colors">Services</Link>
+            <span>/</span>
+            <span className="text-white/60">{service.title}</span>
+          </nav>
+
           <Link href="/services" className="inline-flex items-center gap-2 text-white/40 hover:text-white/80 text-sm font-mono mb-8 transition-colors">
             <ArrowLeft size={14} /> Retour aux services
           </Link>
@@ -94,6 +108,30 @@ export default async function ServiceDetailPage({ params }: { params: { slug: st
           <ServiceContactForm serviceTitle={service.title} accentColor={color} />
         </div>
       </section>
+
+      {relatedServices.length > 0 && (
+        <section className="py-20 border-t border-white/5">
+          <div className="max-w-[1000px] mx-auto px-4">
+            <h2 className="text-2xl font-heading font-bold text-white mb-10">Autres services</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {relatedServices.map((s) => (
+                <Link key={s.id} href={`/services/${s.slug}`} className="group p-6 rounded-xl glass-card hover:border-white/20 transition-all">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg shrink-0" style={{ backgroundColor: s.color + '20', color: s.color }}>
+                      {s.title.charAt(0)}
+                    </div>
+                    <h3 className="text-base font-heading font-bold text-white group-hover:text-[var(--green-l)] transition-colors">{s.title}</h3>
+                  </div>
+                  <p className="text-white/60 text-sm leading-relaxed line-clamp-2">{s.description}</p>
+                  <div className="flex items-center gap-1 mt-3 text-xs text-[var(--green-l)] font-mono opacity-0 group-hover:opacity-100 transition-opacity">
+                    En savoir plus <ArrowRight size={12} />
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <Footer />
     </main>
